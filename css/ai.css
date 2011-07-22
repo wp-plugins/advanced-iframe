@@ -1,0 +1,25 @@
+.errordiv { padding:10px; margin:10px; border: 1px solid #555555;color: #000000;background-color: #f8f8f8; text-align:center; width:360px; }
+
+#im_test .text, #im_test img {
+  vertical-align: middle;
+}
+
+.linepad p {
+line-height: 1.3em;
+}
+
+.updated p, .error p {
+	line-height: 1.1;
+}
+
+.icon_jfu {
+float: left;
+height: 36px;
+margin-top: 14px;
+margin-right: 6px;
+margin-bottom: 0pt;
+margin-left: 0pt;
+width: 36px;
+background-image: url(../img/jfu_logo_32x32.png) !important;
+background-position: -0px -0px !important;
+}
