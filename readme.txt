@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
-Tested up to: 3.1.3
-Stable tag: 1.0
+Tested up to: 3.2.1
+Stable tag: 1.1
 
 This plugin includes any webpage as shortcode in an advanced iframe.
 
@@ -48,7 +48,7 @@ There are 2 ways to install the advanced iframe
 
 == Screenshots ==
 1. Comparison between normal iframe and advanced iframe wrapper. The red areas are modified by the advanced iframe to display the content better.
-2. This image shows the difference with an url forward parameter. In the advanced iframe a subalbum is shown while the normal iframe still shows the entry screen.
+2. This image shows the difference with an url forward parameter. In the advanced iframe a sub album is shown while the normal iframe still shows the entry screen.
 3. The basic admin screen to enable standard settings
 4. The advanced admin screen to enable advanced settings like html and css changes
  
@@ -60,5 +60,8 @@ Please read the instructions in the administration careful.
 First version.
 
 == Changelog ==
+= 1.1 =
+Fix: The iframe was always printed first. Now it is printed exacly where the shortcode is inserted.
+
 = 1.0 =
 First version.
