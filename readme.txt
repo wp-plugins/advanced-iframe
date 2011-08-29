@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
 Tested up to: 3.2.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 This plugin includes any webpage as shortcode in an advanced iframe.
 
@@ -23,7 +23,7 @@ The following differences to a normal iframe are implemented:
 - Forward parameters to the iframe 
 
 The following shortcode attributes can be used. Please go to the administration for details:
-[twg secuitykey="" src="" width="" height="" scrolling="" marginwidth="" marginheight="" 
+[advanced_iframe secuitykey="" src="" width="" height="" scrolling="" marginwidth="" marginheight="" 
  frameborder="" content_id="" content_styles="" hide_elements="" class="" url_forward_parameter=""]
 
 = Aministration =  
@@ -60,6 +60,9 @@ Please read the instructions in the administration careful.
 First version.
 
 == Changelog ==
+= 1.2 =
+Fix: The src was not working in the shortcode. I missed to rename this parameter when making this plugin more generic.
+
 = 1.1 =
 Fix: The iframe was always printed first. Now it is printed exacly where the shortcode is inserted.
 

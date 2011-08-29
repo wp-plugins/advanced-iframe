@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 1.1
+Version: 1.2
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -85,7 +85,7 @@ if (!class_exists("advancediFrame")) {
             // read the shortcode attributes
             if ($options['shortcode_attributes'] == 'true') {
                 extract(shortcode_atts(array('securitykey' => 'not set',
-                    'twg_url' => $options['twg_url'], 'height' => $options['height'], 'width' => $options['width'], 'frameborder' => $options['frameborder'],
+                    'src' => $options['src'], 'height' => $options['height'], 'width' => $options['width'], 'frameborder' => $options['frameborder'],
                     'scrolling' => $options['scrolling'], 'marginheight' => $options['marginheight'], 'marginwidth' => $options['marginwidth'],
                     'transparency' => $options['transparency'], 'content_id' => $options['content_id'],
                     'content_styles' => $options['content_styles'], 'hide_elements' => $options['hide_elements'],
@@ -196,7 +196,7 @@ if (isset($cons_advancediFrame)) {
     add_action('admin_menu', 'advancediFrame_ap', 1); //admin page
     add_action('init', array(&$cons_advancediFrame, 'loadLanguage'), 1); // add languages
     add_action('admin_head', array(&$cons_advancediFrame, 'addAdminHeaderCode'), 99); // load css
-    add_shortcode('advanced_iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode [twg]
+    add_shortcode('advanced_iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode [advanced_iframe]
     register_activation_hook(__FILE__, array(&$cons_advancediFrame, 'activate'));
 }
 ?>
