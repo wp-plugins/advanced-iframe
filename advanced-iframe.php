@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 1.2
+Version: 1.3
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -91,6 +91,7 @@ if (!class_exists("advancediFrame")) {
                     'content_styles' => $options['content_styles'], 'hide_elements' => $options['hide_elements'],
                     'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter']), $atts));
             } else {
+               
                 // only the secrity key is read.
                 extract(shortcode_atts(array('securitykey' => 'not set'), $atts));
             }
@@ -119,16 +120,16 @@ if (!class_exists("advancediFrame")) {
       
                 $html = '';            
 
-                if ((!empty($options['content_id']) && !empty($options['content_styles']))
-                        || !empty($options['hide_elements'])) {
+                if ((!empty($content_id) && !empty($content_styles))
+                        || !empty($hide_elements)) {
                     $html .= "<script>
                    jQuery(document).ready(function() {";
-                    if (!empty($options['hide_elements'])) {
-                        $html .= "jQuery('" . esc_html($options['hide_elements']) . "').css('display', 'none');";
+                    if (!empty($hide_elements)) {
+                        $html .= "jQuery('" . esc_html($hide_elements) . "').css('display', 'none');";
                     }
-                    if (!empty($options['content_id'])) {
-                        $elements = esc_html($options['content_id']); // this field should not have a problem if they are encoded.
-                        $values = esc_html($options['content_styles']); // this field style should not have a problem if they are encoded.
+                    if (!empty($content_id)) {
+                        $elements = esc_html($content_id); // this field should not have a problem if they are encoded.
+                        $values = esc_html($content_styles); // this field style should not have a problem if they are encoded.
                         $elementArray = explode("|", $elements);
                         $valuesArray = explode("|", $values);
                         if (count($elementArray) != count($valuesArray)) {
@@ -196,7 +197,7 @@ if (isset($cons_advancediFrame)) {
     add_action('admin_menu', 'advancediFrame_ap', 1); //admin page
     add_action('init', array(&$cons_advancediFrame, 'loadLanguage'), 1); // add languages
     add_action('admin_head', array(&$cons_advancediFrame, 'addAdminHeaderCode'), 99); // load css
-    add_shortcode('advanced_iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode [advanced_iframe]
+    add_shortcode('advanced_iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode [twg]
     register_activation_hook(__FILE__, array(&$cons_advancediFrame, 'activate'));
 }
 ?>
