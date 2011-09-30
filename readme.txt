@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
 Tested up to: 3.2.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 This plugin includes any webpage as shortcode in an advanced iframe.
 
@@ -60,6 +60,9 @@ Please read the instructions in the administration careful.
 First version.
 
 == Changelog ==
+= 1.3.1 =
+Fix: Improved error message if a &nbsp; is in the shortcode instead of a normal space.
+
 = 1.3 =
 Fix: content_id,content_styles,hide_elements was always used from the config even when a shortcode was given. Now the shortcode is used as well.
 

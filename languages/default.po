@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced iframe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-23 01:49+0100\n"
-"PO-Revision-Date: 2011-07-23 01:49+0100\n"
+"POT-Creation-Date: 2011-09-26 16:26+0100\n"
+"PO-Revision-Date: 2011-09-26 16:26+0100\n"
 "Last-Translator: Michael Dempfle <tinywebgallery@mdempfle.de>\n"
 "Language-Team: TinyWebGallery <tinywebgallery@mdempfle.de>\n"
 "MIME-Version: 1.0\n"
@@ -133,7 +133,7 @@ msgid "Define the parameters that should be passed from the browser url to the i
 msgstr ""
 
 #: advanced-iframe/advanced-iframe-admin-page.php:88
-#: advanced-iframe/advanced-iframe-admin-page.php:110
+#: advanced-iframe/advanced-iframe-admin-page.php:109
 msgid "Update Settings"
 msgstr ""
 
@@ -161,49 +161,49 @@ msgstr ""
 msgid "Define the styles that have to be overwritten to enable the full width. Most of the time have to modify some of the following attributes: width, margin-left, margin-right, padding-left. Please use ; as separator between styles. If you have defined more than one element above (Content id) please separate the different style sets with |. The default values are: Wordpress default: 'width:450px;padding-left:45px;'. Twenty Ten: 'margin-left:20px;margin-right:240px'. iNove: 'width:605px'. Please read the note below how to find this styles for other templates. If you have defined #content|h2 at the Content id you can e.g. set 'width:650px;padding-left:25px;|padding-left:15px;'. Shortcode attribute: content_styles=\"\""
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:101
+#: advanced-iframe/advanced-iframe-admin-page.php:100
 msgid "Hide elements"
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:101
-msgid "This setting allows to hide elements when the iframe is shown. This can be used to hide the sidebar or the heading. Usage: If you want to hide a div you have to enter a hash (#) followed by the id e.g. #sidebar. If you want to hide a heading which is a &lt;h2&gt; you have to enter h2. You can define several elements separated by , e.g. #sidebar,h2. This gives you a lot more space to show the content of the iframe. To get the id of the sidebar go to Appearance -> Editor -> Click on 'Sidebar' on the right side. Then look for the first 'div' you find. The id of this div is the one you need. For some common templates the id is e.g. #menu, #sidebar, or #primary. For Twenty Ten and iNove you can remove the sidebar directly: Page attributes -> Template -> no sidebar. Wordpress default: '#sidebar'. I recommend to use firebug (see below) to find the elements and ids. You can use any valid jQuery selector pattern here! Shortcode attribute: hide_sidebar=\"\""
+#: advanced-iframe/advanced-iframe-admin-page.php:100
+msgid "This setting allows to hide elements when the iframe is shown. This can be used to hide the sidebar or the heading. Usage: If you want to hide a div you have to enter a hash (#) followed by the id e.g. #sidebar. If you want to hide a heading which is a &lt;h2&gt; you have to enter h2. You can define several elements separated by , e.g. #sidebar,h2. This gives you a lot more space to show the content of the iframe. To get the id of the sidebar go to Appearance -> Editor -> Click on 'Sidebar' on the right side. Then look for the first 'div' you find. The id of this div is the one you need. For some common templates the id is e.g. #menu, #sidebar, or #primary. For Twenty Ten and iNove you can remove the sidebar directly: Page attributes -> Template -> no sidebar. Wordpress default: '#sidebar'. I recommend to use firebug (see below) to find the elements and ids. You can use any valid jQuery selector pattern here! Shortcode attribute: hide_elements=\"\""
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:105
+#: advanced-iframe/advanced-iframe-admin-page.php:104
 msgid "<strong>How to find the id and the attributes:</strong><ol><li>Manually: Go to Appearance -> Editor and select the page template. The you have to look with div elements are defined. e.g. container, content, main. Also classes can be defined here. Then you have to select the style sheet below and search for this ids and classes and look which one does define the width of you content.</li><li>Firebug: For Firefox you can use the plugin firebug to select the content element directly in the page. On the right side the styles are always shown. Look for the styles that set the width or any bigger margins. This are the values you can then overwrite by the settings above.</li></ol>"
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:120
+#: advanced-iframe/advanced-iframe-admin-page.php:119
 msgid "Wordpress Flash Uploader, TinyWebGallery, Joomla Flash Uploader"
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:122
+#: advanced-iframe/advanced-iframe-admin-page.php:121
 msgid "This plugin is the extract for the iframe wrapper which was written for the TinyWebGallery. I needed an iframe wrapper that could do more then simply include a page. It needed to pass parameters to the iframe and modify the template on the fly to get more space for TWG. If you want to integrate TWG please use the \"TinyWebGallery wrapper\". It offers specific features only needed for the gallery. I hope this standalone wrapper is useful for other Wordpress users as well."
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:125
+#: advanced-iframe/advanced-iframe-admin-page.php:124
 msgid "Please take a look at my other projects: Wordpress Flash Uploader, TinyWebGallery, Joomla Flash Uploader or TWG Flash Uploader. If you like TWG or one of my other projects like JFU, WFU or TFU you should consider to register because you can use all products with one single license and get all features of the gallery and a complete upload solution as well."
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:128
+#: advanced-iframe/advanced-iframe-admin-page.php:127
 msgid "Please go <a href=\"http://www.tinywebgallery.com\" target=\"_blank\">www.tinywebgallery.com</a> for details."
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:143
-#: advanced-iframe/advanced-iframe-admin-page.php:163
+#: advanced-iframe/advanced-iframe-admin-page.php:142
+#: advanced-iframe/advanced-iframe-admin-page.php:162
 msgid "Yes"
 msgstr ""
 
-#: advanced-iframe/advanced-iframe-admin-page.php:147
-#: advanced-iframe/advanced-iframe-admin-page.php:167
+#: advanced-iframe/advanced-iframe-admin-page.php:146
+#: advanced-iframe/advanced-iframe-admin-page.php:166
 msgid "No"
 msgstr ""
 
-#: advanced-iframe/advanced-iframe.php:100
-msgid "An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey=\"&lt;your security key - see settings&gt;\"]"
+#: advanced-iframe/advanced-iframe.php:101
+msgid "An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey=\"&lt;your security key - see settings&gt;\"]. Please also check in the html mode that your shortcode does only contain notmal spaces and not a &amp;nbsp; instead."
 msgstr ""
 
-#: advanced-iframe/advanced-iframe.php:135
+#: advanced-iframe/advanced-iframe.php:136
 msgid "Configuration error: The attributes content_id and content_styles have to have the amount of value sets separated by |."
 msgstr ""
 

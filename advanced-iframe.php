@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 1.3
+Version: 1.3.1
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -98,7 +98,7 @@ if (!class_exists("advancediFrame")) {
 
             echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/css/ai.css" />' . "\n";
             if ($options['securitykey'] != $securitykey) {
-                echo '<div class="errordiv">' . __('An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey="&lt;your security key - see settings&gt;"]', 'advanced-iframe') . '</div>';
+                echo '<div class="errordiv">' . __('An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey="&lt;your security key - see settings&gt;"]. Please also check in the html mode that your shortcode does only contain notmal spaces and not a &amp;nbsp; instead.', 'advanced-iframe') . '</div>';
                 return;
             } else {
 
