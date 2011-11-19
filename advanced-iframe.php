@@ -64,7 +64,7 @@ if (!class_exists("advancediFrame")) {
 
         /* CSS for the admin area */
         function addAdminHeaderCode() {
-            echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/css/twg.css" />' . "\n";
+            echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/css/ai.css" />' . "\n";
 
         }
 
