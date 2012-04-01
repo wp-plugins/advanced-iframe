@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
-Tested up to: 3.2.1
-Stable tag: 1.3.3
+Tested up to: 3.3.1
+Stable tag: 1.4
 
 This plugin includes any webpage as shortcode in an advanced iframe.
 
@@ -60,8 +60,9 @@ Please read the instructions in the administration careful.
 First version.
 
 == Changelog ==
-= 1.3.3 =
+= 1.4 =
 Documentation updated
+New: id and name attribute added
 
 = 1.3.2 =
 Improved the help

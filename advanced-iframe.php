@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 1.3.2
+Version: 1.4
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -42,7 +42,8 @@ if (!class_exists("advancediFrame")) {
                 'src' => 'http://www.tinywebgallery.com', 'width' => '100%',
                 'height' => '600', 'scrolling' => 'no', 'marginwidth' => '0', 'marginheight' => '0',
                 'frameborder' => '0', 'transparency' => 'true', 'content_id' => '', 'content_styles' => '', 
-                'hide_elements' => '', 'class' => '', 'shortcode_attributes' => 'true', 'url_forward_parameter' => '');
+                'hide_elements' => '', 'class' => '', 'shortcode_attributes' => 'true', 
+                'url_forward_parameter' => '', 'id' => '', 'name' => '');
             return $iframeAdminOptions;
         }
 
@@ -81,7 +82,8 @@ if (!class_exists("advancediFrame")) {
                 'scrolling' => $options['scrolling'], 'marginheight' => $options['marginheight'], 'marginwidth' => $options['marginwidth'],
                 'transparency' => $options['transparency'], 'content_id' => $options['content_id'],
                 'content_styles' => $options['content_styles'], 'hide_elements' => $options['hide_elements'],
-                'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter'], $atts));
+                'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter'],
+                'name' => $options['name'],'id' => $options['id'], $atts));
             // read the shortcode attributes
             if ($options['shortcode_attributes'] == 'true') {
                 extract(shortcode_atts(array('securitykey' => 'not set',
@@ -89,9 +91,9 @@ if (!class_exists("advancediFrame")) {
                     'scrolling' => $options['scrolling'], 'marginheight' => $options['marginheight'], 'marginwidth' => $options['marginwidth'],
                     'transparency' => $options['transparency'], 'content_id' => $options['content_id'],
                     'content_styles' => $options['content_styles'], 'hide_elements' => $options['hide_elements'],
-                    'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter']), $atts));
-            } else {
-               
+                    'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter'], 
+                     'name' => $options['name'], 'id' => $options['id']), $atts));
+            } else {              
                 // only the secrity key is read.
                 extract(shortcode_atts(array('securitykey' => 'not set'), $atts));
             }
@@ -149,6 +151,12 @@ if (!class_exists("advancediFrame")) {
                  </script>";
                 }
                 $html .= "<iframe id='advanced_iframe' src='" . $src . "' width='" . esc_html($width) . "' height='" . esc_html($height) . "' scrolling='" . esc_html($scrolling) . "' ";
+                if (!empty ($name)) {
+                    $html .= " name='" . esc_html($name) . "' ";
+                }
+                 if (!empty ($id)) {
+                    $html .= " id='" . esc_html($id) . "' ";
+                }
                 if (!empty ($marginwidth)) {
                     $html .= " marginwidth='" . esc_html($marginwidth) . "' ";
                 }
@@ -164,6 +172,7 @@ if (!class_exists("advancediFrame")) {
                 if (!empty ($class)) {
                     $html .= " class='" . esc_html($class) . "' ";
                 }
+                
 
                 $html .= "></iframe>\n ";
             }

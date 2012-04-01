@@ -28,7 +28,7 @@ if (is_user_logged_in() && is_admin()) {
         $adminSettings = array('securitykey', 'src', 'width', 'height', 'scrolling',
             'marginwidth', 'marginheight', 'frameborder', 'transparency',
             'content_id', 'content_styles', 'hide_elements', 'class',
-            'shortcode_attributes', 'url_forward_parameter');
+            'shortcode_attributes', 'url_forward_parameter', 'id', 'name');
 
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
 
@@ -81,6 +81,10 @@ if (is_user_logged_in() && is_admin()) {
         printTrueFalse($devOptions, __('Transparency', 'advanced-iframe'), 'transparency', __('If you like that the iframe is transparent and your background is shown you should set this to \'Yes\'. If this value is not set then the iframe is transparent in IE but transparent in e.g. Firefox. So by default you should leave this to \'Yes\'. Shortcode attribute: transparency="true" or transparency="false" ', 'advanced-iframe'));
         printTextInput($devOptions, __('Class', 'advanced-iframe'), 'class', __('You can define a class for the iframe if you like. Shortcode attribute: class=""', 'advanced-iframe'));
         printTextInput($devOptions, __('URL forward parameters', 'advanced-iframe'), 'url_forward_parameter', __('Define the parameters that should be passed from the browser url to the iframe url. Please separate the parameters by \',\'. In e.g. TinyWebGallery this enables you to jump directly to an album or image although TinyWebGallery is included in an iframe. Shortcode attribute: url_forward_parameter=""', 'advanced-iframe'));
+        // new 1.4
+        printTextInput($devOptions, __('Id', 'advanced-iframe'), 'id', __('Enter the \'id\' attribute of the iframe. Shortcode attribute: id=""', 'advanced-iframe'));
+        printTextInput($devOptions, __('Name', 'advanced-iframe'), 'name', __('Enter the \'name\' attribute of the iframe. Shortcode attribute: name=""', 'advanced-iframe'));
+       
         ?>
         </table>
         <p>
