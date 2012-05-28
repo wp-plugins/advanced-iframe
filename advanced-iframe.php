@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 1.4
+Version: 1.5
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -42,8 +42,7 @@ if (!class_exists("advancediFrame")) {
                 'src' => 'http://www.tinywebgallery.com', 'width' => '100%',
                 'height' => '600', 'scrolling' => 'no', 'marginwidth' => '0', 'marginheight' => '0',
                 'frameborder' => '0', 'transparency' => 'true', 'content_id' => '', 'content_styles' => '', 
-                'hide_elements' => '', 'class' => '', 'shortcode_attributes' => 'true', 
-                'url_forward_parameter' => '', 'id' => '', 'name' => '');
+                'hide_elements' => '', 'class' => '', 'shortcode_attributes' => 'true', 'url_forward_parameter' => '');
             return $iframeAdminOptions;
         }
 
@@ -82,22 +81,34 @@ if (!class_exists("advancediFrame")) {
                 'scrolling' => $options['scrolling'], 'marginheight' => $options['marginheight'], 'marginwidth' => $options['marginwidth'],
                 'transparency' => $options['transparency'], 'content_id' => $options['content_id'],
                 'content_styles' => $options['content_styles'], 'hide_elements' => $options['hide_elements'],
-                'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter'],
-                'name' => $options['name'],'id' => $options['id'], $atts));
+                'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter'], $atts));
             // read the shortcode attributes
             if ($options['shortcode_attributes'] == 'true') {
+                // src value can be hidden in [0] and [1] if the editor does hotlink the url. Therefore I look in there if the src is not set!
+                if (!isset($atts['src'])) {
+                    if (isset($atts[0]) && (stristr($atts[0], 'src') !== FALSE)) {
+                      if (isset($atts[1])) {         
+                        $input = '<a ' . $atts[1]; 
+                        $regexp = "<a\s[^>]*href=(\"??)([^\" >]*?)\\1[^>]*>(.*)<\/a>"; 
+                        if(preg_match_all("/$regexp/siU", $input, $matches)) {                    
+                          if (isset($matches[2])) {
+                            $atts['src'] = $matches[2][0];
+                          }
+                        } 
+                      }
+                    }
+                }
                 extract(shortcode_atts(array('securitykey' => 'not set',
                     'src' => $options['src'], 'height' => $options['height'], 'width' => $options['width'], 'frameborder' => $options['frameborder'],
                     'scrolling' => $options['scrolling'], 'marginheight' => $options['marginheight'], 'marginwidth' => $options['marginwidth'],
                     'transparency' => $options['transparency'], 'content_id' => $options['content_id'],
                     'content_styles' => $options['content_styles'], 'hide_elements' => $options['hide_elements'],
-                    'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter'], 
-                     'name' => $options['name'], 'id' => $options['id']), $atts));
-            } else {              
+                    'class' => $options['class'], 'url_forward_parameter' => $options['url_forward_parameter']), $atts));
+            } else {          
                 // only the secrity key is read.
                 extract(shortcode_atts(array('securitykey' => 'not set'), $atts));
             }
-
+           
             echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/css/ai.css" />' . "\n";
             if ($options['securitykey'] != $securitykey) {
                 echo '<div class="errordiv">' . __('An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey="&lt;your security key - see settings&gt;"]. Please also check in the html mode that your shortcode does only contain notmal spaces and not a &amp;nbsp; instead.', 'advanced-iframe') . '</div>';
@@ -151,12 +162,6 @@ if (!class_exists("advancediFrame")) {
                  </script>";
                 }
                 $html .= "<iframe id='advanced_iframe' src='" . $src . "' width='" . esc_html($width) . "' height='" . esc_html($height) . "' scrolling='" . esc_html($scrolling) . "' ";
-                if (!empty ($name)) {
-                    $html .= " name='" . esc_html($name) . "' ";
-                }
-                 if (!empty ($id)) {
-                    $html .= " id='" . esc_html($id) . "' ";
-                }
                 if (!empty ($marginwidth)) {
                     $html .= " marginwidth='" . esc_html($marginwidth) . "' ";
                 }
@@ -172,7 +177,6 @@ if (!class_exists("advancediFrame")) {
                 if (!empty ($class)) {
                     $html .= " class='" . esc_html($class) . "' ";
                 }
-                
 
                 $html .= "></iframe>\n ";
             }

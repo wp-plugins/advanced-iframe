@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
 Tested up to: 3.3.1
-Stable tag: 1.4
+Stable tag: 1.5
 
 This plugin includes any webpage as shortcode in an advanced iframe.
 
@@ -13,7 +13,7 @@ This plugin includes any webpage as shortcode in an advanced iframe.
 This plugin includes any webpage as shortcode in an advanced iframe.
 
 = Shortcode for advanced iframe =
-By entering the shortcode '[advanced_iframe secuitykey=""]' you can include any webpage to any page or article. 
+By entering the shortcode '[advanced_iframe securitykey=""]' you can include any webpage to any page or article. 
 The following differences to a normal iframe are implemented:
 
 - Security code: You can only insert the shortcode with a valid security code from the administration.
@@ -23,8 +23,9 @@ The following differences to a normal iframe are implemented:
 - Forward parameters to the iframe 
 
 The following shortcode attributes can be used. Please go to the administration for details:
-[advanced_iframe secuitykey="" src="" width="" height="" scrolling="" marginwidth="" marginheight="" 
- frameborder="" content_id="" content_styles="" hide_elements="" class="" url_forward_parameter=""]
+[advanced_iframe securitykey="" src="" width="" height="" scrolling="" marginwidth="" 
+ marginheight="" id="" name="" frameborder="" content_id="" content_styles="" 
+ hide_elements="" class="" url_forward_parameter=""]
 
 = Aministration =  
 * See Settings -> Advanced iframe
@@ -38,13 +39,13 @@ There are 2 ways to install the advanced iframe
 1. Click Plugins, Add New
 1. Search for advanced iframe
 1. Install and Activate it
-1. Place '[advanced_iframe secuitykey=""]' in your pages or posts. the security key can be found at Settings -> Advanced iframe
+1. Place '[advanced_iframe securitykey=""]' in your pages or posts. the security key can be found at Settings -> Advanced iframe
 
 *Using FTP*
 
 1. Upload 'advanced-iframe' to the '/wp-content/plugins/' directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place '[advanced_iframe secuitykey=""]' in your pages or posts. the security key can be found at Settings -> Advanced iframe
+1. Place '[advanced_iframe securitykey=""]' in your pages or posts. the security key can be found at Settings -> Advanced iframe
 
 == Screenshots ==
 1. Comparison between normal iframe and advanced iframe wrapper. The red areas are modified by the advanced iframe to display the content better.
@@ -60,6 +61,10 @@ Please read the instructions in the administration careful.
 First version.
 
 == Changelog ==
+= 1.5 =
+Support for src values that are hotlinked by the editor. 
+Fixed the typo in the doumentation. in securitykey sometimes the r was missing 
+
 = 1.4 =
 Documentation updated
 New: id and name attribute added
