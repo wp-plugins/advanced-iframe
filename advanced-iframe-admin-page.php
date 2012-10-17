@@ -178,7 +178,7 @@ echo '</p><table class="form-table">';
         </li>                 
       </ol>                                      
     </p>             
-    <p>        For the 'scroll to top' functionality please replace <strong>iframe_height.js</strong> with <strong>iframe_scroll.js</strong> and remove the height variable. In the plugin folder is an example.html where both examples are shown. The example should point you to the right direction if you like to do something else.              
+    <p>        For the 'scroll to top' functionality please replace <strong>iframe_height.html</strong> with <strong>iframe_scroll.html</strong> and remove the height variable. In the plugin folder is an example.html where both examples are shown. The example should point you to the right direction if you like to do something else.              
     </p>          <h3>      
       <?php _e('Additional files', 'advanced-iframe') ?></h3>             
     <p>               
