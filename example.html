@@ -1,0 +1,39 @@
+<html>
+<head>
+<script type="text/javascript">
+    function updateIframeHeight() {
+        var iframe = document.getElementById('hiddenIframe');
+        var newHeight = parseInt(document.body.scrollHeight,10);
+        iframe.src = 'http://localhost/wordpress32/wp-content/plugins/advanced-iframe/js/iframe_height.html?height=' + newHeight;
+    }
+    function scrollToTop() {      
+        var iframe = document.getElementById('hiddenIframe2');
+        iframe.src = 'http://localhost/wordpress32/wp-content/plugins/advanced-iframe/js/iframe_scroll.html';
+    }    
+</script> 
+</head>
+<body onload="updateIframeHeight();scrollToTop();"> 
+<div id="iframe-first-div" style="height:400px;border:2px solid #f00;">
+
+This is an example page where the scroll to top and automatic setting of the iframe height is implmented.<br/>
+Please look at the source code to see how this works.   
+
+<p>
+This is a simple div with a height of 600 px and a border of 2px. <br/> 
+</p>
+If you click on the link below you come back to the same page but your parent page should scroll to the top.<br/>
+Scroll down your page to see a result.
+<p>
+<a href="example.html">Link to this page </a>
+</p>
+</div>
+<div id="iframe-second-div" style="height:100px;border:2px solid #00f;">
+<p>
+This a 2nd small div with id="iframe-second-div" I use as example how to hide an element in the iframe.
+</p>  
+</div>
+<iframe id="hiddenIframe" style="visibility:hidden;" frameborder="0" border="0" width="0" height="0" src="http://localhost/wordpress32/wp-content/plugins/advanced-iframe/js/iframe_height.html">
+Iframes not supported.</iframe><iframe id="hiddenIframe2" style="visibility:hidden;" frameborder="0" border="0" width="0" height="0" src="http://localhost/wordpress32/wp-content/plugins/advanced-iframe/js/iframe_scroll.html">
+Iframes not supported.</iframe>
+</body>
+</html>

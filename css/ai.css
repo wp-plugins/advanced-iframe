@@ -12,14 +12,15 @@ line-height: 1.3em;
 	line-height: 1.1;
 }
 
-.icon_jfu {
+.icon_ai {
 float: left;
 height: 36px;
-margin-top: 14px;
+margin-top: 8px;
 margin-right: 6px;
 margin-bottom: 0pt;
 margin-left: 0pt;
 width: 36px;
 background-image: url(../img/jfu_logo_32x32.png) !important;
+background-repeat: no-repeat;
 background-position: -0px -0px !important;
 }
