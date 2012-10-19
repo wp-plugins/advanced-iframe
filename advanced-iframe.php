@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 2.0
+Version: 2.0.1
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -192,7 +192,7 @@ if (!class_exists('advancediFrame')) {
                         
             if ($store_height_in_cookie == 'true') {
                 echo  '<script type="text/javascript">aiEnableCookie=true; aiId="' . $id . '";</script>';
-            }
+            }  
             if ($additional_height != 0) {
                 echo  '<script type="text/javascript">aiExtraSpace=' . $additional_height . ';</script>';
             }

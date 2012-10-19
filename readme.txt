@@ -4,13 +4,13 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
 Tested up to: 3.4.2
-Stable tag: 2.0
+Stable tag: 2.0.1
 
-This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
+This plugin includes any webpage as shortcode in an advanced iframe.
 
 == Description ==
 
-This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
+This plugin includes any webpage as shortcode in an advanced iframe.
 
 = Shortcode for advanced iframe =
 By entering the shortcode '[advanced_iframe securitykey=""]' you can include any webpage to any page or article. 
@@ -36,7 +36,7 @@ The following shortcode attributes can be used. Please go to the administration 
  iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="" ]
 
 
-= Administration =  
+= Aministration =  
 * See Settings -> Advanced iframe
 * Enables the configuration of the defaults for the iframe and the modifications on the template.
 
@@ -76,6 +76,9 @@ http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
 First version.
 
 == Changelog ==
+= 2.0.1 =
+Fix: The included footer was causing an Javascript error on non advanced iframe pages. Now I check if the function does exist.   
+
 = 2.0 =
 New: onload attribute added
 New: Javascript onload solution for scolling the parent page to the top.
