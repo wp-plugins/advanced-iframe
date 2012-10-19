@@ -118,7 +118,7 @@ if (!class_exists('advancediFrame')) {
             if (!isset ($options['iframe_content_id'])) { $options['iframe_content_id'] = ''; }
             if (!isset ($options['iframe_content_styles'])) { $options['iframe_content_styles'] = ''; }
             if (!isset ($options['iframe_hide_elements'])) { $options['iframe_hide_elements'] = ''; }
-            if (!isset ($options['version_counter'])) { $options['version_counter'] = '1'; }
+             if (!isset ($options['version_counter'])) { $options['version_counter'] = '1'; }
             
             // defaults from main config
             extract(array('securitykey' => 'not set',
@@ -354,8 +354,8 @@ if (!class_exists('advancediFrame')) {
             return $html;
         }
         
-         function add_script_footer() {
-             echo '<script type="text/javascript">aiModifyParent();</script>';
+        function add_script_footer() {
+             echo '<script type="text/javascript">if(window.aiModifyParent) {aiModifyParent();}</script>';
         }
         
        
