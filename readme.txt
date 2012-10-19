@@ -6,11 +6,11 @@ Requires at least: 2.8.6
 Tested up to: 3.4.2
 Stable tag: 2.0.1
 
-This plugin includes any webpage as shortcode in an advanced iframe.
+This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
 
 == Description ==
 
-This plugin includes any webpage as shortcode in an advanced iframe.
+This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
 
 = Shortcode for advanced iframe =
 By entering the shortcode '[advanced_iframe securitykey=""]' you can include any webpage to any page or article. 
