@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
-Tested up to: 3.4.2
-Stable tag: 2.0.1
+Tested up to: 3.5
+Stable tag: 2.0.2
 
 This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
 
@@ -76,6 +76,9 @@ http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
 First version.
 
 == Changelog ==
+= 2.0.2 =
+Tested with Wordpress 3.5
+
 = 2.0.1 =
 Fix: The included footer was causing an Javascript error on non advanced iframe pages. Now I check if the function does exist.   
 
