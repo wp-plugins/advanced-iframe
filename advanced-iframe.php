@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 2.0.1
+Version: 2.0.2
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
