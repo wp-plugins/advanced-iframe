@@ -80,19 +80,32 @@ function aiUseCookie() {
  */ 
 function ai_is_numeric(input){
     return !isNaN(input);
-  }
+}
 
 /**
 * Disable the additional_height input field
 */     
 function aiDisableHeight() {
-jQuery("#additional_height").attr('readonly','readonly');
-jQuery("#additional_height").val('0');
+  jQuery("#additional_height").attr('readonly','readonly');
+  jQuery("#additional_height").val('0');
 }
 
 /**
 * Enable the additional_height input field
 */    
 function aiEnableHeight() {
-jQuery("#additional_height").removeAttr('readonly');
+  jQuery("#additional_height").removeAttr('readonly');
+}
+
+/**
+ * Removes all elements from an iframe except the given one
+ * 
+ * @param iframeId id of the iframe
+ * @param showElement the id, class (jQuery syntax) of the element that should be displayed. 
+ */ 
+function aiShowElementOnly( iframeId, showElement ) {
+  var iframe = jQuery(iframeId).contents().find("body"); 
+  var selectedBox = iframe.find(showElement).clone(); 
+  iframe.find("*").remove(); 
+  iframe.append(selectedBox);
 }

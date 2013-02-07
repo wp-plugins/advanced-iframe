@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, advanced,  shortcode, widget
 Requires at least: 2.8.6
-Tested up to: 3.5
-Stable tag: 2.0.2
+Tested up to: 3.5.1
+Stable tag: 2.1
 
 This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
 
@@ -26,6 +26,7 @@ The following differences to a normal iframe are implemented:
 - Hide areas inside iframe if the pages are on the same domain (new 2.0)
 - Modify css styles inside iframe if the pages are on the same domain to e.g. change the width of the content area (new 2.0) 
 - Add a css and js file to the parent page (new 2.0)
+- Show only a specifiy part of the page in the iframe if the pages are on the same domain (new 2.1)
 
 The following shortcode attributes can be used. Please go to the administration for details:
 
@@ -33,8 +34,8 @@ The following shortcode attributes can be used. Please go to the administration 
  marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
  class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
  additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
- iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="" ]
-
+ iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
+ onload_show_element_only=""]
 
 = Aministration =  
 * See Settings -> Advanced iframe
@@ -68,7 +69,7 @@ There are 2 ways to install the advanced iframe
 Please read the instructions in the administration careful. The documentation there should explain all of your questions!
 
 = Demo =
-See the demo with the 2.0 features here:
+See the demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
 
 == Upgrade Notice ==
@@ -76,6 +77,9 @@ http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
 First version.
 
 == Changelog ==
+= 2.1 =
+Show only a specifiy part of the page in the iframe if the pages are on the same domain.
+
 = 2.0.2 =
 Tested with Wordpress 3.5
 

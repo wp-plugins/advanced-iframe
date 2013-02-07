@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 2.0.2
+Version: 2.1
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe.
@@ -47,7 +47,7 @@ if (!class_exists('advancediFrame')) {
                 'onload' => '', 'onload_resize' => 'false', 'onload_scroll_top' => 'false',
                 'additional_js' => '', 'additional_css' => '', 'store_height_in_cookie' => 'false',
                 'additional_height' => '0', 'iframe_content_id' => '', 'iframe_content_styles' => '', 
-                'iframe_hide_elements' => '', 'version_counter' => '1'     
+                'iframe_hide_elements' => '', 'version_counter' => '1', 'onload_show_element_only' => ''     
                 );
             return $iframeAdminOptions;
         }
@@ -118,8 +118,9 @@ if (!class_exists('advancediFrame')) {
             if (!isset ($options['iframe_content_id'])) { $options['iframe_content_id'] = ''; }
             if (!isset ($options['iframe_content_styles'])) { $options['iframe_content_styles'] = ''; }
             if (!isset ($options['iframe_hide_elements'])) { $options['iframe_hide_elements'] = ''; }
-             if (!isset ($options['version_counter'])) { $options['version_counter'] = '1'; }
-            
+            if (!isset ($options['version_counter'])) { $options['version_counter'] = '1'; }
+            if (!isset ($options['onload_show_element_only'])) { $options['onload_show_element_only'] = ''; }
+
             // defaults from main config
             extract(array('securitykey' => 'not set',
                 'src' => $options['src'], 'height' => $options['height'], 'width' => $options['width'], 
@@ -138,8 +139,9 @@ if (!class_exists('advancediFrame')) {
                 'iframe_content_id' =>  $options['iframe_content_id'],
                 'iframe_content_styles' =>  $options['iframe_content_styles'],
                 'iframe_hide_elements' =>  $options['iframe_hide_elements'],
-                 'version_counter' =>  $options['version_counter'] 
-                , $atts));
+                'version_counter' =>  $options['version_counter'],
+                'onload_show_element_only' =>  $options['onload_show_element_only'], 
+                 $atts));
             // read the shortcode attributes
             if ($options['shortcode_attributes'] == 'true') {
                 // src value can be hidden in [0] and [1] if the editor does hotlink the url. Therefore I look in there if the src is not set!
@@ -173,7 +175,9 @@ if (!class_exists('advancediFrame')) {
                     'additional_height' =>  $options['additional_height'],  
                     'iframe_content_id' =>  $options['iframe_content_id'],
                     'iframe_content_styles' =>  $options['iframe_content_styles'], 
-                    'iframe_hide_elements' =>  $options['iframe_hide_elements'] )
+                    'iframe_hide_elements' =>  $options['iframe_hide_elements'],
+                    'onload_show_element_only' =>  $options['onload_show_element_only'],
+                     )
                     , $atts));
             } else {          
                 // only the secrity key is read.
@@ -332,11 +336,14 @@ if (!class_exists('advancediFrame')) {
                 if (!empty ($onload)) {
                     $onload_str .= esc_html($onload);
                 }
+                if (!empty($onload_show_element_only)) {
+                    $onload_str .= ';aiShowElementOnly("#'.$id.'","'.$onload_show_element_only.'");';
+                }
                 if ($onload_resize == 'true') {
-                     $onload_str .= ';aiResizeIframe(this);';
+                    $onload_str .= ';aiResizeIframe(this);';
                 }
                 if ($onload_scroll_top == 'true') {
-                     $onload_str .= ';aiScrollToTop();';
+                    $onload_str .= ';aiScrollToTop();';
                 }
                 if ($onload_str != '') {
                    $html .= " onload='" . esc_js($onload_str) . "' "; 
