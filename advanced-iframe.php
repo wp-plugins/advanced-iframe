@@ -2,10 +2,10 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 2.1
+Version: 3.0 
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
-Description: This plugin includes any webpage as shortcode in an advanced iframe.
+Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -47,7 +47,9 @@ if (!class_exists('advancediFrame')) {
                 'onload' => '', 'onload_resize' => 'false', 'onload_scroll_top' => 'false',
                 'additional_js' => '', 'additional_css' => '', 'store_height_in_cookie' => 'false',
                 'additional_height' => '0', 'iframe_content_id' => '', 'iframe_content_styles' => '', 
-                'iframe_hide_elements' => '', 'version_counter' => '1', 'onload_show_element_only' => ''     
+                'iframe_hide_elements' => '', 'version_counter' => '1', 'onload_show_element_only' => '' , 
+                'include_url'=> '','include_content'=> '','include_height'=> '','include_fade'=> '',
+                'include_hide_page_until_loaded' => 'false', 'donation_bottom' => 'false'                  
                 );
             return $iframeAdminOptions;
         }
@@ -120,6 +122,13 @@ if (!class_exists('advancediFrame')) {
             if (!isset ($options['iframe_hide_elements'])) { $options['iframe_hide_elements'] = ''; }
             if (!isset ($options['version_counter'])) { $options['version_counter'] = '1'; }
             if (!isset ($options['onload_show_element_only'])) { $options['onload_show_element_only'] = ''; }
+            // defaults for new settings  in 3.0
+            if (!isset ($options['include_url'])) { $options['include_url'] = ''; }
+            if (!isset ($options['include_content'])) { $options['include_content'] = ''; }
+            if (!isset ($options['include_height'])) { $options['include_height'] = ''; }
+            if (!isset ($options['include_fade'])) { $options['include_fade'] = '0'; }
+            if (!isset ($options['include_hide_page_until_loaded'])) { $options['include_hide_page_until_loaded'] = 'false'; }
+            if (!isset ($options['donation_bottom'])) { $options['donation_bottom'] = 'false'; }
 
             // defaults from main config
             extract(array('securitykey' => 'not set',
@@ -140,7 +149,12 @@ if (!class_exists('advancediFrame')) {
                 'iframe_content_styles' =>  $options['iframe_content_styles'],
                 'iframe_hide_elements' =>  $options['iframe_hide_elements'],
                 'version_counter' =>  $options['version_counter'],
-                'onload_show_element_only' =>  $options['onload_show_element_only'], 
+                'onload_show_element_only' =>  $options['onload_show_element_only'],                 
+                'include_url' =>  $options['include_url'], 
+                'include_content' =>  $options['include_content'], 
+                'include_height' =>  $options['include_height'], 
+                'include_fade' =>  $options['include_fade'], 
+                'include_hide_page_until_loaded' =>  $options['include_hide_page_until_loaded'],                      
                  $atts));
             // read the shortcode attributes
             if ($options['shortcode_attributes'] == 'true') {
@@ -177,6 +191,11 @@ if (!class_exists('advancediFrame')) {
                     'iframe_content_styles' =>  $options['iframe_content_styles'], 
                     'iframe_hide_elements' =>  $options['iframe_hide_elements'],
                     'onload_show_element_only' =>  $options['onload_show_element_only'],
+                    'include_url' =>  $options['include_url'], 
+                    'include_content' =>  $options['include_content'], 
+                    'include_height' =>  $options['include_height'], 
+                    'include_fade' =>  $options['include_fade'], 
+                    'include_hide_page_until_loaded' =>  $options['include_hide_page_until_loaded'], 
                      )
                     , $atts));
             } else {          
@@ -223,8 +242,8 @@ if (!class_exists('advancediFrame')) {
                 }
       
                 $html = '';   
-                 
-                if ((!empty($content_id) && !empty($content_styles)) || !empty($hide_elements)) {
+                if (empty($include_url)) { 
+                  if ((!empty($content_id) && !empty($content_styles)) || !empty($hide_elements)) {
                     
             
                     // hide elements is called directy in the page to hide elements as fast as quickly
@@ -351,14 +370,37 @@ if (!class_exists('advancediFrame')) {
                 $html .= "></iframe>\n ";
                 if ($store_height_in_cookie == 'true') {
                    $html .= '<script type="text/javascript">aiUseCookie();</script>';
-                }
-                if ($additional_js != '' && version_compare(get_bloginfo('version'), '3.3') >= 0 ) {  // wp >= 3.3 
+                }                         
+            } else {
+                  $ai_height = (empty ($include_height)) ? '' : (' style="height:'.$include_height.';" ');
+
+                  $html = '<div '.$ai_height.' id="ai_temp_'.$name.'"><!-- --></div>';
+                  $html .= '<script type="text/javascript">';
+                  if  ($include_hide_page_until_loaded === 'true') {
+                    $html .= 'jQuery("body").css("display", "none");';
+                  }
+                  $html .= 'jQuery("#ai_temp_'.$name.'").load("' . $include_url;
+                  if  (!empty ($include_content)) {
+                    $html .= ' ' . $include_content;
+                  }
+                  $html .= '" , function() {';
+                  if  ($include_hide_page_until_loaded === 'true') {
+                  $html .= ' jQuery("body").css("display", "block"); ';
+                  }
+                  $html .= ' })';
+                  if  (!empty ($include_fade)) {
+                    $html .= '.hide().fadeIn('.$include_fade.');';
+                  }
+                  $html .= '</script>';
+            }
+            if ($additional_js != '' && version_compare(get_bloginfo('version'), '3.3') >= 0 ) {  // wp >= 3.3 
                    wp_register_script( 'additional-advanced-iframe', $additional_js, false, $version_counter);
                    wp_enqueue_script( 'additional-advanced-iframe');
-                }   
-                          
-            }
+            }   
+            
+            // $html .= '<div style="clear:none" />';
             return $html;
+          }
         }
         
         function add_script_footer() {

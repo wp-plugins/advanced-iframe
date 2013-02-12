@@ -1,12 +1,12 @@
 === Plugin Name ===
 Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
-Tags: iframe, advanced,  shortcode, widget
+Tags: iframe, embed, integration, content, advanced, shortcode, jQuery 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 2.1
+Stable tag: 3.0
 
-This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
+This plugin includes a webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe. You can also embed content directly to the page.
 
 == Description ==
 
@@ -27,6 +27,7 @@ The following differences to a normal iframe are implemented:
 - Modify css styles inside iframe if the pages are on the same domain to e.g. change the width of the content area (new 2.0) 
 - Add a css and js file to the parent page (new 2.0)
 - Show only a specifiy part of the page in the iframe if the pages are on the same domain (new 2.1)
+- Embed a page or part of the page directly with jQuery if the pages are on the same domain (new 3.0)
 
 The following shortcode attributes can be used. Please go to the administration for details:
 
@@ -35,7 +36,8 @@ The following shortcode attributes can be used. Please go to the administration 
  class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
  additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
  iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
- onload_show_element_only=""]
+ onload_show_element_only="", include_url="", include_content="", include_height="", 
+ include_fade="", include_hide_page_until_loaded=""]
 
 = Aministration =  
 * See Settings -> Advanced iframe
@@ -77,6 +79,10 @@ http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
 First version.
 
 == Changelog ==
+= 3.0 =
+A page or part of a page can now be embedded directly to the page with jQuery if the page is on the same domain. See the  new section 'Include content directly'.
+Tested with Wordpress 3.5.1
+
 = 2.1 =
 Show only a specifiy part of the page in the iframe if the pages are on the same domain.
 

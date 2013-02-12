@@ -2,7 +2,7 @@
 /* 
 Advanced iframe
 http://www.tinywebgallery.com/blog/advanced-iframe
-Michael Dempfle
+Michael Dempfle 
 Administration include
 */
 ?>   
@@ -18,6 +18,40 @@ Administration include
     } 
 </script> 
 <?php
+
+function printDonation($devOptions) {
+echo '
+    <div id="icon-options-general" class="icon_ai">          
+    <br>           
+  </div><h2>';
+  _e('Pay what you want', 'advanced-iframe'); 
+  echo '</h2>  
+  <p>';
+  _e('You like this plugin? You got great support? Support the development with a small amount or buy something you would buy anyway over Trialpay and I will get a provision from them.', 'advanced-iframe'); 
+echo '</p>  
+  <p>    
+    <div style="float:left;width:150px;"><div>';
+    _e('Paypal:', 'advanced-iframe'); 
+    echo '</div><A target="_blank" HREF="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40mdempfle%2ede&item_name=advanced%20iframe&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=EN&bn=PP%2dDonationsBF&charset=UTF%2d8"><img src="../wp-content/plugins/advanced-iframe/img/btn_donate_LG.gif"></A></div> <div style="float:left;width:70%;"><div>';
+    _e('Trialpay:', 'advanced-iframe'); 
+    echo '</div> <a target="_blank" href="http://www.trialpay.com/stores/tinywebgallery/advanced-iframe?tid=9amMLw9"><img src="../wp-content/plugins/advanced-iframe/img/btn_donate_LG.gif"></a><br />';
+    _e('How does a "free" donation work? Simply complete one offer from brands like Gap, FTP and Blockbuster and Trialpay will pay me a promotion. There are also free offers like installing an app on your smart phone. Please read the offers properly because there are also offers where you should NOT forget to cancel the offer in time. I don\'t want that you get something you don\'t want!', 'advanced-iframe');      
+    echo '
+    </div>
+    <div style="clear:both;" /> 
+     <table class="form-table">'; 
+    printTrueFalse($devOptions, __('Show this section at the bottom', 'advanced-iframe'), 'donation_bottom', __('Please move this section to the bottom if it bothers you or if you have already supported the development. Feel also free to contact me if you are missing a feature. Sorry for moving this section to the top but at the bottom it seems to be ignored completely.', 'advanced-iframe'));
+echo '     
+     </table>
+         <p>                   
+      <input class="button-primary" type="submit" name="update_iframe-loader" value="'; 
+      _e('Update Settings', 'advanced-iframe');
+echo '"/>             
+    </p>              
+  </p> 
+';
+}
+
 if (is_user_logged_in() && is_admin()) {
     $devOptions = $this->getAdminOptions();
 // print_r($devOptions);
@@ -29,8 +63,9 @@ if (is_user_logged_in() && is_admin()) {
             'onload', 'onload_resize', 'onload_scroll_top', 
             'additional_js', 'additional_css', 'store_height_in_cookie', 'additional_height',
             'iframe_content_id', 'iframe_content_styles', 'iframe_hide_elements', 'version_counter',
-            'onload_show_element_only'
-            );
+            'onload_show_element_only', 'donation_bottom', 
+            'include_url','include_content','include_height','include_fade','include_hide_page_until_loaded'
+            );                     
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
              if ($item == 'version_counter') {
@@ -61,6 +96,11 @@ if (is_user_logged_in() && is_admin()) {
 <div class="wrap">        
   <form method="post" action="options-general.php?page=advanced-iframe.php">             
     <?php wp_nonce_field('twg-options', 'twg-options'); ?>              
+<?php
+if ($devOptions['donation_bottom'] === 'false') {
+  printDonation($devOptions);
+}
+?>   
     <div id="icon-options-general" class="icon_ai">                   
       <br>             
     </div>        <h2>               
@@ -197,7 +237,28 @@ echo '</p><table class="form-table">';
     <p>                   
       <input id="onload" class="button-primary" type="submit" name="update_iframe-loader"                    value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>             
     </p>        <br />       
-  </form>         
+
+  <div id="icon-options-general" class="icon_ai">                 
+    <br>           
+  </div>    <h2>         
+    <?php _e('Include content directly', 'advanced-iframe'); ?></h2>    
+     <p>         
+    <?php _e('You can also include content directly with jQuery. The page is loaded and the part you specify below is included by Javascript into the page. The cool thing is that you can specify an id or a class which specify the content area that should be included. This feature does only work if the page is loaded from the <strong>SAME</strong> domain. If you use the setting below no iframe is used anymore. So only include stuff that is for display only.<br/>Please note: Loading the external content is done after the page is fully loaded and takes some time. Therefore some extra settings below are possible to make the integration as invisible as possible. The included div has the id ai_temp_&gt;iframe_name&lt;. So if you need to overwrite some css you can put it in an extra file and add this in the section "Additional files" ', 'advanced-iframe');
+echo '<table class="form-table">';
+     printTextInput($devOptions, __('Include url', 'advanced-iframe'), 'include_url', __('Enter the full URL to your page you want to include. e.g. http://www.tinywebgallery.com. If you specify this then the page is included directly, the iframe settings above are not used and no iframe is included. Shortcode attribute: include_url=""', 'advanced-iframe'));
+     printTextInput($devOptions, __('Include content', 'advanced-iframe'), 'include_content', __('You can specify an id or a class which specify the content area that should be included. For an id please use e.g. #id, for a class use .class. Shortcode attribute: include_content=""', 'advanced-iframe')); 
+     printNumberInput($devOptions, __('Include_height', 'advanced-iframe'), 'include_height', __('You can specify the height of the content that should be included. If you do this the space for the content is already reserved and this prevents that you maybe see when the page gets updated. You should specify the value in px. Shortcode attribute: include_height=""', 'advanced-iframe'));
+     printNumberInput($devOptions, __('Include fade', 'advanced-iframe'), 'include_fade', __('You can specify a fade in time that is used when the content is done loading. If you leave this setting entry the content is shown right away. If you specify a time in milliseconds then this content is faded in in the given time. This does sometimes looks nicer than if the content suddenly appears. Shortcode attribute: include_fade=""', 'advanced-iframe'));
+     printTrueFalse($devOptions, __('Hide page until include is loaded', 'advanced-iframe'), 'include_hide_page_until_loaded', __('If you like to hide the whole page until the extra content is loaded you should set this to \'Yes\'. You should test this setting and decide what looks best for you. Shortcode attribute: include_hide_page_until_loaded="true" or include_hide_page_until_loaded="false" ', 'advanced-iframe'));
+ echo '</table>';    
+    
+     ?> 
+   <p>                   
+      <input id="onload" class="button-primary" type="submit" name="update_iframe-loader"                    value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>             
+    </p>        <br />         
+  </p>  
+  
+         
   <div id="icon-options-general" class="icon_ai">                 
     <br>           
   </div>    <h2>         
@@ -210,18 +271,13 @@ echo '</p><table class="form-table">';
   </p>       
   <p>         
     <?php _e('Please go <a href="http://www.tinywebgallery.com" target="_blank">www.tinywebgallery.com</a> for details.', 'advanced-iframe'); ?>        
-  </p>       
-  <br>        
-  <div id="icon-options-general" class="icon_ai">          
-    <br>           
-  </div>      <h2>Donate</h2>  
-  <p>You like this plugin? Support the development with a small donation.   
-  </p>  
-  <p>    
-    <A HREF="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40mdempfle%2ede&item_name=advanced%20iframe&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=EUR&lc=EN&bn=PP%2dDonationsBF&charset=UTF%2d8">      
-      <img src="../wp-content/plugins/wordpress-flash-uploader/img/btn_donate_LG.gif"></A>  
-  </p>  
-  </p>       
+  </p>
+  <?php
+if ($devOptions['donation_bottom'] === 'true') {
+  printDonation($devOptions);
+}
+?>        
+</form>   
 </div>           
 <?php 
 }
