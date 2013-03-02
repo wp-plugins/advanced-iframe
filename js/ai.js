@@ -9,10 +9,21 @@ var aiExtraSpace = 0;
  *  The extra space is not stored in the cookie! The height would 
  *  be added every time otherwise and the iframe would grow,  
  */ 
-function aiResizeIframe(obj) {
-  obj.height = obj.contentWindow.document.body.scrollHeight + aiExtraSpace; //IE6, IE7, IE9, Safari, FF and Chrome
-  if (aiEnableCookie && aiExtraSpace == 0 ) {
-      aiWriteCookie(obj.height);
+function aiResizeIframe(obj, resize_width) {
+  if (obj.contentWindow.document.body != null) {
+    var oldScrollposition = jQuery(document).scrollTop();     
+    obj.height = 1; // set to 1 because otherwise the iframe does never get smaller.
+    obj.height = obj.contentWindow.document.body.scrollHeight + aiExtraSpace; //IE6, IE7, IE9, Safari, FF and Chrome
+    if (aiEnableCookie && aiExtraSpace == 0 ) {
+        aiWriteCookie(obj.height);
+    }
+    jQuery(document).scrollTop(oldScrollposition);
+    if (resize_width == 'true') {
+      obj.width = obj.contentWindow.document.body.scrollWidth + aiExtraSpace; //IE6, IE7, IE9, Safari, FF and Chrome
+    }
+  } else {
+    // body is not loaded yet - we wait 100 ms.
+    setTimeout(function() { aiResizeIframe(obj, resize_width); },100); 
   }
 }
 
@@ -24,7 +35,9 @@ function aiResizeIframe(obj) {
 function aiResizeIframeHeightById(id, nHeight) {
     height = parseInt(nHeight) + aiExtraSpace;
     var iframe = document.getElementById(id);
-		iframe.setAttribute('height', height + 'px');
+		var oldScrollposition = jQuery(document).scrollTop();     
+    iframe.setAttribute('height', height + 'px');
+    jQuery(document).scrollTop(oldScrollposition);
     if (aiEnableCookie && aiExtraSpace == 0) {
       aiWriteCookie(height);
     }
@@ -108,4 +121,28 @@ function aiShowElementOnly( iframeId, showElement ) {
   var selectedBox = iframe.find(showElement).clone(); 
   iframe.find("*").remove(); 
   iframe.append(selectedBox);
+}
+
+function checkIfValidTarget(evt, elements) {
+  var targ;
+  if (!evt) var e = window.event;
+  if (evt.target) targ = evt.target;
+  else if (evt.srcElement) targ = evt.srcElement;
+  if (targ.nodeType == 3) {	targ = targ.parentNode; }
+  
+  var parts = elements.split(','); 
+  // check each part if we have a match...
+  for (var i=0; i< parts.length; ++i) {
+    var selectorArray = parts[i].split(":");   
+    if (selectorArray[0].toLowerCase() === targ.nodeName.toLowerCase()) {
+      if (selectorArray.length > 1) {
+           if (targ.id.toLowerCase().indexOf(selectorArray[1].toLowerCase()) !== -1) {
+               return true;
+           }
+      } else {
+        return true;
+      }
+    } 
+  }
+  return false;
 }

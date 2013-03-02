@@ -4,10 +4,11 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, integration, content, advanced, shortcode, jQuery 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.0
+Stable tag: 3.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin includes a webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe. You can also embed content directly to the page.
-
+Include any webpage in an advanced iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
 == Description ==
 
 This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
@@ -28,16 +29,14 @@ The following differences to a normal iframe are implemented:
 - Add a css and js file to the parent page (new 2.0)
 - Show only a specifiy part of the page in the iframe if the pages are on the same domain (new 2.1)
 - Embed a page or part of the page directly with jQuery if the pages are on the same domain (new 3.0)
+- Resize on AJAX events on the included page (new 3.1)
+- Resize the iframe to the content width (new 3.1)
+- Resize on click (new 3.1)
+- Scroll position is restored after the resize (new 3.1)
 
-The following shortcode attributes can be used. Please go to the administration for details:
+All settings can be set with shortcode attributes as well. If you only use one iframe please use the settings in the administration because there each parameter is explained in detail and also the defaults are set there.
 
-[advanced_iframe securitykey="" src="" width="" height="" scrolling="" marginwidth="" 
- marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
- class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
- additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
- iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
- onload_show_element_only="", include_url="", include_content="", include_height="", 
- include_fade="", include_hide_page_until_loaded=""]
+**[Quick overview of all advanced iframe attributes](http://wordpress.org/extend/plugins/advanced-iframe/other_notes/)**
 
 = Aministration =  
 * See Settings -> Advanced iframe
@@ -59,6 +58,23 @@ There are 2 ways to install the advanced iframe
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Place '[advanced_iframe securitykey=""]' in your pages or posts. the security key can be found at Settings -> Advanced iframe
 
+== Other Notes ==
+= Advanced iframe attributes =
+
+Below you find all possible shortcode attributes. If you only use one iframe please use the settings in the administration because there each parameter is explained in detail and also the defaults are set there.
+
+Setting an attribute does overwrite the setting in the administration. 
+
+[advanced_iframe securitykey="" src="" width="" height="" scrolling="" marginwidth="" 
+ marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
+ class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
+ additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
+ iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
+ onload_show_element_only="", include_url="", include_content="", include_height="", 
+ include_fade="", include_hide_page_until_loaded="", onload_resize_width="", "resize_on_ajax", 
+ "resize_on_ajax_jquery", "resize_on_click", "resize_on_click_elements"]
+
+
 == Screenshots ==
 1. Comparison between normal iframe and advanced iframe wrapper. The red areas are modified by the advanced iframe to display the content better.
 2. This image shows the difference with an url forward parameter. In the advanced iframe a sub album is shown while the normal iframe still shows the entry screen.
@@ -75,10 +91,18 @@ See the demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
 
 == Upgrade Notice ==
-= 1.0 =
-First version.
+Simply overwrite all files from your previous installation.
+If you have some radio elements empty after the update simply 
+select the one you like and save again.
 
 == Changelog ==
+= 3.1 =
+New: Javascript onload solution for resizing the iframe dynamically to the width of the content. 
+New: Resize on AJAX events. Works for jQuery and direct XMLHttpRequest on the same domain. 
+New: Resize on click. You can specify the elements and a timeout when the resize should happen.
+New: Scroll position is now saved and restored after the resize.
+Fix: iFrames are now also made smaller at content resize in all browsers
+
 = 3.0 =
 A page or part of a page can now be embedded directly to the page with jQuery if the page is on the same domain. See the  new section 'Include content directly'.
 Tested with Wordpress 3.5.1
