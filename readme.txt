@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
-Tags: iframe, embed, integration, content, advanced, shortcode, jQuery 
+Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
 Stable tag: 3.1
