@@ -97,35 +97,35 @@ select the one you like and save again.
 
 == Changelog ==
 = 3.1 =
-New: Javascript onload solution for resizing the iframe dynamically to the width of the content. 
-New: Resize on AJAX events. Works for jQuery and direct XMLHttpRequest on the same domain. 
-New: Resize on click. You can specify the elements and a timeout when the resize should happen.
-New: Scroll position is now saved and restored after the resize.
-Fix: iFrames are now also made smaller at content resize in all browsers
+- New: Javascript onload solution for resizing the iframe dynamically to the width of the content. 
+- New: Resize on AJAX events. Works for jQuery and direct XMLHttpRequest on the same domain. 
+- New: Resize on click. You can specify the elements and a timeout when the resize should happen.
+- New: Scroll position is now saved and restored after the resize.
+- Fix: iFrames are now also made smaller at content resize in all browsers
 
 = 3.0 =
-A page or part of a page can now be embedded directly to the page with jQuery if the page is on the same domain. See the  new section 'Include content directly'.
-Tested with Wordpress 3.5.1
+- A page or part of a page can now be embedded directly to the page with jQuery if the page is on the same domain. See the  new section 'Include content directly'.
+- Tested with Wordpress 3.5.1
 
 = 2.1 =
-Show only a specifiy part of the page in the iframe if the pages are on the same domain.
+- Show only a specifiy part of the page in the iframe if the pages are on the same domain.
 
 = 2.0.2 =
-Tested with Wordpress 3.5
+- Tested with Wordpress 3.5
 
 = 2.0.1 =
-Fix: The included footer was causing an Javascript error on non advanced iframe pages. Now I check if the function does exist.   
+- Fix: The included footer was causing an Javascript error on non advanced iframe pages. Now I check if the function does exist.   
 
 = 2.0 =
-New: onload attribute added
-New: Javascript onload solution for scolling the parent page to the top.
-New: Javascript onload solution for resizing the iframe dynamically to the height of the content. 
-New: Javascript solution for the scrolling and resizing that works cross domain as well.  
-New: Hide elements/modify css modify speed was dramatically improved. The function is now not called only in the ready event of JQuery but also directly before the footer. This causes that you don't see the changes most of the time anymore!
-New: An additional css file can be added to the parent page.
-New: An additional Javascript file can be added to the parent page.
-New: Hide areas inside iframe if the pages are on the same domain.
-New: Modify css styles inside iframe if the pages are on the same domain to e.g. change the width of the content area. 
+- New: onload attribute added
+- New: Javascript onload solution for scolling the parent page to the top.
+- New: Javascript onload solution for resizing the iframe dynamically to the height of the content. 
+- New: Javascript solution for the scrolling and resizing that works cross domain as well.  
+- New: Hide elements/modify css modify speed was dramatically improved. The function is now not called only in the ready event of JQuery but also directly before the footer. This causes that you don't see the changes most of the time anymore!
+- New: An additional css file can be added to the parent page.
+- New: An additional Javascript file can be added to the parent page.
+- New: Hide areas inside iframe if the pages are on the same domain.
+- New: Modify css styles inside iframe if the pages are on the same domain to e.g. change the width of the content area. 
 
 = 1.5 =
 Support for src values that are hotlinked by the editor. 
