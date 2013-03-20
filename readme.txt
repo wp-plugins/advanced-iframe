@@ -4,35 +4,30 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.1
+Stable tag: 3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Include any webpage in an advanced iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
-== Description ==
+Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
 
-This plugin includes any webpage as shortcode in an advanced iframe that can hide and modify elements and foreward parameters to the iframe.
+== Description ==
+Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
 
 = Shortcode for advanced iframe =
 By entering the shortcode '[advanced_iframe securitykey=""]' you can include any webpage to any page or article. 
-The following differences to a normal iframe are implemented:
+The following cool features compared to a normal iframe are implemented:
 
 - Security code: You can only insert the shortcode with a valid security code from the administration.
-- Enable/disable the overwrite of default short code settings
 - Hide areas of the layout to give the iframe more space (see screenshot) 
-- Modify css styles to e.g. change the width of the content area (see screenshot)
+- Modify css styles in the parent and the iframe to e.g. change the width of the content area (see screenshot)
 - Forward parameters to the iframe 
-- Resize the iframe to the content height (new 2.0)
-- Scroll the parent to the top when the iframe is loaded (new 2.0)
-- Hide areas inside iframe if the pages are on the same domain (new 2.0)
-- Modify css styles inside iframe if the pages are on the same domain to e.g. change the width of the content area (new 2.0) 
-- Add a css and js file to the parent page (new 2.0)
-- Show only a specifiy part of the page in the iframe if the pages are on the same domain (new 2.1)
-- Embed a page or part of the page directly with jQuery if the pages are on the same domain (new 3.0)
-- Resize on AJAX events on the included page (new 3.1)
-- Resize the iframe to the content width (new 3.1)
-- Resize on click (new 3.1)
-- Scroll position is restored after the resize (new 3.1)
+- Resize the iframe to the content height or width on loading, AJAX or click 
+- Scroll the parent to the top when the iframe is loaded
+- Show only specific areas of the iframe or include parts directly by jQuery
+- Hide the content until it is fully loaded 
+- Add a css and js file to the parent page
+
+Please note: Modification inside the iframe are only possible if you are on the same domain or use a workaround like described in the settings.
 
 All settings can be set with shortcode attributes as well. If you only use one iframe please use the settings in the administration because there each parameter is explained in detail and also the defaults are set there.
 
@@ -86,6 +81,9 @@ Setting an attribute does overwrite the setting in the administration.
 = Shortcodes =
 Please read the instructions in the administration careful. The documentation there should explain all of your questions!
 
+= If a shortcode does not work =
+If a shortcode does not work please view the shortcode in the editor in text mode. If you copy a shortcode directly from the settings maybe additional html is copied as well. And this causes the shortcode to fail.
+
 = Demo =
 See the demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
@@ -96,6 +94,12 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.2 =
+- New: Paid support. Because some settings are quite advenced I now also offer paid support.
+- New: Iframe checker: Checks the headers if a page can be included into an iframe.
+- New: Javascript onload solution hiding the iframe until the content is loaded. 
+- Fix: some shortcodes in the administration where not correct because of copy and paste.
+
 = 3.1 =
 - New: Javascript onload solution for resizing the iframe dynamically to the width of the content. 
 - New: Resize on AJAX events. Works for jQuery and direct XMLHttpRequest on the same domain. 
