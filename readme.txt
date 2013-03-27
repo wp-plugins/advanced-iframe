@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.2
+Stable tag: 3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,10 +64,11 @@ Setting an attribute does overwrite the setting in the administration.
  marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
  class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
  additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
- iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
- onload_show_element_only="", include_url="", include_content="", include_height="", 
- include_fade="", include_hide_page_until_loaded="", onload_resize_width="", "resize_on_ajax", 
- "resize_on_ajax_jquery", "resize_on_click", "resize_on_click_elements"]
+ iframe_content_id="", iframe_content_styles=""  iframe_hide_elements="" 
+ onload_show_element_only="" include_url="" include_content="" include_height="" 
+ include_fade="" include_hide_page_until_loaded="" onload_resize_width="" resize_on_ajax=""  
+ resize_on_ajax_jquery="", resize_on_click="" resize_on_click_elements="" 
+ hide_page_until_loaded=""]
 
 
 == Screenshots ==
@@ -94,6 +95,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.3 =
+- Fix: The height was not detected properly with firefox and some doctypes. Now a more advanced way to determine the height is used which works now fine for Firefox as well.
+
 = 3.2 =
 - New: Paid support. Because some settings are quite advenced I now also offer paid support.
 - New: Iframe checker: Checks the headers if a page can be included into an iframe.

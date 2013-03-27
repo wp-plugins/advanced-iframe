@@ -13,13 +13,24 @@ function aiResizeIframe(obj, resize_width) {
   if (obj.contentWindow.document.body != null) {
     var oldScrollposition = jQuery(document).scrollTop();     
     obj.height = 1; // set to 1 because otherwise the iframe does never get smaller.
-    obj.height = obj.contentWindow.document.body.scrollHeight + aiExtraSpace; //IE6, IE7, IE9, Safari, FF and Chrome
-    if (aiEnableCookie && aiExtraSpace == 0 ) {
-        aiWriteCookie(obj.height);
+    var bodyHeight = Math.max(obj.contentWindow.document.body.scrollHeight, 
+      obj.contentWindow.document.body.offsetHeight, 
+      obj.contentWindow.document.documentElement.scrollHeight, 
+      obj.contentWindow.document.documentElement.offsetHeight, 
+      obj.contentWindow.document.documentElement.clientHeight);
+    var newheight = bodyHeight + aiExtraSpace;
+    obj.height = newheight + 'px'; 
+    if (aiEnableCookie && aiExtraSpace == 0 ) {  
+        aiWriteCookie(newheight);
     }
     jQuery(document).scrollTop(oldScrollposition);
     if (resize_width == 'true') {
-      obj.width = obj.contentWindow.document.body.scrollWidth + aiExtraSpace; //IE6, IE7, IE9, Safari, FF and Chrome
+      var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
+        obj.contentWindow.document.body.offsetWidth, 
+        obj.contentWindow.document.documentElement.scrollWidth, 
+        obj.contentWindow.document.documentElement.offsetWidth, 
+        obj.contentWindow.document.documentElement.clientWidth); 
+      obj.width = (bodyWidth + aiExtraSpace) + 'px';
     }
   } else {
     // body is not loaded yet - we wait 100 ms.
@@ -83,7 +94,7 @@ function aiUseCookie() {
     // cookie does exist and has a numeric value
     if (name == cookieName && value != null && ai_is_numeric(value)) { 
        var iframe = document.getElementById(aiId);
-	     iframe.setAttribute('height', (parseInt(value) + aiExtraSpace) + 'px');
+	     iframe.setAttribute('height', (parseInt(value)) + 'px');
     } 
   }                               
 }

@@ -272,7 +272,10 @@ echo '</p><table class="form-table">';
         </p>                       
         </li>                 
       </ol>                                      
-    </p>             
+    </p> 
+    <p>
+    Please test with <strong>all</strong> browsers! If you have problems with <strong>Firefox</strong> please use the code in the ai.js (var bodyHeight = Math.max(... );) to get the height!
+    </p>            
     <p>        For the 'scroll to top' functionality please replace <strong>iframe_height.html</strong> with <strong>iframe_scroll.html</strong> and remove the height variable. In the plugin folder is an example.html where both examples are shown. For "Show only one element" you also have to rewrite the Javscript because it would remove the hidden iframe as well. The example should point you to the right direction if you like to do something simelar. 
     </p>          <h3>      
       <?php _e('Additional files', 'advanced-iframe') ?></h3>             
