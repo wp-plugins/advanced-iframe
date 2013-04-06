@@ -7,6 +7,7 @@
 	var nHeight = getFirstParamFromLocation();
   if (nHeight != undefined) {
     try {
+      // if you use multiple instances use window.top.aiResizeIframeHeight_<id> 
       window.top.aiResizeIframeHeight(nHeight);
   	} catch(e) {
     }

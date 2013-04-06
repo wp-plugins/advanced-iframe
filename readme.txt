@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.3
+Stable tag: 3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,11 +64,10 @@ Setting an attribute does overwrite the setting in the administration.
  marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
  class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
  additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
- iframe_content_id="", iframe_content_styles=""  iframe_hide_elements="" 
- onload_show_element_only="" include_url="" include_content="" include_height="" 
- include_fade="" include_hide_page_until_loaded="" onload_resize_width="" resize_on_ajax=""  
- resize_on_ajax_jquery="", resize_on_click="" resize_on_click_elements="" 
- hide_page_until_loaded=""]
+ iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
+ onload_show_element_only="", include_url="", include_content="", include_height="", 
+ include_fade="", include_hide_page_until_loaded="", onload_resize_width="", "resize_on_ajax", 
+ "resize_on_ajax_jquery", "resize_on_click", "resize_on_click_elements"]
 
 
 == Screenshots ==
@@ -85,6 +84,11 @@ Please read the instructions in the administration careful. The documentation th
 = If a shortcode does not work =
 If a shortcode does not work please view the shortcode in the editor in text mode. If you copy a shortcode directly from the settings maybe additional html is copied as well. And this causes the shortcode to fail.
 
+= If you use several iframes on the same page =
+If you use multiple iframes on the same page make sure that you give each shortcode a different id!
+Cookies and additional_height are not supported yet when you use more than one iframe on one page because they are used as global variables in the external js file. They work fine if you use them on different pages.
+
+
 = Demo =
 See the demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
@@ -95,8 +99,13 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.4 =
+- New: Basic support for multiple advanced iframes on one page. All generated public Javascript functions have now the id included in the name. Cookies and additional_height are not supported yet because they are used as global variables in the external js file. 
+- New: additional_height has to be a number. px or % are now automatically removed to avoid Javascript errors.
+- Fix: forwarded parameters are now urlencoded. e.g. keyword=gr%E5%E5sen is now passed properly.
+
 = 3.3 =
-- Fix: The height was not detected properly with firefox and some doctypes. Now a more advanced way to determine the height is used which works now fine for Firefox as well.
+- Fix: the height was not detected properly with firefox and some doctypes. Now a more advanced way to determine the height is used which works now fine for Firefox as well.
 
 = 3.2 =
 - New: Paid support. Because some settings are quite advenced I now also offer paid support.

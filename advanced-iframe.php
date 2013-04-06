@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 3.3 
+Version: 3.4 
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly
@@ -103,8 +103,8 @@ if (!class_exists('advancediFrame')) {
         }
 
         function param($param, $content = null) {
-            $value = isset($_GET[$param]) ? $_GET[$param] : '';
-            return esc_html($value);
+            $value = isset($_GET[$param]) ? $_GET[$param] : '';         
+            return urlencode($value);
         }
 
         function do_iframe_script($atts) {
@@ -240,7 +240,8 @@ if (!class_exists('advancediFrame')) {
             if ($additional_height != 0) {
                 echo  '<script type="text/javascript">aiExtraSpace=' . $additional_height . ';</script>';
             }
-            echo '<script type="text/javascript">function aiResizeIframeHeight(height) { aiResizeIframeHeightById("'.$id.'",height); }</script>' . "\n";
+            echo '<script type="text/javascript">function aiResizeIframeHeight(height) { aiResizeIframeHeightById("'.esc_html($id).'",height); }</script>' . "\n";
+            echo '<script type="text/javascript">function aiResizeIframeHeight_' . esc_html($id) . '(height) { aiResizeIframeHeightById("'.esc_html($id).'",height); }</script>' . "\n";
             
             if ($options['securitykey'] != $securitykey) {
                 echo '<div class="errordiv">' . __('An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey="&lt;your security key - see settings&gt;"]. Please also check in the html mode that your shortcode does only contain notmal spaces and not a &amp;nbsp; instead.', 'advanced-iframe') . '</div>';
@@ -254,9 +255,9 @@ if (!class_exists('advancediFrame')) {
                     }
                     $parameters = explode(",", $url_forward_parameter);
                     foreach ($parameters as $parameter) {
-                        $read_param_esc = $this->param($parameter);
-                        if ($read_param_esc != '') {
-                            $src .= $sep . $parameter . "=" . $read_param_esc;
+                        $read_param_url = $this->param($parameter);
+                        if ($read_param_url != '') {
+                            $src .= $sep . $parameter . "=" . ($read_param_url);
                             $sep = "&amp;";
                         }
                     }
@@ -291,13 +292,13 @@ if (!class_exists('advancediFrame')) {
                         }
                     }
                     $html .= '<script type="text/javascript">';
-                    $html .= 'function aiModifyParent() { ';
+                    $html .= 'function aiModifyParent_' . esc_html($id) . '() { ';
                     $html .=  $hidehtml;
                     $html .= '}';
                     $html .= 'jQuery(document).ready(function() { ';
-                    $html .= 'aiModifyParent();';
+                    $html .= 'aiModifyParent_' . esc_html($id) . '();';
                     $html .= ' });';
-                    $html .= 'aiModifyParent();';
+                    $html .= 'aiModifyParent_' . esc_html($id) . '();';
                     $html .= '</script>';
                 }
                 
@@ -332,7 +333,7 @@ if (!class_exists('advancediFrame')) {
                     }
                     if ($hideiframehtml != '') {
                     $html .= '<script type="text/javascript">';
-                    $html .= 'function aiModifyIframe() { ';
+                    $html .= 'function aiModifyIframe_' . esc_html($id) . '() { ';
                     $html .=  $hideiframehtml;
                     $html .= '}';
                     $html .= '</script>';
@@ -367,7 +368,7 @@ if (!class_exists('advancediFrame')) {
                 // create onload string
                 $onload_str = '';
                 if ($hideiframehtml) {
-                    $onload_str .= ';aiModifyIframe();';
+                    $onload_str .= ';aiModifyIframe_' . esc_html($id) . '();';
                 }
                 
                 if (!empty ($onload)) {
