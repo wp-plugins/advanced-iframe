@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.4
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,10 +99,14 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.4.1 =
+- Fix: Url of the support page was not starting with http and therefore not working
+- Fix: url where checked with the sanizize functions of Wordpress. This was too strict. Now esc_url() is used and stuff like %E5 does work as well in the url.
+
 = 3.4 =
 - New: Basic support for multiple advanced iframes on one page. All generated public Javascript functions have now the id included in the name. Cookies and additional_height are not supported yet because they are used as global variables in the external js file. 
 - New: additional_height has to be a number. px or % are now automatically removed to avoid Javascript errors.
-- Fix: forwarded parameters are now urlencoded. e.g. keyword=gr%E5%E5sen is now passed properly.
+- Fix: forewarded parameters are now urlencoded. e.g. keyword=gr%E5%E5sen is now passed properly.
 
 = 3.3 =
 - Fix: the height was not detected properly with firefox and some doctypes. Now a more advanced way to determine the height is used which works now fine for Firefox as well.

@@ -76,14 +76,19 @@ if (is_user_logged_in() && is_admin()) {
                  $text = trim(trim($_POST[$item]),'px%emt'); // remove px...    
              } else {
                 $text = trim($_POST[$item]);
-             }   
-             // replace ' with "
-             $text = str_replace("'", '"' ,$text);
-             if (function_exists('sanitize_text_field')) {
+             }  
+              $text = str_replace("'", '"' ,$text);
+             // replace ' with "  
+            
+             if ($item == 'include_url' || $item == 'src') {
+                $devOptions[$item] = stripslashes(esc_url($text));
+              } else if (function_exists('sanitize_text_field')) {
                 $devOptions[$item] = stripslashes(sanitize_text_field($text));
              } else {
                  $devOptions[$item] = stripslashes($text);
              }
+            
+             
         }
         update_option($this->adminOptionsName, $devOptions);
         ?>          
@@ -97,8 +102,9 @@ if (is_user_logged_in() && is_admin()) {
     ?>     
 <style type="text/css">        table th {             text-align: left;         }      
 </style>
-<div class="wrap">        
-  <form method="post" action="options-general.php?page=advanced-iframe.php">             
+<div class="wrap">  
+  <!-- options-general.php?page=advanced-iframe.php -->      
+  <form method="post" action="">             
     <?php wp_nonce_field('twg-options', 'twg-options'); ?>              
 <?php
 if ($devOptions['donation_bottom'] === 'false') {
@@ -158,7 +164,7 @@ if ($devOptions['donation_bottom'] === 'false') {
       <?php _e('What do you get? <ul><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Free check if you can include the content the way YOU like.</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Fast and reliable setup of what you want.</li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- You only pay if it works!</li></ul>' , 'advanced-iframe'); ?>
       </p>
        <p>
-      <?php _e('If you are interested please visit <a target="_blank" href="www.tinywebgallery.com/blog/advanced-iframe-support/">http://www.tinywebgallery.com/blog/advanced-iframe-support/</a>  for more information.' , 'advanced-iframe'); ?>
+      <?php _e('If you are interested please visit <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe-support/">http://www.tinywebgallery.com/blog/advanced-iframe-support/</a>  for more information.' , 'advanced-iframe'); ?>
       </p>
       
        
