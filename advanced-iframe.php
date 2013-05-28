@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 3.4.1 
+Version: 3.4.2 
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly
@@ -230,8 +230,10 @@ if (!class_exists('advancediFrame')) {
              if (empty ($name)) {
                 $name = 'advanced_iframe';
             }
- 
-            echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/css/ai.css" />' . "\n";
+            // inline css to prevent loading of the whole ai.css
+            echo '<style type="text/css">
+                 .errordiv { padding:10px; margin:10px; border: 1px solid #555555;color: #000000;background-color: #f8f8f8; text-align:center; width:360px; }
+                 </style>';
             echo '<script type="text/javascript" src="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/js/ai.js" ></script>' . "\n";
                         
             if ($store_height_in_cookie == 'true') {

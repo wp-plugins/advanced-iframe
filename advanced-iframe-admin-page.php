@@ -174,6 +174,9 @@ if ($devOptions['donation_bottom'] === 'false') {
     <br>           
   </div> <h2>      
       <?php _e('Advanced iframe - Advanced options', 'advanced-iframe') ?></h2>             
+     <p>               
+      <?php _e('Please note that the advanced options will part of the pro version once all planned features are implemented.', 'advanced-iframe'); ?>              
+    </p> 
     <p>               
       <?php _e('With the following 3 options you can modify your template on the fly to give the iframe more space! At most templates you would have to create a page template with a special css and this is quite complicated. By using the options below your template is modified on the fly by jQuery. Please look at the screenshots to make these options more clear. The options are very useful for templates that have a top navigation because otherwise your menu is gone! If you still want to do this you should add a back link to the page. The examples below are for Twenty Ten, iNove and the default Wordpress theme.', 'advanced-iframe'); ?>              
     </p>             

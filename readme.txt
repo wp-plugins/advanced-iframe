@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.4.1
+Stable tag: 3.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.4.2 =
+- New: the style for the site is now inline because it was only one style. Now no extra css is loaded anymore.
+
 = 3.4.1 =
 - Fix: Url of the support page was not starting with http and therefore not working
 - Fix: url where checked with the sanizize functions of Wordpress. This was too strict. Now esc_url() is used and stuff like %E5 does work as well in the url.
