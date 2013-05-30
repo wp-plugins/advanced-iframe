@@ -86,6 +86,7 @@ If a shortcode does not work please view the shortcode in the editor in text mod
 
 = How to use the iframe several times on the same installation =
 By default the settings from the settings are used. So you only have to use
+
 [advanced-iframe securitykey="Your security key"]
 
 If you want to use the advanced iframe several time you can overwrite all settings from the settings sirectly in the shortcode. So for a different url you have to use:
