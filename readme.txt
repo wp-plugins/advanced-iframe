@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.4.2
+Stable tag: 3.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,19 @@ Please read the instructions in the administration careful. The documentation th
 = If a shortcode does not work =
 If a shortcode does not work please view the shortcode in the editor in text mode. If you copy a shortcode directly from the settings maybe additional html is copied as well. And this causes the shortcode to fail.
 
+= How to use the iframe several times on the same installation =
+By default the settings from the settings are used. So you only have to use
+[advanced-iframe securitykey="Your security key"]
+
+If you want to use the advanced iframe several time you can overwrite all settings from the settings sirectly in the shortcode. So for a different url you have to use:
+
+[advanced-iframe securitykey="Your security key" src="http://www.tinywebgallery.com"]
+
+For a different url and width use:
+
+[advanced-iframe securitykey="Your security key" src="http://www.tinywebgallery.com" width="500"]
+
+
 = If you use several iframes on the same page =
 If you use multiple iframes on the same page make sure that you give each shortcode a different id!
 Cookies and additional_height are not supported yet when you use more than one iframe on one page because they are used as global variables in the external js file. They work fine if you use them on different pages.
@@ -99,6 +112,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.4.3 =
+- New: Added a section in the FAQ how to use the advanced iframe multiple times on one installation
+
 = 3.4.2 =
 - New: the style for the site is now inline because it was only one style. Now no extra css is loaded anymore.
 
