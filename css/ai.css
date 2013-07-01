@@ -24,3 +24,7 @@ background-image: url(../img/jfu_logo_32x32.png) !important;
 background-repeat: no-repeat;
 background-position: -0px -0px !important;
 }
+
+.shortcode span {
+font-weight:bold;
+}

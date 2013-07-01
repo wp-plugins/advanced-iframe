@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iframe
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 3.4.3 
+Version: 3.5 
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly
@@ -40,7 +40,7 @@ if (!class_exists('advancediFrame')) {
             $iframeAdminOptions = array(
                 'securitykey' => sha1(session_id()),
                 'src' => 'http://www.tinywebgallery.com', 'width' => '100%',
-                'height' => '600', 'scrolling' => 'no', 'marginwidth' => '0', 'marginheight' => '0',
+                'height' => '600', 'scrolling' => 'auto', 'marginwidth' => '0', 'marginheight' => '0',
                 'frameborder' => '0', 'transparency' => 'true', 'content_id' => '', 'content_styles' => '', 
                 'hide_elements' => '', 'class' => '', 'shortcode_attributes' => 'true', 'url_forward_parameter' => '',
                 'id' => 'advanced_iframe', 'name' => '', 
@@ -136,7 +136,8 @@ if (!class_exists('advancediFrame')) {
             if (!isset ($options['resize_on_ajax_jquery'])) { $options['resize_on_ajax_jquery'] = 'true'; }
             if (!isset ($options['resize_on_click'])) { $options['resize_on_click'] = ''; }
             if (!isset ($options['resize_on_click_elements'])) { $options['resize_on_click_elements'] = 'a'; }
-            if (!isset ($options['hide_page_until_loaded'])) { $options['hide_page_until_loaded'] = 'false'; }  
+            if (!isset ($options['hide_page_until_loaded'])) { $options['hide_page_until_loaded'] = 'false'; } 
+            if (!isset ($options['scrolling'])) { $options['scrolling'] = 'auto'; }  
      
             // defaults from main config
             extract(array('securitykey' => 'not set',
@@ -346,8 +347,12 @@ if (!class_exists('advancediFrame')) {
                 if (!empty ($name)) {
                     $html .= " name='" . esc_html($name) . "' ";
                 }
-                $html .= " src='" . $src . "' width='" . esc_html($width) . "' height='" . esc_html($height) .
-                         "' scrolling='" . esc_html($scrolling) . "' ";
+                $html .= " src='" . $src . "' width='" . esc_html($width) . "' height='" . esc_html($height);
+                
+                // default is auto - enables to add scrolling with css!
+                if ($scrolling != 'none') {
+                     $html .= "' scrolling='" . esc_html($scrolling) . "' ";
+                }
  
                if (!empty ($marginwidth)) {
                     $html .= " marginwidth='" . esc_html($marginwidth) . "' ";
@@ -549,7 +554,8 @@ if (isset($cons_advancediFrame)) {
     add_action('wp_enqueue_scripts',  array(&$cons_advancediFrame, 'addWpHeaderCode'), 98); // load css
     add_action('wp_footer',  array(&$cons_advancediFrame, 'add_script_footer'), 2);
     
-    add_shortcode('advanced_iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode [twg]
+    add_shortcode('advanced_iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode 
+    add_shortcode('advanced-iframe', array(&$cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode alternative style
     register_activation_hook(__FILE__, array(&$cons_advancediFrame, 'activate'));
 }
 ?>

@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
 Requires at least: 2.8.6
 Tested up to: 3.5.1
-Stable tag: 3.4.3
+Stable tag: 3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,13 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 3.5 =
+- New: The external workaround was rewritten. It does now work by only including a script to the iframe page. 
+- New: The resize of the external workaround does now also make the iframe smaller.
+- New: The Javascript on the external page does only modifies the page if it is included in an iframe.
+- New: advanced-iframe is now also possible instead of advanced_iframe as shortcode
+- New: If you set scrolling to 'Not rendered' the attribute scrolling is not rendered to the iframe. This makes it possible to set this with css and make the scrollbar responsive as well.
+
 = 3.4.3 =
 - New: Added a section in the FAQ how to use the advanced iframe multiple times on one installation
 

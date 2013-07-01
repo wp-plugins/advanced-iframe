@@ -16,8 +16,7 @@ function aiResizeIframe(obj, resize_width) {
     var bodyHeight = Math.max(obj.contentWindow.document.body.scrollHeight, 
       obj.contentWindow.document.body.offsetHeight, 
       obj.contentWindow.document.documentElement.scrollHeight, 
-      obj.contentWindow.document.documentElement.offsetHeight, 
-      obj.contentWindow.document.documentElement.clientHeight);
+      obj.contentWindow.document.documentElement.offsetHeight);
     var newheight = bodyHeight + aiExtraSpace;
     obj.height = newheight + 'px'; 
     if (aiEnableCookie && aiExtraSpace == 0 ) {  
@@ -28,8 +27,7 @@ function aiResizeIframe(obj, resize_width) {
       var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
         obj.contentWindow.document.body.offsetWidth, 
         obj.contentWindow.document.documentElement.scrollWidth, 
-        obj.contentWindow.document.documentElement.offsetWidth, 
-        obj.contentWindow.document.documentElement.clientWidth); 
+        obj.contentWindow.document.documentElement.offsetWidth); 
       obj.width = (bodyWidth + aiExtraSpace) + 'px';
     }
   } else {

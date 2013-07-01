@@ -91,6 +91,19 @@ if (is_user_logged_in() && is_admin()) {
              
         }
         update_option($this->adminOptionsName, $devOptions);
+        
+        // create the external js file with the url of the wordpress installation
+        $template_name = dirname(__FILE__) . '/js/ai_external.template.js';
+        $script_name = dirname(__FILE__) . '/js/ai_external.js';        
+        $content = file_get_contents($template_name);
+        $new_content = str_replace('WORDPRESS_SITE_URL', get_site_url(), $content);
+
+        $fh = fopen($script_name, 'w');
+        if ($fh) { 
+            fwrite($fh, $new_content);
+            fclose($fh);
+        }
+
         ?>          
 <div class="updated">               
   <p><strong>      
@@ -118,8 +131,8 @@ if ($devOptions['donation_bottom'] === 'false') {
     <p>               
       <?php _e('This plugin will include any content an advanced iframe. Please enter the url and the size you want to include your page. You have a couple of additional default options which help to integrate your site better into your template. You can overwrite all of these settings by specifying the parameter in the shortcode. Please read the documentation after each field about the parameter you have to use.', 'advanced-iframe'); ?>              
     </p>             
-    <p>               
-      <?php _e('Please use the following shortcode to include a page to your page: ', 'advanced-iframe'); ?> <strong>[advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>"]</strong>             
+    <p class="shortcode">               
+      <?php _e('Please use the following shortcode to include a page to your page: ', 'advanced-iframe'); ?> <span> [advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>"] </span>             
     </p>             
     <table class="form-table">         
 <?php
@@ -134,7 +147,7 @@ if ($devOptions['donation_bottom'] === 'false') {
         <?php      
         printNumberInput($devOptions, __('Width', 'advanced-iframe'), 'width', __('The width of the iframe. You can specify the value in px or in %. If you don\'t specify anything px is assumed.  Shortcode attribute: width=""', 'advanced-iframe'));
         printNumberInput($devOptions, __('Height', 'advanced-iframe'), 'height', __('The height of the iframe. You can specify the value in px or in %. If you don\'t specify anything px is assumed. Please note that % does most of the time does NOT give the expected result (e.g. 100% is only 150px) because the % are not from the iframe page but from the parent element. If you like something like that the iframe is resized to the content please read the \'<a href="#onload">Javascript iframe onload options</a>\' section below! Shortcode attribute: height=""', 'advanced-iframe'));
-        printAutoNo($devOptions, __('Scrolling', 'advanced-iframe'), 'scrolling', __('Defines if scrollbars are shown if the page is too big for your iframe. Please note: If you select \'Yes\' IE does always show scrollbars on many pages! So only use this if needed. Shortcode attribute: scrolling="auto" or scrolling="no"', 'advanced-iframe'));
+        printAutoNo($devOptions, __('Scrolling', 'advanced-iframe'), 'scrolling', __('Defines if scrollbars are shown if the page is too big for your iframe. Please note: If you select \'Yes\' IE does always show scrollbars on many pages! So only use this if needed. Scrolling "none" means that the attribute is not rendered at all and can be set by css to enable the scrollbars responsive.  Shortcode attribute: scrolling="auto" or scrolling="no" or scrolling="none"', 'advanced-iframe'));
         printNumberInput($devOptions, __('Margin width', 'advanced-iframe'), 'marginwidth', __('The margin width of the iframe. You can specify the value in px. If you don\'t specify anything px is assumed.  Shortcode attribute: marginwidth=""', 'advanced-iframe'));
         printNumberInput($devOptions, __('Margin height', 'advanced-iframe'), 'marginheight', __('The margin height of the iframe. You can specify the value in px. If you don\'t specify anything px is assumed.  Shortcode attribute: marginheight=""', 'advanced-iframe'));
         printNumberInput($devOptions, __('Frame border', 'advanced-iframe'), 'frameborder', __('The frame border of the iframe. You can specify the value in px. If you don\'t specify anything px is assumed.  Shortcode attribute: frameborder=""', 'advanced-iframe'));
@@ -247,12 +260,14 @@ echo '</p><table class="form-table">';
       <input class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>             
     </p>             
     <p>        <h4>        
-        <?php _e('Enabling cross-site scripting XSS via an iframe', 'advanced-iframe') ?></h4> If the parent site and the iframe site are NOT on the same domain it is only possible to do the above stuff by including an additional iframe to the iframe page which runs again on the parent domain and can then access the functions there. A detailed documentation how this can be done is described here:                
+        <?php _e('Enabling cross-site scripting XSS via an iframe', 'advanced-iframe') ?></h4>
+        
+        <?php _e('If the parent site and the iframe site are NOT on the same domain it is only possible to do the above stuff by including an additional iframe to the iframe page which runs again on the parent domain and can then access the functions there. A detailed documentation how this can be done is described here:                
       <p>                 
         <a target="_blank" href="http://www.codecouch.com/2008/10/cross-site-scripting-xss-using-iframes/">http://www.codecouch.com/2008/10/cross-site-scripting-xss-using-iframes</a>                  
       </p>The following steps are needed:                
       <ol>                 
-        <li>Don't use the onload options above (cookie and additional height does work).         
+        <li>Don\'t use the onload options above (cookie and additional height does work).         
         </li>                 
         <li>The parent page has a Javascript function that resized the iframe         
         </li>                 
@@ -260,34 +275,36 @@ echo '</p><table class="form-table">';
         </li>                 
         <li>A page on the parent domain does exist that is included by the hidden iframe that calls the function on the parent page         
         </li>               
-      </ol>For that features 'resize' and 'scroll to top' I have already prepared everything that you need on the parent domain. Therefore 2. and 4. are already done :). For 3. you have to do the following changes in your page that is included in the iframe:       
-      <br>                 
+      </ol>For that features \'resize\' and \'scroll to top\' I have already prepared everything that you need on the parent domain. Therefore 2. and 4. are already done :). For 3. a Javascript file was generated which you have to include into your iframe page:       
+      <br>
+      ') ?>                 
       <ol>                       
-        <li> Add the following Javascript function to the header and <strong>check if the domain and wordpress root is correct</strong>!:                         
-        <p>&lt;script type="text/javascript"&gt;<br />            	
-          &nbsp;&nbsp;&nbsp;&nbsp;function updateIframeHeight() {<br />            	
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var iframe = document.getElementById('hiddenIframe');<br /> 
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.body.style.height = 1;<br />
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var newHeight = parseInt(document.body.scrollHeight,10);<br />            
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iframe.src = '<?php echo site_url(); ?>/wp-content/plugins/advanced-iframe/js/iframe_height.html?height=' + newHeight;<br />            	
-          &nbsp;&nbsp;&nbsp;&nbsp;}<br />            	
-          &lt;/script&gt;                          
+        <li><?php _e('Add the following Javascript to the page you want to include (The optimal place is before the &lt;/body&gt; if possible):') ?>
+        <p>&lt;script src="<?php echo site_url(); ?>/wp-content/plugins/advanced-iframe/js/ai_external.js"&gt;&lt;/script&gt;                     
         </p>                         
-        </li>                       
-        <li>              Change &lt;body&gt; to &lt;body onload="updateIframeHeight()"&gt;:                        
-        </li>                       
-        <li>              Add the hidden iframe at the bottom of your body:                        
-        <p>              &lt;iframe id="hiddenIframe" style="visibility:hidden;" width="0" height="0" src="<?php 
-                         echo site_url(); ?>/wp-content/plugins/advanced-iframe/js/iframe_height.html"&gt;Iframes not supported.&lt;/iframe&gt;                        
-        </p>                       
-        </li>                 
+        </li>                         
+        <li>
+        <?php _e('
+        <strong>Check if the wordpress site url (var domain=) in this file is correct</strong>. If not please set the correct url in the file ai_external.template.js. If the file ai_external.js cannot be generated you can enter the correct url in ai_external.template.js and use this file.                        
+        ') ?>
+        </li>                                     
       </ol>                                      
     </p> 
     <p>
-    Please test with <strong>all</strong> browsers! If you have problems with <strong>Firefox</strong> please use the code in the ai.js (var bodyHeight = Math.max(... );) to get the height!
-    </p>            
-    <p>        For the 'scroll to top' functionality please replace <strong>iframe_height.html</strong> with <strong>iframe_scroll.html</strong> and remove the height variable. In the plugin folder is an example.html where both examples are shown. For "Show only one element" you also have to rewrite the Javscript because it would remove the hidden iframe as well. The example should point you to the right direction if you like to do something simelar. 
-    </p>          <h3>      
+    <?php _e('
+    The Javascript does the following:
+         <ol>
+           <li>Adds the iframe dynamically</li>
+           <li>Adds a wrapper div below the body which is measured</li>
+           <li>Removes any margin, padding from the body</li>
+           <li>Adds overflow:hidden to the body</li>
+           <li>Adds "aiUpdateIframeHeight()" to the onload event of the page</li>
+         </ol>
+    ') ?>
+    </p>   
+    <p><?php _e('Please test with <strong>all</strong> browsers! If the wrapper div (It has a transparent border of 1px!) that is added causes layout problems you have to remove the wrapper div in the Javascript file and you have to measure the body. The problem with this solution is that an iframe can not shrink anymore. The overflow:hidden removes any scrollbars inside the iframe even if the page is to wide. If you like to scroll to the right please remove this in the ai_external.template.js. The alternative solution is also described in the Javascript file. The Javascript file is regenerated each time you save the settings on this page.') ?></p>            
+    <p><?php _e('For the \'scroll to top\' functionality please replace <strong>iframe_height.html</strong> with <strong>iframe_scroll.html</strong> and remove the height variable. In the plugin folder is an example.html where both examples are shown. For "Show only one element" you also have to rewrite the Javscript because it would remove the hidden iframe as well. The example should point you to the right direction if you like to do something simelar.') ?> 
+    </p><h3>      
       <?php _e('Additional files', 'advanced-iframe') ?></h3>             
     <p>               
       <?php _e('For some features in iframes additional css or js files are needed in the parent page. E.g. for the newest version of lytebox this is needed. Each of the files do get a version number which is randomly changed each time you save the settings. So if you cange the ccs or the js file you should save the settings once to make sure your users to get the new version right away and not a chached one.', 'advanced-iframe'); ?>              
@@ -355,7 +372,7 @@ function printTrueFalse($options, $label, $id, $description) {
     if ($options[$id] == "true") {
         echo 'checked="checked"';
     }
-    echo ' /> ' . __('Yes', 'advanced-iframe') . '&nbsp;&nbsp;<input type="radio" id="' . $id . '" name="' . $id . '" value="false" ';
+    echo ' /> ' . __('Yes', 'advanced-iframe') . '&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="' . $id . '" name="' . $id . '" value="false" ';
     if ($options[$id] == "false") {
         echo 'checked="checked"';
     }
@@ -370,15 +387,19 @@ function printAutoNo($options, $label, $id, $description) {
       <th scope="row">' . $label . '</th>
       <td>
       ';
-    echo '<input type="radio" id="' . $id . '" name="' . $id . '" value="auto" ';
+    echo '<input type="radio" id="' . $id . '1" name="' . $id . '" value="auto" ';
     if ($options[$id] == "auto") {
         echo 'checked="checked"';
     }
-    echo ' /> ' . __('Yes', 'advanced-iframe') . '&nbsp;&nbsp;<input type="radio" id="' . $id . '" name="' . $id . '" value="no" ';
+    echo ' /> ' . __('Yes', 'advanced-iframe') . '&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="' . $id . '2" name="' . $id . '" value="no" ';
     if ($options[$id] == "no") {
         echo 'checked="checked"';
     }
-    echo '/> ' . __('No', 'advanced-iframe') . '<br>
+    echo '/> ' . __('No', 'advanced-iframe') . '&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="' . $id . '3" name="' . $id . '" value="none" ';
+    if ($options[$id] == "none") {
+        echo 'checked="checked"';
+    }
+    echo '/> ' . __('Not rendered', 'advanced-iframe') . '<br>
     <em>' . $description . '</em></td>
     </tr>
     ';
@@ -417,7 +438,7 @@ function printHeightTrueFalse($options, $label, $id, $description) {
     if ($options[$id] == "true") {
         echo 'checked="checked"';
     }
-    echo ' /> ' . __('Yes', 'advanced-iframe') . '&nbsp;&nbsp;<input onclick="aiEnableHeight();"  type="radio" id="' . $id . '" name="' . $id . '" value="false" ';
+    echo ' /> ' . __('Yes', 'advanced-iframe') . '&nbsp;&nbsp;&nbsp;&nbsp;<input onclick="aiEnableHeight();"  type="radio" id="' . $id . '" name="' . $id . '" value="false" ';
     if ($options[$id] == "false") {
         echo 'checked="checked"';
     }
