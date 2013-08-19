@@ -1,30 +1,130 @@
-.errordiv { padding:10px; margin:10px; border: 1px solid #555555;color: #000000;background-color: #f8f8f8; text-align:center; width:360px; }
-
+.errordiv {
+	padding: 10px;
+	margin: 10px;
+	border: 1px solid #555555;
+	color: #000000;
+	background-color: #f8f8f8;
+	text-align: center;
+	width: 360px;
+}
 #im_test .text, #im_test img {
-  vertical-align: middle;
+	vertical-align: middle;
 }
-
 .linepad p {
-line-height: 1.3em;
+	line-height: 1.3em;
 }
-
 .updated p, .error p {
 	line-height: 1.1;
 }
-
 .icon_ai {
-float: left;
-height: 36px;
-margin-top: 8px;
-margin-right: 6px;
-margin-bottom: 0pt;
-margin-left: 0pt;
-width: 36px;
-background-image: url(../img/jfu_logo_32x32.png) !important;
-background-repeat: no-repeat;
-background-position: -0px -0px !important;
+	float: left;
+	height: 36px;
+	margin-top: 8px;
+	margin-right: 6px;
+	margin-bottom: 0pt;
+	margin-left: 0pt;
+	width: 36px;
+	background-image: url(../img/jfu_logo_32x32.png) !important;
+	background-repeat: no-repeat;
+	background-position: -0px -0px !important;
+}
+.shortcode span {
+	font-weight: bold;
+}
+.signup_account_container {
+	float: left;
+	width: 225px;
+	margin-right: 20px;
+	border: 2px solid #F1F1F1;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	cursor: pointer;
+}
+.signup_account_container#first {
+	margin-left: 230px;
+}
+.signup_account_container#last {
+	margin-right: 0px;
+}
+.signup_account_container#last .signup_inner {
+	width: 163px!important;
+}
+.signup_account_container:hover, .signup_account_container_active {
+	border: 2px solid #80B8D9;
+}
+.signup_button_desc {
+	color: #999;
+	font-size: 11px;
+	margin-top: 6px;
+}
+.signup_content {
+}
+.signup_inner {
+	width: 163px;
+	padding: 26px 30px;
+	border: 1px solid #DDD;
+	background: #FFF;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.signup_inner_desc {
+	color: #484848;
+	font-size: 12px;
+	margin-bottom: 16px;
+}
+.signup_inner_header {
+	color: #5E8C16;
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+.signup_inner_plan {
+	color: #24536F;
+	font-size: 14px;
+	margin-bottom: 11px;
+	text-shadow: 1px 1px 1px #FFF;
+}
+.signup_inner_price {
+	color: #494949;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 11px;
+	text-shadow: 1px 1px 1px #FFF;
+}
+.signup_inner_button {
+	display: block;
+	text-align: center;
+	background: rgb(2,157,214);
+	background: -moz-linear-gradient(top,  rgba(2,157,214,1) 37%, rgba(0,119,175,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(37%,rgba(2,157,214,1)), color-stop(100%,rgba(0,119,175,1)));
+	background: -webkit-linear-gradient(top,  rgba(2,157,214,1) 37%, rgba(0,119,175,1) 100%);
+	background: -o-linear-gradient(top,  rgba(2,157,214,1) 37%, rgba(0,119,175,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(2,157,214,1) 37%, rgba(0,119,175,1) 100%);
+	background: linear-gradient(to bottom,  rgba(2,157,214,1) 37%, rgba(0,119,175,1) 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#029dd6', endColorstr='#0077af',GradientType=0 );
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid rgba(0,0,0,0.4);
+	-moz-box-shadow: inset 0 0 1px rgba(255,255,255,0.8);
+	-webkit-box-shadow: inset 0 0 1px rgba(255,255,255,0.8);
+	box-shadow: inset 0 0 1px rgba(255,255,255,0.8);
+	padding: 10px;
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+	letter-spacing: 1px;
+	font-size: 14px;
+}
+.signup_inner:hover {
+	background: #F2F7F9;
+	border: 1px solid #FFF;
 }
 
-.shortcode span {
-font-weight:bold;
+ul.pro {
+ list-style-type: square;
+  margin-left:1.5em; 
+  padding-left:20px; 
 }

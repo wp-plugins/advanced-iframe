@@ -1,17 +1,17 @@
 === Plugin Name ===
 Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
-Tags: iframe, embed, resize, content, advanced, shortcode, modify css 
+Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.6
-Stable tag: 3.6
+Stable tag: 4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
 
 == Description ==
-Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
+Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly or show a part of an iframe.
 
 = Shortcode for advanced iframe =
 By entering the shortcode '[advanced_iframe securitykey=""]' you can include any webpage to any page or article. 
@@ -19,26 +19,53 @@ The following cool features compared to a normal iframe are implemented:
 
 - Security code: You can only insert the shortcode with a valid security code from the administration.
 - Hide areas of the layout to give the iframe more space (see screenshot) 
+- Show only specific areas of the iframe when the iframe is on a same domain (The Pro version supports this on different domains) or include parts directly by jQuery
 - Modify css styles in the parent and the iframe to e.g. change the width of the content area (see screenshot)
 - Forward parameters to the iframe 
 - Resize the iframe to the content height or width on loading, AJAX or click 
 - Scroll the parent to the top when the iframe is loaded
-- Show only specific areas of the iframe or include parts directly by jQuery
 - Hide the content until it is fully loaded 
 - Add a css and js file to the parent page
+- Widget support (Pro)
 
 Please note: Modification inside the iframe are only possible if you are on the same domain or use a workaround like described in the settings.
+
+So please check first if the iframe page and the parent page are one the same domain. www.example.com and text.example.com are different domains! Please check in the documentation if you can use the feature you like
+
+A free iframe checker is available at 
+http://www.tinywebgallery.com/blog/advanced-iframe/free-iframe-checker.
+This tool does check if a page is allowed to be included! 
 
 All settings can be set with shortcode attributes as well. If you only use one iframe please use the settings in the administration because there each parameter is explained in detail and also the defaults are set there.
 
 **[Quick overview of all advanced iframe attributes](http://wordpress.org/extend/plugins/advanced-iframe/other_notes/)**
 
-= Aministration =  
-* See Settings -> Advanced iframe
-* Enables the configuration of the defaults for the iframe and the modifications on the template.
+= Upgrading to Advanced IFrame Pro =
+
+It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get:
+
+- Show only specific areas of the iframe even when the iframe is on different domain
+- Widget support
+- No view limit
+
+= Administration =  
+* Go to Settings -> Advanced iFrame
+
+=	Quick start guide =
+To include a webpage to your page please check the following things first:
+
+*	Check if your page page is allowed to be included http://www.tinywebgallery.com/blog/advanced-iframe/free-iframe-checker!
+* Check if the iframe page and the parent page are one the same domain. www.example.com and text.example.com are different domains!
+* Can you modify the page that should be included?
+
+Most likely you have one of the following setups:
+
+1.	iframe cannot be included:  You cannot include the content because the owner does not allow this. 
+1.	iframe can be included and you are on a different domain: You are not allowed to modify the content of the iframe but you can show it or a part of it. To resize the content to the height/width you need to modify the iframe page to enable the provided workaround.
+1.	Iframe can be included and you are on the same domain: All features of the plugin can be used. 
 
 == Installation ==
-There are 2 ways to install the advanced iframe
+There are 2 ways to install the Advanced iFrame
 
 *Using the Wordpress Admin screen*
 
@@ -62,12 +89,13 @@ Setting an attribute does overwrite the setting in the administration.
 
 [advanced_iframe securitykey="" src="" width="" height="" scrolling="" marginwidth="" 
  marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
- class="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
- additional_js="" additional_css=""  store_height_in_cookie="" additional_height="" 
- iframe_content_id="", iframe_content_styles="",  iframe_hide_elements="", 
- onload_show_element_only="", include_url="", include_content="", include_height="", 
- include_fade="", include_hide_page_until_loaded="", onload_resize_width="", "resize_on_ajax", 
- "resize_on_ajax_jquery", "resize_on_click", "resize_on_click_elements"]
+ class="" style="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
+ additional_js="" additional_css="" store_height_in_cookie="" additional_height="" 
+ iframe_content_id="" iframe_content_styles="" iframe_hide_elements=""  
+ onload_show_element_only=""  include_url="" include_content=""  include_height=""  
+ include_fade="" include_hide_page_until_loaded=""  onload_resize_width="", resize_on_ajax=""  
+ resize_on_ajax_jquery=""  resize_on_click="" resize_on_click_elements=""  
+ hide_page_until_loaded=""]
 
 
 == Screenshots ==
@@ -78,30 +106,8 @@ Setting an attribute does overwrite the setting in the administration.
 5. The advanced admin screen to enable Javascript scroll to top and autoresize resize
  
 == Frequently Asked Questions ==
-= Shortcodes =
-Please read the instructions in the administration careful. The documentation there should explain all of your questions!
-
-= If a shortcode does not work =
-If a shortcode does not work please view the shortcode in the editor in text mode. If you copy a shortcode directly from the settings maybe additional html is copied as well. And this causes the shortcode to fail.
-
-= How to use the iframe several times on the same installation =
-By default the settings from the settings are used. So you only have to use
-
-[advanced-iframe securitykey="Your security key"]
-
-If you want to use the advanced iframe several time you can overwrite all settings from the settings sirectly in the shortcode. So for a different url you have to use:
-
-[advanced-iframe securitykey="Your security key" src="http://www.tinywebgallery.com"]
-
-For a different url and width use:
-
-[advanced-iframe securitykey="Your security key" src="http://www.tinywebgallery.com" width="500"]
-
-
-= If you use several iframes on the same page =
-If you use multiple iframes on the same page make sure that you give each shortcode a different id!
-Cookies and additional_height are not supported yet when you use more than one iframe on one page because they are used as global variables in the external js file. They work fine if you use them on different pages.
-
+Find the latest FAQ here:
+http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-faq/
 
 = Demo =
 See the demo here:
@@ -113,6 +119,15 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 4.0 =
+- New: Pro version on codecanyon.net.
+- New: Show only a part of an iframe - works on different domains! (Pro)
+- New: Change the visible part of the iframe after each onload event (Pro)
+- New: Open a new url after the last step (Pro)
+- New: Open the iframe in a new tab or as parent after the last step (Pro)
+- New: Widget. You can now include the shortcode also as widget (Pro)
+- New: New attribute 'style'. You can now set any style directly at the iframe. The recommended way is to use a css file and the attribute class.
+
 = 3.6 =
 - New: Tested with Wordpress 3.6
 - New: Updated example file.
@@ -132,7 +147,7 @@ select the one you like and save again.
 
 = 3.4.1 =
 - Fix: Url of the support page was not starting with http and therefore not working
-- Fix: url where checked with the sanizize functions of Wordpress. This was too strict. Now esc_url() is used and stuff like %E5 does work as well in the url.
+- Fix: Url where checked with the sanizize functions of Wordpress. This was too strict. Now esc_url() is used and stuff like %E5 does work as well in the url.
 
 = 3.4 =
 - New: Basic support for multiple advanced iframes on one page. All generated public Javascript functions have now the id included in the name. Cookies and additional_height are not supported yet because they are used as global variables in the external js file. 
