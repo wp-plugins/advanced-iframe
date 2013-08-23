@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.6
-Stable tag: 4.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,7 @@ All settings can be set with shortcode attributes as well. If you only use one i
 
 = Upgrading to Advanced IFrame Pro =
 
-It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get:
+It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get
 
 - Show only specific areas of the iframe even when the iframe is on different domain
 - Widget support
@@ -119,6 +119,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 4.0.1 =
+- Fix: Fixed a copy and paste error where wrong shortcodes where used in the documentation 
+
 = 4.0 =
 - New: Pro version on codecanyon.net.
 - New: Show only a part of an iframe - works on different domains! (Pro)

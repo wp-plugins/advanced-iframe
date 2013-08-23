@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Advanced iframe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-19 16:47+0100\n"
-"PO-Revision-Date: 2013-08-19 16:47+0100\n"
+"POT-Creation-Date: 2013-08-21 10:50+0100\n"
+"PO-Revision-Date: 2013-08-21 10:51+0100\n"
 "Last-Translator: TinyWebGallery <tinywebgallery@mdempfle.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -339,7 +339,7 @@ msgid "Upper left corner x"
 msgstr ""
 
 #: advanced-iframe/advanced-iframe-admin-page.php:304
-msgid "Specifies the offset in pixel from left of the upper left corner. Shortcode attribute: include_height=\"\""
+msgid "Specifies the offset in pixel from left of the upper left corner. Shortcode attribute: show_part_of_iframe_x=\"\""
 msgstr ""
 
 #: advanced-iframe/advanced-iframe-admin-page.php:305
@@ -347,7 +347,7 @@ msgid "Upper left corner y"
 msgstr ""
 
 #: advanced-iframe/advanced-iframe-admin-page.php:305
-msgid "Specifies the offset in pixel from top of the upper left corner. Shortcode attribute: include_height=\"\""
+msgid "Specifies the offset in pixel from top of the upper left corner. Shortcode attribute: show_part_of_iframe_y=\"\""
 msgstr ""
 
 #: advanced-iframe/advanced-iframe-admin-page.php:306
