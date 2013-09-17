@@ -132,7 +132,7 @@ if (is_user_logged_in() && is_admin()) {
             'show_part_of_iframe_new_window','show_part_of_iframe_new_url',
             'show_part_of_iframe_next_viewports_hide', 'show_part_of_iframe_next_viewports',
             'show_part_of_iframe_next_viewports_loop','style',
-            'evanto_user_name', 'api_key', 'purcase_code'                         
+            'evanto_user_name', 'api_key', 'purcase_code', 'use_shortcode_attributes_only'                         
             );                     
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
@@ -141,12 +141,7 @@ if (is_user_logged_in() && is_admin()) {
              } else if ($item == 'additional_height') {
                  $text = trim(trim($_POST[$item]),'px%emt'); // remove px...    
              } else {
-                if (!empty($_POST[$item])) { 
-                   $text = trim($_POST[$item]);
-                } else {
-                   // current setting is not overwritten
-                   continue;
-                }
+                 $text = trim($_POST[$item]);
              }  
               $text = str_replace("'", '"' ,$text);
              // replace ' with "  
@@ -186,7 +181,7 @@ if (is_user_logged_in() && is_admin()) {
 </style>
 <div class="wrap">     
   <!-- options-general.php?page=advanced-iframe.php -->          
-  <form method="post" action="">                  
+  <form name="ai_form" method="post" action="">                  
     <?php wp_nonce_field('twg-options', 'twg-options'); ?>                
 <?php
 if ($devOptions['donation_bottom'] === 'false') {
@@ -207,15 +202,23 @@ if ($devOptions['donation_bottom'] === 'false') {
     </p>                  
     <p class="shortcode">                      
       <?php _e('Please use the following shortcode to include a page to your page: ', 'advanced-iframe'); ?>  
-      <span> [advanced_iframe securitykey="
-        <?php echo $devOptions['securitykey']; ?>"] 
-      </span>                  
+      <span> [advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>"] 
+      </span> 
+      <p>
+      Examples if you want to use several iframes with different settings. Also read the <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-faq">FAQ</a>:
+      <ul>
+      <li>[advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>" src="http://www.tinywebgallery.com"] </li> 
+      <li>[advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>" src="http://www.tinywebgallery.com" width="100%" height="600"]</li> 
+      <li>[advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>" src="http://www.tinywebgallery.com" id="iframe1" name="iframe1" width="100%" height="600" ]</li>
+      </ul>
+      </p>                 
     </p>                  
     <table class="form-table">          
 <?php
         printTextInput($devOptions, __('Security key', 'advanced-iframe'), 'securitykey', __('This is the security key which has to be used in the shorttag. This is mandatory because otherwise anyone who can create an article can insert an iframe.  The default security key was randomly generated during installation. Please change the key if you like. You should use this in combination with e.g. Page security to make sure that only the users you define can modify pages.', 'advanced-iframe'));
         printTrueFalse($devOptions, __('Allow shortcode attributes', 'advanced-iframe'), 'shortcode_attributes', __('Allow to set attributes in the shortcode. All of the attributes can be overwritten in the shortcode if you set \'Yes\'. Otherwise the settings you specify here are used.', 'advanced-iframe'));
-        printTextInput($devOptions, __('Url', 'advanced-iframe'), 'src', __('Enter the full URL to your page. e.g. http://www.tinywebgallery.com. You can also add parameters to this url like http://www.tinywebgallery.com/test.php?iframe=true. then you can check this variable and use it to e.g. hide some elements in the iframe. Shortcode attribute: src=""', 'advanced-iframe'));
+        printTrueFalse($devOptions, __('Use shortcode attributes only', 'advanced-iframe'), 'use_shortcode_attributes_only', __('All iframes you use in your pages use the settings below and the shortcode attributes you define there overwrite this settings. When you use several iframes with different settings this can lead to strange behavior because you do not see the whole configuration in the shortcode. By setting this option to true only the parameters defined as attributes are used. So the minimum you need to define is: securitykey and src of the iframe. You can set this for a single iframe as well with the shortcode attribute use_shortcode_attributes_only="true". A minimal shortcode would then look like this: [advanced_iframe securitykey="', 'advanced-iframe') . $devOptions['securitykey'] . __('" use_shortcode_attributes_only="yes" src="http://www.tinywebgallery.com"].  Shortcode attribute: use_shortcode_attributes_only="true" or use_shortcode_attributes_only="false"', 'advanced-iframe'));    
+        printTextInput($devOptions, __('<b>Url</b>', 'advanced-iframe'), 'src', __('Enter the full URL to your page. e.g. http://www.tinywebgallery.com. Make sure not to mix http and https! Many browsers do e.g. block Javascript or show unexpected behaviour. Also use the free url checker below to make sure that you can include the page. You can also add parameters to this url like http://www.tinywebgallery.com/test.php?iframe=true. then you can check this variable and use it to e.g. hide some elements in the iframe. Shortcode attribute: src=""', 'advanced-iframe'));
               ?>         
       <tr valign="top">      
         <th scope="row"><strong>Free url checker</strong>

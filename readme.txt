@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.6
-Stable tag: 4.0.1
+Tested up to: 3.6.1
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,7 +95,7 @@ Setting an attribute does overwrite the setting in the administration.
  onload_show_element_only=""  include_url="" include_content=""  include_height=""  
  include_fade="" include_hide_page_until_loaded=""  onload_resize_width="", resize_on_ajax=""  
  resize_on_ajax_jquery=""  resize_on_click="" resize_on_click_elements=""  
- hide_page_until_loaded=""]
+ hide_page_until_loaded="" use_shortcode_attributes_only=""]
 
 
 == Screenshots ==
@@ -119,6 +119,12 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 4.1 =
+- New: New attribute use_shortcode_attributes_only. Enables not to use any of the defaults and only the settings specified as attributes.
+- New: Fields could only be made empty by entering a space. Now simply removing the text does work again.
+- Fix: minor fixes 
+- Fix: Code and documentation improvements
+
 = 4.0.1 =
 - Fix: Fixed a copy and paste error where wrong shortcodes where used in the documentation 
 

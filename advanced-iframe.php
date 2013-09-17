@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Advanced iFrame
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 4.0.1 
+Version: 4.1 
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly
@@ -66,7 +66,8 @@ if (!class_exists('advancediFrame')) {
                 'show_part_of_iframe_width' => '400', 'show_part_of_iframe_height' => '300',
                 'show_part_of_iframe_new_window' => '' ,'show_part_of_iframe_new_url' => '',
                 'show_part_of_iframe_next_viewports_hide' => 'false', 'show_part_of_iframe_next_viewports' => '',
-                'show_part_of_iframe_next_viewports_loop' => 'false', 'style' => ''                             
+                'show_part_of_iframe_next_viewports_loop' => 'false', 'style' => '', 
+                'use_shortcode_attributes_only' => 'false'                             
                 );
             return $iframeAdminOptions;
         }
@@ -138,49 +139,22 @@ if (!class_exists('advancediFrame')) {
          */                 
         function do_iframe_script($atts) {
             $options = get_option('advancediFrameAdminOptions');
-            // defaults for new settings
-            if (!isset ($options['id'])) { $options['id'] = ''; }
-            if (!isset ($options['name'])) { $options['name'] = ''; }
-            if (!isset ($options['onload'])) { $options['onload'] = ''; }
-            if (!isset ($options['onload_resize'])) { $options['onload_resize'] = 'false'; }
-            if (!isset ($options['onload_scroll_top'])) { $options['onload_scroll_top'] = 'false'; }
-            if (!isset ($options['additional_js'])) { $options['additional_js'] = ''; }
-            if (!isset ($options['additional_css'])) { $options['additional_css'] = ''; }
-            if (!isset ($options['store_height_in_cookie'])) { $options['store_height_in_cookie'] = 'false'; }
-            if (!isset ($options['additional_height'])) { $options['additional_height'] = 0; }    
-            if (!isset ($options['iframe_content_id'])) { $options['iframe_content_id'] = ''; }
-            if (!isset ($options['iframe_content_styles'])) { $options['iframe_content_styles'] = ''; }
-            if (!isset ($options['iframe_hide_elements'])) { $options['iframe_hide_elements'] = ''; }
-            if (!isset ($options['version_counter'])) { $options['version_counter'] = '1'; }
-            if (!isset ($options['onload_show_element_only'])) { $options['onload_show_element_only'] = ''; }
-            // defaults for new settings  in 3.0
-            if (!isset ($options['include_url'])) { $options['include_url'] = ''; }
-            if (!isset ($options['include_content'])) { $options['include_content'] = ''; }
-            if (!isset ($options['include_height'])) { $options['include_height'] = ''; }
-            if (!isset ($options['include_fade'])) { $options['include_fade'] = '0'; }
-            if (!isset ($options['include_hide_page_until_loaded'])) { $options['include_hide_page_until_loaded'] = 'false'; }
-            if (!isset ($options['donation_bottom'])) { $options['donation_bottom'] = 'false'; }
-            if (!isset ($options['onload_resize_width'])) { $options['onload_resize_width'] = 'false'; }
-            if (!isset ($options['resize_on_ajax'])) { $options['resize_on_ajax'] = ''; }
-            if (!isset ($options['resize_on_ajax_jquery'])) { $options['resize_on_ajax_jquery'] = 'true'; }
-            if (!isset ($options['resize_on_click'])) { $options['resize_on_click'] = ''; }
-            if (!isset ($options['resize_on_click_elements'])) { $options['resize_on_click_elements'] = 'a'; }
-            if (!isset ($options['hide_page_until_loaded'])) { $options['hide_page_until_loaded'] = 'false'; } 
-            if (!isset ($options['scrolling'])) { $options['scrolling'] = 'auto'; } 
-            
-            if (!isset ($options['show_part_of_iframe'])) { $options['show_part_of_iframe'] = 'false'; } 
-            if (!isset ($options['show_part_of_iframe_x'])) { $options['show_part_of_iframe_x'] = '100'; } 
-            if (!isset ($options['show_part_of_iframe_y'])) { $options['show_part_of_iframe_y'] = '100'; } 
-            if (!isset ($options['show_part_of_iframe_width'])) { $options['show_part_of_iframe_width'] = '400'; } 
-            if (!isset ($options['show_part_of_iframe_height'])) { $options['show_part_of_iframe_height'] = '300'; } 
-            if (!isset ($options['show_part_of_iframe_new_window'])) { $options['show_part_of_iframe_new_window'] = ''; } 
-            if (!isset ($options['show_part_of_iframe_new_url'])) { $options['show_part_of_iframe_new_url'] = ''; } 
-            if (!isset ($options['show_part_of_iframe_next_viewports_hide'])) { $options['show_part_of_iframe_next_viewports_hide'] = 'false'; } 
-            if (!isset ($options['show_part_of_iframe_next_viewports'])) { $options['show_part_of_iframe_next_viewports'] = ''; } 
-            if (!isset ($options['show_part_of_iframe_next_viewports_loop'])) { $options['show_part_of_iframe_next_viewports_loop'] = 'false'; } 
-            if (!isset ($options['style'])) { $options['style'] = ''; } 
-            
+            // set defaults for not existing settings
+            // can happen if users never save the config but only use the shortcodes  
+            $defaults = $this->iframe_defaults();
+            foreach ($defaults as $key => $option) {
+            $iframeAdminOptions[$key] = $option;
+              if (!isset ($options[$key])) { $options[$key] = $option; }
+            }
+
+            // check if defaults from confg should be read
+            extract(shortcode_atts(array('use_shortcode_attributes_only' => 'not set'), $atts));
+            // if not set in shortcode we look in the config
+            if ($use_shortcode_attributes_only == 'not set') {
+               $use_shortcode_attributes_only = $options['use_shortcode_attributes_only'];
+            }         
             // defaults from main config
+            if ($use_shortcode_attributes_only == 'false') {
             extract(array('securitykey' => 'not set',
                 'src' => $options['src'], 'height' => $options['height'], 'width' => $options['width'], 
                 'frameborder' => $options['frameborder'], 'scrolling' => $options['scrolling'], 
@@ -223,7 +197,7 @@ if (!class_exists('advancediFrame')) {
                 'show_part_of_iframe_next_viewports_loop' => $options['show_part_of_iframe_next_viewports_loop'],
                 'style' => $options['style'],              
                  $atts));
-            
+            }
             // read the shortcode attributes
             if ($options['shortcode_attributes'] == 'true') {
                 // src value can be hidden in [0] and [1] if the editor does hotlink the url. Therefore I look in there if the src is not set!
@@ -241,6 +215,14 @@ if (!class_exists('advancediFrame')) {
                     }
                 }
                
+                if ($use_shortcode_attributes_only == 'true') {
+                     $key_temp = $options['securitykey'];
+                     $options = $defaults;
+                     $options['securitykey'] = $key_temp;
+                     $options['src'] = "not set"; 
+                     $options['height'] = "not set"; 
+                     $options['width'] = "not set";
+                }
                 extract(shortcode_atts(array('securitykey' => 'not set',
                     'src' => $options['src'], 'height' => $options['height'], 'width' => $options['width'], 
                     'frameborder' => $options['frameborder'], 'scrolling' => $options['scrolling'], 
@@ -287,7 +269,7 @@ if (!class_exists('advancediFrame')) {
             } else {          
                 // only the secrity key is read.
                 extract(shortcode_atts(array('securitykey' => 'not set'), $atts));
-            }
+            } 
 
             $default_options = get_option('default_a_options');
             if (!file_exists(dirname(__FILE__) . "/includes/class-cw-envato-api.php")) {
@@ -346,10 +328,11 @@ if (!class_exists('advancediFrame')) {
             echo '<script type="text/javascript">function aiResizeIframeHeight_' . esc_html($id) . '(height) { aiResizeIframeHeightById("'.esc_html($id).'",height); }</script>' . "\n";
             
             
-            
-            
             if ($options['securitykey'] != $securitykey) {
                 echo '<div class="errordiv">' . __('An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey="&lt;your security key - see settings&gt;"]. Please also check in the html mode that your shortcode does only contain notmal spaces and not a &amp;nbsp; instead.', 'advanced-iframe') . '</div>';
+                return;
+            } else if ( $src == "not set" ) {
+                echo '<div class="errordiv">' . __('You have set "Use shortcode attributes only" (use_shortcode_attributes_only) to "true" which means that you have to specify all parameters as shortcode attributes. Please specify at least "securitykey" and "src". Examples are available in the administration.', 'advanced-iframe') . '</div>';
                 return;
             } else {
                 // add parameters
@@ -452,8 +435,15 @@ if (!class_exists('advancediFrame')) {
                 if (!empty ($name)) {
                     $html .= " name='" . esc_html($name) . "' ";
                 }
-                $html .= " src='" . $src . "' width='" . esc_html($width) . "' height='" . esc_html($height);
-                
+                $html .= " src='" . $src . "' ";
+ 
+                if ($width != 'not set' && $width != '') {
+                     $html .= " width='" . esc_html($width) . "' ";
+                } 
+                 if ($height != 'not set' && $height != '') {
+                     $html .= " height='" . esc_html($height) . "' ";
+                } 
+                 
                 // default is auto - enables to add scrolling with css!
                 if ($scrolling != 'none') {
                      $html .= "' scrolling='" . esc_html($scrolling) . "' ";
@@ -630,7 +620,7 @@ if (!class_exists('advancediFrame')) {
                
         function printAdminPage() {
             require_once('advanced-iframe-admin-page.php');
-        }
+        }  
         
         /**
          *  Intercepts the Ajax resize events in iframes.
@@ -747,15 +737,23 @@ if (isset($cons_advancediFrame)) {
     register_activation_hook(__FILE__, array(&$cons_advancediFrame, 'activate'));
     
     add_filter( 'widget_text', 'shortcode_unautop');
-    add_filter( 'widget_text', 'do_shortcode');
+    add_filter( 'widget_text', 'do_shortcode'); 
 }
 
+
+// remove update functionality
+function ai_remove_update($value) {
+    unset($value->response[ plugin_basename(__FILE__) ]);
+    return $value;
+}
 // setup for widget
 function advanced_iframe_widget_init(){
 	  register_widget('AdvancedIframe_Widget');
 }
+
 if (file_exists(dirname(__FILE__) . "/advanced-iframe-widget.php")) {
     require_once('advanced-iframe-widget.php');
-    add_action('widgets_init','advanced_iframe_widget_init');            
-}                                                                            
+    add_action('widgets_init','advanced_iframe_widget_init');     
+    add_filter('site_transient_update_plugins', 'ai_remove_update');     
+}                                                                                    
 ?>
