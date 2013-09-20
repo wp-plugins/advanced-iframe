@@ -119,6 +119,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 4.1.1 =
+- Fix: Hidden administration fields caused a notice when saving.
+
 = 4.1 =
 - New: New attribute use_shortcode_attributes_only. Enables not to use any of the defaults and only the settings specified as attributes.
 - New: Fields could only be made empty by entering a space. Now simply removing the text does work again.

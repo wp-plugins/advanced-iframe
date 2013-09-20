@@ -51,6 +51,25 @@ if (file_exists(dirname(__FILE__) . "/includes/class-cw-envato-api.php")) {
         <input class="button-primary" type="submit" name="update_iframe-loader" value="'; 
         _e('Verify data', 'advanced-iframe');
   echo '"/></p>';             
+ } else {
+  echo '
+      <div id="icon-options-general" class="icon_ai">          
+      <br>           
+      </div><h2>';
+      _e('Advanced iFrame Pro - Please vote for the plugin on codecanyon', 'advanced-iframe'); 
+  echo '</h2>';    
+  echo '<p>';
+    _e('<p>Thank you for getting Advanced iFrame Pro at Codecanyon. </p>', 'advanced-iframe' );
+    _e('<p>Please feel free to leave an item rating from your items download page if you haven\'t already done so.</p>', 'advanced-iframe' );    
+    _e('<p>Please get in contact with me if you have problems because most of the issues are easy to solve. But at least tell me what you did not like so I can improve this. Also make sure that you took a look at the quick start guide to make sure the feature you like can be used!</p>', 'advanced-iframe' );
+  
+  echo '<table class="form-table">';         
+      printTrueFalse($devOptions, __('Show this section at the bottom', 'advanced-iframe'), 'donation_bottom', __('Please move this section to the bottom after you have read it.', 'advanced-iframe'));
+  echo '</table><p>'; 
+  echo '<p>                   
+        <input class="button-primary" type="submit" name="update_iframe-loader" value="'; 
+      _e('Update Settings', 'advanced-iframe');
+  echo '"/></p>'; 
  }
  
 } else {
@@ -132,7 +151,7 @@ if (is_user_logged_in() && is_admin()) {
             'show_part_of_iframe_new_window','show_part_of_iframe_new_url',
             'show_part_of_iframe_next_viewports_hide', 'show_part_of_iframe_next_viewports',
             'show_part_of_iframe_next_viewports_loop','style',
-            'evanto_user_name', 'api_key', 'purcase_code', 'use_shortcode_attributes_only'                         
+            'use_shortcode_attributes_only'                         
             );                     
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
@@ -141,7 +160,16 @@ if (is_user_logged_in() && is_admin()) {
              } else if ($item == 'additional_height') {
                  $text = trim(trim($_POST[$item]),'px%emt'); // remove px...    
              } else {
-                 $text = trim($_POST[$item]);
+                 if (isset($_POST[$item])) {
+                     $text = trim($_POST[$item]);
+                 } else {
+                     if ($item == 'show_part_of_iframe' || $item == 'show_part_of_iframe_next_viewports_loop' 
+                     || $item= 'show_part_of_iframe_next_viewports_hide') {
+                         $text = 'false';  
+                     } else {
+                         $text = '';
+                     }
+                 }
              }  
               $text = str_replace("'", '"' ,$text);
              // replace ' with "  
