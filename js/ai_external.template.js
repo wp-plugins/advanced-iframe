@@ -13,12 +13,10 @@ function aiUpdateIframeHeight() {
       newElementStr += url+'">Iframes not supported.</iframe>';
       var newElement = aiCreate(newElementStr);
       document.body.appendChild(newElement);
-      
+           
       // add a wrapper div below the body to measure - if you remove this you have to measure the height of the body! 
-      // See below for this solution.
-      var org_html = document.body.innerHTML;
-      var new_html = '<div id="ai_wrapper_div" style="margin:0px;padding:0px;border: 1px solid transparent;">' + org_html + '</div>';
-      document.body.innerHTML = new_html;
+      // See below for this solution. The wrapper is only created if needed
+      createAiWrapperDiv();
       
       // remove any margin,padding from the body because each browser handles this differently
       // Overflow hidden is used to avoid scrollbars that can be shown for a milisecond
@@ -33,8 +31,49 @@ function aiUpdateIframeHeight() {
       //    document.documentElement.scrollHeight, document.documentElement.offsetHeight);  
   
       var iframe = document.getElementById('ai_hidden_iframe');
-      // 4 pixels extra are needed because of IE! (2 for Chrome) - if you still have scrollbars add a little bit more offset.
+      // 4 pixels extra are needed because of IE! (2 for Chrome)
+      // If you still have scrollbars add a little bit more offset.
       iframe.src = url + '?height=' + (newHeight + 4);
+    }
+}
+
+/**
+ *  Gets the text length from text nodes. For other nodes a dummy length is returned
+ *  browser do add empty text nodes between elements which should return a length
+ *  of 0 because they should not be counted. 
+ */ 
+function getTextLength( obj ) {
+    var value = obj.textContent ? obj.textContent : "NO_TEXT";
+    return value.trim().length;
+} 
+
+/**
+ * Creates a wrapper div if needed. 
+ * It is not created if the body has only one single div below the body.
+ * childNdes.length has to be > 2 because the iframe is already attached!    
+ */ 
+function createAiWrapperDiv() {
+    var countElements = 0;   
+    // Count tags which are not empty text nodes, no script and no iframe tags
+    // because only if we have more than 1 of this tags a wrapper div is needed
+    for (i = 0; i < document.body.childNodes.length; ++i) {
+       var nodeName = document.body.childNodes[i].nodeName.toLowerCase(); 
+       var nodeLength = getTextLength(document.body.childNodes[i]); 
+       if ( nodeLength != 0 && nodeName != 'script' && nodeName != 'iframe') {
+           countElements++;  
+       }
+    }
+    if (countElements > 1) {
+      var div = document.createElement("div");
+  	  div.id = "ai_wrapper_div";
+  	  div.style = "margin:0px;padding:0px;border: 1px solid transparent;";
+  
+    	// Move the body's children into this wrapper
+    	while (document.body.firstChild) {
+    		div.appendChild(document.body.firstChild);
+    	}
+    	// Append the wrapper to the body
+    	document.body.appendChild(div);
     }
 }
 

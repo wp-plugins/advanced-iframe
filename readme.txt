@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.6.1
-Stable tag: 4.1
+Stable tag: 4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,10 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 4.2 =
+- New: Improved external workaround. The body in the wrapper is not copied as simple string anymore (This removes e.g jQuery stuff that is attached in the DOM) but a div object is created where the child notes of the body are attached to. Thanks to Jason.
+- New: Improved external workaround. The wrapper div is now only rendered if needed. 
+
 = 4.1.1 =
 - Fix: Hidden administration fields caused a notice when saving.
 
