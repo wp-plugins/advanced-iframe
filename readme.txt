@@ -42,7 +42,7 @@ All settings can be set with shortcode attributes as well. If you only use one i
 
 = Upgrading to Advanced IFrame Pro =
 
-It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get
+It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get
 
 - Show only specific areas of the iframe even when the iframe is on different domain
 - Widget support
