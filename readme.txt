@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.6.1
-Stable tag: 4.2
+Tested up to: 3.7.1
+Stable tag: 5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,15 +87,26 @@ Below you find all possible shortcode attributes. If you only use one iframe ple
 
 Setting an attribute does overwrite the setting in the administration. 
 
-[advanced_iframe securitykey="" src="" width="" height="" scrolling="" marginwidth="" 
- marginheight="" id="" name="" frameborder="" content_id="" content_styles="" hide_elements="" 
- class="" style="" url_forward_parameter="" onload="" onload_resize="" onload_scroll_top=""
- additional_js="" additional_css="" store_height_in_cookie="" additional_height="" 
- iframe_content_id="" iframe_content_styles="" iframe_hide_elements=""  
- onload_show_element_only=""  include_url="" include_content=""  include_height=""  
- include_fade="" include_hide_page_until_loaded=""  onload_resize_width="", resize_on_ajax=""  
- resize_on_ajax_jquery=""  resize_on_click="" resize_on_click_elements=""  
- hide_page_until_loaded="" use_shortcode_attributes_only=""]
+[advanced_iframe securitykey=""   src="" 
+  id=""   name="" 
+  width=""   height="" 
+  marginwidth=""   marginheight=""
+  scrolling=""   frameborder="" 
+  class=""   style="" 
+  content_id=""   content_styles="" 
+  hide_elements=""   url_forward_parameter="" 
+  onload=""   onload_resize="" 
+  onload_scroll_top=""   onload_show_element_only="" 
+  store_height_in_cookie=""   additional_height="" 
+  additional_js=""   additional_css="" 
+  iframe_content_id=""   iframe_content_styles="" 
+  iframe_hide_elements=""  hide_page_until_loaded=""
+  include_hide_page_until_loaded="" 
+  include_url="" include_content=""  
+  include_height=""  include_fade="" 
+  onload_resize_width=""   resize_on_ajax=""  
+  resize_on_ajax_jquery=""   resize_on_click="" 
+  resize_on_click_elements=""   use_shortcode_attributes_only=""]
 
 
 == Screenshots ==
@@ -111,7 +122,9 @@ http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-faq/
 
 = Demo =
 See the demo here:
-http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0/
+http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
+http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0
+
 
 == Upgrade Notice ==
 Simply overwrite all files from your previous installation.
@@ -119,6 +132,27 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.0 =
+- New: 'Show only a part of the iframe' has now a graphical area selector where yu can simply select the area you want to show with the mouse! (Pro)
+- New: Improved external workaround: It can now be configured to work with different settings for different iframes  
+- New: Improved documentation of the external workaround
+- New: Improved external workaround: "Modify the content of the iframe if the iframe page is on the same domain" is now supported in the workaround and can be configured for different domains (Pro).
+- New: Improved external workaround: The iframe can be hidden until al external modifications are done!
+- New: Improved external workaround: The same page can now be included into different wordpress installations. Only one configration is allowed here. For multiple configurations you need the onclude the different scripts depending on the parent with php. 
+- New: Tested with Wordpress 3.7.1
+- New: Fully compatible with php >= 5.3
+- New: "Scroll to top" does now not need a workaround anymore and the setting was moved to a different section where it makes more sense.
+- New: Whitelist for url foreward parameters. If the value does only contain parameters on the whitelist than the value is not encoded anymore. Whitelist: @a-zA-Z0-9À-ÖØ-öø-ÿ|)( minus and space.
+- New: Support of the external workaround for IE7 and IE8
+- New: Quickstart guide added to the administration page of advanced iframe pro.
+- New: When the external workaround is set to true settings which only work on the same domain are disabled.
+- New: Improved handling of the show_part_of_iframe_... feature. Not needed dependencies at configuration where removed. This enables more flexibility here! (Pro) 
+- Fix: show_part_of_iframe_x and show_part_of_iframe_y where switched. now show_part_of_iframe_x = left and show_part_of_iframe_y = top (Pro)
+- Fix: \n where removed from the code because some other plugins converted them to br which where adding unwanted empty lines.
+- Fix: Hide elements until loaded is now again the last step of the onload values.
+- Fix: em tags where replaced by p tags in the administration. Copying em tags where copying the em tags to the editor as well which could cause invalid shortcodes  
+- Fix: "Restart the viewports from the beginning after the last step": old shortcode was in the description show_part_of_iframe_do_update -> show_part_of_iframe_next_viewports_loop (Pro)
+
 = 4.2 =
 - New: Improved external workaround. The body in the wrapper is not copied as simple string anymore (This removes e.g jQuery stuff that is attached in the DOM) but a div object is created where the child notes of the body are attached to. Thanks to Jason.
 - New: Improved external workaround. The wrapper div is now only rendered if needed. 

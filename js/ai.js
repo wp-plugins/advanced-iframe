@@ -42,7 +42,7 @@ function aiResizeIframe(obj, resize_width) {
  *  Please read the documentation!   
  */ 
 function aiResizeIframeHeightById(id, nHeight) {
-    height = parseInt(nHeight) + aiExtraSpace;
+    var height = parseInt(nHeight) + aiExtraSpace;
     var iframe = document.getElementById(id);
 		var oldScrollposition = jQuery(document).scrollTop();     
     iframe.setAttribute('height', height + 'px');
@@ -58,7 +58,7 @@ function aiResizeIframeHeightById(id, nHeight) {
  * page starts at the top and not that only the iframe changes. 
  */ 
 function aiScrollToTop() {
-  window.parent.window.scrollTo(0,0);
+  window.scrollTo(0,0); 
 }
 
 /**
@@ -154,4 +154,28 @@ function checkIfValidTarget(evt, elements) {
     } 
   }
   return false;
+}
+
+function openSelectorWindow (url) {
+   var local_width =  jQuery("#width").val();
+   var local_height = jQuery("#height").val();
+
+   if (local_width.indexOf("%") >= 0 || Number(local_width) < 900) {
+       local_width = 900;   
+   }
+   local_width = Number(local_width) + 40;
+   if ( local_width > (screen.width)) {
+       local_width = screen.width; 
+   }     
+   if (local_height.indexOf("%") >= 0) {
+       local_height = screen.height;   
+   } else {
+        local_height =  Number(local_height) + 440; 
+   }
+   if ( local_height > (screen.height-50)) {
+       local_height = screen.height-50; 
+   } 
+   var options = "width="+local_width+",height="+local_height+",left=0,top=0,resizable=1,scrollbars=1";
+   var popup_window = window.open(url, "", options);
+   popup_window.focus();
 }

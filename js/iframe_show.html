@@ -1,0 +1,12 @@
+<script type="text/javascript">
+  function getParamFromLocation(nr) {
+		var pair = window.location.search.substring(1);
+		var parts = pair.split('=');
+		return parts[nr];
+	}
+  var id = getParamFromLocation(1);
+    try {
+      // if you use multiple instances use window.top.aiShowIframe_<id> 
+      window.top.aiShowIframe("#" + id);
+  	} catch(e) {}
+</script>

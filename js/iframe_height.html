@@ -1,15 +1,23 @@
 <script type="text/javascript">
-	function getFirstParamFromLocation() {
+	function getParamFromLocation(nr) {
 		var pair = window.location.search.substring(1);
 		var parts = pair.split('=');
-		return parts[1];
+		return parts[nr];
 	}
-	var nHeight = getFirstParamFromLocation();
+  var nHeight = getParamFromLocation(1);
   if (nHeight != undefined) {
     try {
-      // if you use multiple instances use window.top.aiResizeIframeHeight_<id> 
-      window.top.aiResizeIframeHeight(nHeight);
+      var id = getParamFromLocation(2);
+      if (id != undefined) {
+          window.top.aiResizeIframeHeightById(id, nHeight);
+          window.top.aiShowIframe( '#' + id);
+      } else {
+          // To be compatible with older versions of advanced iframe 
+          window.top.aiResizeIframeHeight(nHeight);
+          window.top.aiShowIframe();
+      }  
   	} catch(e) {
+      console.log(e);
     }
   }
 </script>
