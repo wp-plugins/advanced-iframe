@@ -121,8 +121,10 @@ Find the latest FAQ here:
 http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-faq/
 
 = Demo =
-See the demo here:
+See the pro demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
+
+See the free demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0
 
 
