@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.7.1
-Stable tag: 5.0
+Stable tag: 5.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,8 @@ All settings can be set with shortcode attributes as well. If you only use one i
 It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get
 
 - Show only specific areas of the iframe even when the iframe is on different domain
+- Graphical content selector: http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html
+- External workaround supports iframe modifications
 - Widget support
 - No view limit
 
@@ -134,6 +136,10 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.0.1 =
+- New: Support of the external height workaround when the iframe is already in an iframe. Now the correct iframe is used and not the top one anymore.
+- Removed not used file.
+
 = 5.0 =
 - New: 'Show only a part of the iframe' has now a graphical area selector where yu can simply select the area you want to show with the mouse! (Pro)
 - New: Improved external workaround: It can now be configured to work with different settings for different iframes  

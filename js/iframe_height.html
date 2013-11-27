@@ -9,12 +9,12 @@
     try {
       var id = getParamFromLocation(2);
       if (id != undefined) {
-          window.top.aiResizeIframeHeightById(id, nHeight);
-          window.top.aiShowIframe( '#' + id);
+          window.parent.parent.aiResizeIframeHeightById(id, nHeight);
+          window.parent.parent.aiShowIframe( '#' + id);
       } else {
           // To be compatible with older versions of advanced iframe 
-          window.top.aiResizeIframeHeight(nHeight);
-          window.top.aiShowIframe();
+          window.parent.parent.aiResizeIframeHeight(nHeight);
+          window.parent.parent.aiShowIframe();
       }  
   	} catch(e) {
       console.log(e);

@@ -7,6 +7,6 @@
   var id = getParamFromLocation(1);
     try {
       // if you use multiple instances use window.top.aiShowIframe_<id> 
-      window.top.aiShowIframe("#" + id);
+      window.parent.parent.aiShowIframe("#" + id);
   	} catch(e) {}
 </script>
