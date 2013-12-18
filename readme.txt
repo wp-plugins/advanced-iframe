@@ -49,6 +49,11 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - External workaround supports iframe modifications
 - Widget support
 - No view limit
+- Hide areas of an iframe
+
+You can find the comparision chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
+
+See the pro demo here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
 
 = Administration =  
 * Go to Settings -> Advanced iFrame

@@ -52,6 +52,11 @@
 .signup_account_container#last .signup_inner {
 	width: 235px!important;
 }
+
+.signup_account_container#last {
+  width: 297px!important;
+}
+
 .signup_account_container:hover, .signup_account_container_active {
 	border: 2px solid #80B8D9;
 }
@@ -91,7 +96,6 @@
 .signup_inner_price {
 	color: #494949;
 	font-size: 16px;
-	font-weight: bold;
 	margin-bottom: 11px;
 	text-shadow: 1px 1px 1px #FFF;
 }
@@ -138,9 +142,14 @@ ul.pro {
   margin-bottom:-5px; 
 }
 
-#last .signup_inner_desc {
+#last .signup_inner_desc, #last li {
   margin-bottom:0; 
 }
+
+#last .signup_account_container {
+  width: auto;
+}
+
 
 #details-workaround, #details-javascript {
   background: #F2F7F9;
