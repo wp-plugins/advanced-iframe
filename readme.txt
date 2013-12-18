@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.7.1
-Stable tag: 5.0.1
+Tested up to: 3.8
+Stable tag: 5.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.0.2 =
+- New: tested with Wordpress 3.8
+
 = 5.0.1 =
 - New: Support of the external height workaround when the iframe is already in an iframe. Now the correct iframe is used and not the top one anymore.
 - Removed not used file.
