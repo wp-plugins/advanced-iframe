@@ -17,7 +17,9 @@
           window.parent.parent.aiShowIframe();
       }  
   	} catch(e) {
-      console.log(e);
+      if (console && console.log) {
+        console.log(e);
+      }
     }
   }
 </script>

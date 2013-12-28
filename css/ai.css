@@ -164,3 +164,6 @@ ul.pro {
 	text-decoration: none;
 }
 
+a.signup_inner_button:active, a.signup_inner_button:hover {
+  color:#cccccc;
+}

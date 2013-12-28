@@ -1,6 +1,6 @@
 <?php  
 /* 
-Advanced iFrame
+Advanced iFrame Pro
 http://www.tinywebgallery.com/blog/advanced-iframe
 Michael Dempfle 
 Administration include
@@ -84,6 +84,8 @@ if (file_exists(dirname(__FILE__) . "/includes/class-cw-envato-api.php")) {
   
   echo '<table class="form-table">';         
       printTrueFalse($devOptions, __('Show this section at the bottom', 'advanced-iframe'), 'donation_bottom', __('Please move this section to the bottom after you have read it.', 'advanced-iframe'));
+       printTrueFalse($devOptions, __('Enable expert mode', 'advanced-iframe'), 'expert_mode', __('If you enable the exprt mode the description is only shown if you click on the setting. You see more settings at once but only one description at once. Use this if you are common with the settings.', 'advanced-iframe'), 'false');
+      
   echo '</table><p>'; 
   echo '<p>                   
         <input class="button-primary" type="submit" name="update_iframe-loader" value="'; 
@@ -134,7 +136,7 @@ echo '
         _e('Pro', 'advanced-iframe');
         echo '</div>					
 				<div class="signup_inner_price">
-					<strong>$14</strong>
+					<strong>$14</strong> (one time fee)
 				</div>
 				<div class="signup_inner_header">';
         _e('For commercial, business, and professional sites', 'advanced-iframe');
@@ -157,7 +159,7 @@ echo '
 			
 				<div class="signup_inner_desc">
            <ul class="pro"><li>';
-           _e('Show specific areas of the iframe even when the iframe is on a different domain<br /><a target="_blank" href="http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html">Show the new graphical selector</a></li><li>Widget support</li><li>External workaround supports iframe modifications</li><li>No view limit</li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-support">Support</a></li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">See pro demo</a>', 'advanced-iframe');
+           _e('Show specific areas of the iframe when the iframe is on a different domain<br /><a target="_blank" href="http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html">Show the new graphical selector</a></li><li>Widget support</li><li>External workaround supports iframe modifications</li><li>No view limit</li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-support">Support</a></li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">See pro demo</a><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart">Compare versions</a>', 'advanced-iframe');
            echo '</li></ul>
         </div>
 			</div>
@@ -207,7 +209,10 @@ if (is_user_logged_in() && is_admin()) {
             'show_part_of_iframe_next_viewports_hide', 'show_part_of_iframe_next_viewports',
             'show_part_of_iframe_next_viewports_loop','style',
             'use_shortcode_attributes_only','enable_external_height_workaround',
-            'keep_overflow_hidden','hide_page_until_loaded_external'                         
+            'keep_overflow_hidden','hide_page_until_loaded_external',
+            'onload_resize_delay', 'expert_mode', 
+            'show_part_of_iframe_allow_scrollbar_vertical', 'show_part_of_iframe_allow_scrollbar_horizontal',
+            'hide_part_of_iframe'                        
             );                     
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
@@ -363,7 +368,7 @@ if ($devOptions['donation_bottom'] === 'false') {
         printTextInput($devOptions, __('Style', 'advanced-iframe'), 'style', __('You can define styles for the iframe if you like. The recommended way is to put the styles in a css file and use the class option. Shortcode attribute: style=""', 'advanced-iframe'));       
 
         
-        printTextInput($devOptions, __('Id', 'advanced-iframe'), 'id', __('Enter the \'id\' attribute of the iframe. Allowed values are only a-zA-Z0-9_. Do NOT use any other characters because the id is also used to generate unique javascript functions! Other characters will be removed when you save! Shortcode attribute: id=""', 'advanced-iframe'));
+        printTextInput($devOptions, __('Id', 'advanced-iframe'), 'id', __('Enter the \'id\' attribute of the iframe. Allowed values are only a-zA-Z0-9_. Do NOT use any other characters because the id is also used to generate unique javascript functions! Other characters will be removed when you save! If a src directly in a shortcode is set and no id than an id is generated automatically if several iframes are on one page to avoid configuration problems. Shortcode attribute: id=""', 'advanced-iframe'));
         printTextInput($devOptions, __('Name', 'advanced-iframe'), 'name', __('Enter the \'name\' attribute of the iframe. Shortcode attribute: name=""', 'advanced-iframe'));
         printTextInput($devOptions, __('URL forward parameters', 'advanced-iframe'), 'url_forward_parameter', __('Define the parameters that should be passed from the browser url to the iframe url. Please separate the parameters by \',\'. In e.g. TinyWebGallery this enables you to jump directly to an album or image although TinyWebGallery is included in an iframe. Shortcode attribute: url_forward_parameter=""', 'advanced-iframe'));         
         printTrueFalse($devOptions, __('Scrolls the parent window to the top', 'advanced-iframe'), 'onload_scroll_top', __('If you like that if you click on a link in the iframe the parent page should scroll to the top you should set this to \'Yes\'. Please note that this is done by Javascript! So if a user has Javascript deactivated no scrolling is done.   This setting generates the code onload="aiScrollToTop();" to the iframe. If you select the resize iframe as well then onload="aiResizeIframe(this);aiScrollToTop();" is generated. If you like a different order please enter the javascript functions directly in the onload parameter in the order you like. Shortcode attribute: onload_scroll_top="true" or onload_scroll_top="false" ', 'advanced-iframe'));
@@ -437,7 +442,7 @@ echo '</p><table class="form-table">';
 <?php if ($evanto) { ?>
     <p>              
 
-<?php _e('You can only show a part of the iframe. This solution DOES WORK across domains without any hacks! This is a solution that works only with css by placing a window over the iframe which does a clipping. All areas of the iframe that are not inside the window cannot be seen. Please specify the upper left corner coordinates x and y and the height and width that should be shown. Specify a fixed height and width in the iframe options at the top for optimal results! Simply select the area you want to show with the graphical area selector! Please go to the <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">demo</a> for some working examples. Please also check the 5 options below. These are the advanced features to handle changes in the iframe', 'advanced-iframe');
+<?php _e('You can only show a part of the iframe. This solution DOES WORK across domains without any hacks! This is a solution that works only with css by placing a window over the iframe which does a clipping. All areas of the iframe that are not inside the window cannot be seen. Please specify the upper left corner coordinates x and y and the height and width that should be shown. Specify a fixed height and width in the iframe options at the top for optimal results! Simply select the area you want to show with the graphical area selector! Please go to the <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">pro demo</a> for some working examples. Please also check the 5 options below. These are the advanced features to handle changes in the iframe', 'advanced-iframe');
 
 echo '<p><input id="s" class="button-primary" type="button" name="update_iframe-loader" onclick="openSelectorWindow(\''. site_url() .'/wp-content/plugins/advanced-iframe/includes/advanced-iframe-area-selector.html\');" value="';
  _e('Open the area selector', 'advanced-iframe');
@@ -450,6 +455,9 @@ echo '<table class="form-table">';
      printNumberInput($devOptions, __('Upper left corner y (top distance)', 'advanced-iframe'), 'show_part_of_iframe_y', __('Specifies the y coordinate of the upper left corner.  Enter the y-offset from the top border of your external iframe page you want to show. Shortcode attribute: show_part_of_iframe_y=""', 'advanced-iframe')); 
      printNumberInput($devOptions, __('Width of the visible content', 'advanced-iframe'), 'show_part_of_iframe_width', __('Specifies the width of the content in pixel that should be shown. Shortcode attribute: show_part_of_iframe_width=""', 'advanced-iframe'));
      printNumberInput($devOptions, __('Height of the visible content', 'advanced-iframe'), 'show_part_of_iframe_height', __('Specifies the height of the content in pixel that should be shown. Shortcode attribute: show_part_of_iframe_height=""', 'advanced-iframe')); 
+     printTrueFalse($devOptions, __('Enable horizontal scrollbar', 'advanced-iframe'), 'show_part_of_iframe_allow_scrollbar_horizontal', __('By default you specify a fixed area you want to show from the external page. Settings this to "true" will show a horizontal scrollbar if needed. Shortcode attribute: show_part_of_iframe_allow_scrollbar_horizontal="true" or show_part_of_iframe_allow_scrollbar_horizontal="false" ', 'advanced-iframe'), 'false');
+     printTrueFalse($devOptions, __('Enable vertical scrollbar', 'advanced-iframe'), 'show_part_of_iframe_allow_scrollbar_vertical', __('By default you specify a fixed area you want to show from the external page. Settings this to "true" will show a vertical scrollbar if needed. Shortcode attribute: show_part_of_iframe_allow_scrollbar_vertical="true" or show_part_of_iframe_allow_scrollbar_vertical="false" ', 'advanced-iframe'), 'false');
+ 
      echo '</table>'; 
      
         
@@ -462,6 +470,9 @@ echo '</p><table class="form-table">';
     printTextInput($devOptions, __('Open iFrame in new window after the last step', 'advanced-iframe'), 'show_part_of_iframe_new_window', __('You can define if the iframe is opened in a new tab/window or as full window. the options you can use are "_top" = as full window, "_blank" = new tab/window or you leave it blank to stay in the iframe. Because of the browser restriction not the current url of the iframe can be loaded. It is either the initial one or the one you specify in the next setting. Shortcode attribute: show_part_of_iframe_new_window="", show_part_of_iframe_new_window="_top" or show_part_of_iframe_new_window="_blank" ', 'advanced-iframe'));   
     printTextInput($devOptions, __('Url that is opened after the last step', 'advanced-iframe'), 'show_part_of_iframe_new_url', __('You can define the url that is loaded after the last step. This enables you to jump to a certain page after your workflow. This is useful with the above. Shortcode attribute: show_part_of_iframe_new_url="" ', 'advanced-iframe'));       
     printTrueFalse($devOptions, __('Hide the iframe after the last step', 'advanced-iframe'), 'show_part_of_iframe_next_viewports_hide', __('Hides the iframe after the last step completely. Shortcode attribute: show_part_of_iframe_next_viewports_hide="true" or show_part_of_iframe_next_viewports_hide="false" ', 'advanced-iframe'));
+
+    printTextInput($devOptions, __('Hide a part of the iframe', 'advanced-iframe'), 'hide_part_of_iframe', __('Please note: This is an advanced setting! You need to know basic html/css! You can define an area which will be hidden by a rectangle you define. This can e.g. be used to hide a logo. A rectangle is defined the following way: left,top,width,height,color,z-index e.g. 10,20,200,50,#ffffff,10. This defines a rectagle in white with the z-index of 10. z-index means the layer the rectangle is placed. If you don\'t see your rectangle please use a higher z-index. You can also define a background image here! use e.g. 10,20,200,50,#ffffff;background-image:url(your-logo.gif);background-repeat:no-repeat;,10 for a white rectange with the given background image. Use the area selector to get the coordinates very easy. You can specify several rectangles by seperating them by |. Please see the <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo#e8">pro demo</a> for a cool example where a logo is exchanged. Shortcode attribute: hide_part_of_iframe=""', 'advanced-iframe'));
+   
 echo '</table>';       
            ?>      
       <p>                          
@@ -507,7 +518,9 @@ echo '</p><table class="form-table">';
         printTextInput($devOptions, __('Onload', 'advanced-iframe'), 'onload', __('Enter the \'onload\' script of the iframe you want to execute. You can enter Javascript that is executed when the iframe is loaded. Please check the following settings first! There you find a solution for iframe resize and one for scrolling the parent to the top. Please note that the output is escaped for security reasons with the Wordpress function esc_js. So please define your Javascript functions in your parent page, read all needed parameters inside the functions and call this function here. I recommend to use only the following characters: a-zA-Z_0-9();. Also note that the 2 settings below also use the onload event. So if you set them to true the code is appended to your onload function. If you like a different order of the predefined functions (aiShowElementOnly(id,element); aiResizeIframe(this); and aiScrollToTop();) please set the settings below to \'No\' and enter them here directly. Shortcode attribute: onload=""', 'advanced-iframe'));
   
         printTrueFalse($devOptions, __('Resize iframe to content height', 'advanced-iframe'), 'onload_resize', __('If you like that the iframe is resized to the height of the content you should set this to \'Yes\'. Please note that this is done by Javascript! So if a user has Javascript deactivated or a not supported browser the iframe does not get resized. Please set the height of the iframe to the minimum pixels the iframe should have! Some web pages use 100% of the height. Specifying a too big value as height does not gives you the expected result. This setting generates the code onload="aiResizeIframe(this);" to the iframe. Shortcode attribute: onload_resize="true" or onload_resize="false" ', 'advanced-iframe'));
-        printHeightTrueFalse($devOptions, __('Store height in cookie', 'advanced-iframe'), 'store_height_in_cookie', __('If you enable the dynamic resize the value is calculated each time when the page is loaded. So each time it took a little time until the resize of the iframe is done. And this is visible sometimes if the content page loads very slow or is on a different domain or depends on the browser. By enabling this option the last calculated height is stored in a cookie and available right away. The iframe is then first resized to this height and later on when the new height comes it is updated. By default this is disabled because when you have dynamic content in the iframe it is possible that the iframe does not shrink. So please try this setting with your destination page. If you use several iframes please don\'t use this because currently only one cookie is supported. Shortcode attribute: store_height_in_cookie="true" or store_height_in_cookie="false" ', 'advanced-iframe'));
+        printNumberInput($devOptions, __('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resize delay', 'advanced-iframe'), 'onload_resize_delay', __('Sometimes the external page does not have its full height after loading because e.g. parts of the page are build by Javascript. If this is the case you can define a timeout in millisecounds until the resize is called. Otherwise leave this field empty.. Shortcode attribute: onload_resize_delay=""', 'advanced-iframe'));
+         
+        printHeightTrueFalse($devOptions, __('Store height in cookie', 'advanced-iframe'), 'store_height_in_cookie', __('If you enable the dynamic resize the value is calculated each time when the page is loaded. So each time it took a little time until the resize of the iframe is done. And this is visible sometimes if the content page loads very slow or is on a different domain or depends on the browser. By enabling this option the last calculated height is stored in a cookie and available right away. The iframe is then first resized to this height and later on when the new height comes it is updated. By default this is disabled because when you have dynamic content in the iframe it is possible that the iframe does not shrink. So please try this setting with your destination page. <strong>If you use several iframes on one page please don\'t use this because currently only one cookie per page is supported. If you use iframe on different pages different id are needed because the id is part of the cookie.</stong>. Shortcode attribute: store_height_in_cookie="true" or store_height_in_cookie="false" ', 'advanced-iframe'));
         printHeightNumberInput($devOptions, __('Additional height', 'advanced-iframe'), 'additional_height', __('If you like that the iframe is higher than the calculated value you can add some extra height here. This number is then added to the calculated one. This is e.g. needed if one of your tested browsers displays a scrollbar because of 1 or 2 pixel. Or you have an invisible area that is shown by the click on a button that can increase the size of the page. This option is NOT possible when "Store height in cookie" is enabled because this would cause that the height will increase at each reload of the parent page. If you use several iframes please use the same setting for all of them because there is only one global variable. Shortcode attribute: additional_height=""', 'advanced-iframe'));
         printTrueFalse($devOptions, __('Resize iframe to content width', 'advanced-iframe'), 'onload_resize_width', __('If you like that the iframe is resized to the width of the content you should set this to \'Yes\'. Please note that this is done by Javascript and only in combination with resizing the content height! So if a user has Javascript deactivated or a not supported browser the iframe does not get resized. This setting generates the code onload="aiResizeIframe(this, \'true\');" to the iframe. Shortcode attribute: onload_resize_width="true" or onload_resize_width="false" ', 'advanced-iframe'));
         
@@ -627,7 +640,8 @@ _e('to open this file and check the variable <b>domain</b> at the top. If not pl
           <li>&nbsp;&nbsp;&nbsp;- iframe_hide_elements - See <a href="#modifycontent">Hide elements in iframe</a>.</li>
           <li>&nbsp;&nbsp;&nbsp;- onload_show_element_only - See <a href="#modifycontent">Show only one element</a></li>
           <li>&nbsp;&nbsp;&nbsp;- iframe_content_id - See <a href="#modifycontent">Content id in iframe</a></li>
-          <li>&nbsp;&nbsp;&nbsp;- iframe_content_styles - See <a href="#modifycontent">Content styles in iframe</a></li>    
+          <li>&nbsp;&nbsp;&nbsp;- iframe_content_styles - See <a href="#modifycontent">Content styles in iframe</a></li>
+          <li>&nbsp;&nbsp;&nbsp;- onload_resize_delay - See <a href="#rt">Resize delay</a>. This setting is not stored in ai_external.js as default because if you enable the external workaround this setting is disabled above because of configuration inconsistencies! So this setting has to be done in the external page. e.g. var onload_resize_delay=100; means 100 ms resize delay</li>    
      ', 'advanced-iframe');
     }  
       _e('    
@@ -699,7 +713,14 @@ if ($devOptions['donation_bottom'] === 'true') {
 }
     ?>         
   </form>    
-</div>            
+</div>
+<script>
+jQuery(function() {
+  initAdminConfiguration();
+});
+</script>
+
+            
 <?php 
 }
 /**

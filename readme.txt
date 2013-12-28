@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.8
-Stable tag: 5.0.2
+Stable tag: 5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,9 +51,10 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - No view limit
 - Hide areas of an iframe
 
-You can find the comparision chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
+You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
 
-See the pro demo here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
+See the pro demo here: 
+http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
 
 = Administration =  
 * Go to Settings -> Advanced iFrame
@@ -113,7 +114,9 @@ Setting an attribute does overwrite the setting in the administration.
   include_height=""  include_fade="" 
   onload_resize_width=""   resize_on_ajax=""  
   resize_on_ajax_jquery=""   resize_on_click="" 
-  resize_on_click_elements=""   use_shortcode_attributes_only=""]
+  resize_on_click_elements=""   use_shortcode_attributes_only=""
+  onload_resize_delay=""
+  ]
 
 
 == Screenshots ==
@@ -134,15 +137,27 @@ http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
 See the free demo here:
 http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0
 
-
 == Upgrade Notice ==
 Simply overwrite all files from your previous installation.
 If you have some radio elements empty after the update simply 
 select the one you like and save again.
 
 == Changelog ==
-= 5.0.2 =
-- New: tested with Wordpress 3.8
+= 5.2 =
+- New: New feature "Hide a part of the iframe". Extra layers can be placed over the iframe. This enables you to e.g. hide a logo or even place your own logo on an iframe. See the pro demo for examples (Pro)
+- New: Try catch is now used at features which could fail when features for the same domain are used on external domains. Now the exceptions are catched and logged to the console.   
+- New: A dynamic auto id is now only generated if several iframes are detected on one page.
+- New: Tested with Wordpress 3.8
+- New: Improved documentation  
+- Fix: At grayed out radios only the first radio box was grayed out - now all are disabled
+
+= 5.1 =
+- New: vertical and/or horizontal scrollbars in the pro feature "Show only part of the iframe" solution are possible. This makes it possible to include e.g. a whole inner content with scrollbars but without showing e.g. the header of the external page. See the pro version for a working example.
+- New: Resize can now be delayed. This helps if the onload event is fired but the page is not completely build. This feature is also possible in the external workaround of the pro version.
+- New: Administration options are grayed out if not available because of another setting.
+- New: Expert mode. If you enable this the description is only shown if you click on the setting. You see more settings at once but only one description at once. Use this if you are common with the settings. 
+- New: id is now set automatically if a src is set in the shortcode but no id is set. This avoids problems if people  forgets to set the id ;).  
+- Fix: The external workaround does now hide the html element until all modifications are done. Before only the body was hidden which was showing the background in some browsers. If you still see a background for a very short time please look into ai_external.template.js - line 53
 
 = 5.0.1 =
 - New: Support of the external height workaround when the iframe is already in an iframe. Now the correct iframe is used and not the top one anymore.

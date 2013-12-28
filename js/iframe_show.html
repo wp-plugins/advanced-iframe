@@ -8,5 +8,9 @@
     try {
       // if you use multiple instances use window.top.aiShowIframe_<id> 
       window.parent.parent.aiShowIframe("#" + id);
-  	} catch(e) {}
+  	} catch(e) {
+      if (console && console.log) {
+        console.log(e);
+      }
+    }
 </script>

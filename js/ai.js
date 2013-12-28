@@ -10,29 +10,36 @@ var aiExtraSpace = 0;
  *  be added every time otherwise and the iframe would grow,  
  */ 
 function aiResizeIframe(obj, resize_width) {
-  if (obj.contentWindow.document.body != null) {
-    var oldScrollposition = jQuery(document).scrollTop();     
-    obj.height = 1; // set to 1 because otherwise the iframe does never get smaller.
-    var bodyHeight = Math.max(obj.contentWindow.document.body.scrollHeight, 
-      obj.contentWindow.document.body.offsetHeight, 
-      obj.contentWindow.document.documentElement.scrollHeight, 
-      obj.contentWindow.document.documentElement.offsetHeight);
-    var newheight = bodyHeight + aiExtraSpace;
-    obj.height = newheight + 'px'; 
-    if (aiEnableCookie && aiExtraSpace == 0 ) {  
-        aiWriteCookie(newheight);
+  try {
+    if (obj.contentWindow.document.body != null) {
+      var oldScrollposition = jQuery(document).scrollTop();     
+      obj.height = 1; // set to 1 because otherwise the iframe does never get smaller.
+      var bodyHeight = Math.max(obj.contentWindow.document.body.scrollHeight, 
+        obj.contentWindow.document.body.offsetHeight, 
+        obj.contentWindow.document.documentElement.scrollHeight, 
+        obj.contentWindow.document.documentElement.offsetHeight);
+      var newheight = bodyHeight + aiExtraSpace;
+      obj.height = newheight + 'px'; 
+      if (aiEnableCookie && aiExtraSpace == 0 ) {  
+          aiWriteCookie(newheight);
+      }
+      jQuery(document).scrollTop(oldScrollposition);
+      if (resize_width == 'true') {
+        var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
+          obj.contentWindow.document.body.offsetWidth, 
+          obj.contentWindow.document.documentElement.scrollWidth, 
+          obj.contentWindow.document.documentElement.offsetWidth); 
+        obj.width = (bodyWidth + aiExtraSpace) + 'px';
+      }
+    } else {
+      // body is not loaded yet - we wait 100 ms.
+      setTimeout(function() { aiResizeIframe(obj, resize_width); },100); 
     }
-    jQuery(document).scrollTop(oldScrollposition);
-    if (resize_width == 'true') {
-      var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
-        obj.contentWindow.document.body.offsetWidth, 
-        obj.contentWindow.document.documentElement.scrollWidth, 
-        obj.contentWindow.document.documentElement.offsetWidth); 
-      obj.width = (bodyWidth + aiExtraSpace) + 'px';
-    }
-  } else {
-    // body is not loaded yet - we wait 100 ms.
-    setTimeout(function() { aiResizeIframe(obj, resize_width); },100); 
+  } catch(e) {
+    if (console && console.log) {
+      console.log("Advanced iframe configuration error: You have enabled the resize of the iframe for pages on the same domain. But you use an iframe page on a different domain. You need to use the external workaround like described in the settings.");
+      console.log(e);
+    } 
   }
 }
 
@@ -50,7 +57,7 @@ function aiResizeIframeHeightById(id, nHeight) {
     if (aiEnableCookie && aiExtraSpace == 0) {
       aiWriteCookie(height);
     }
-	}
+}
 
 /**
  * Scrolls the parent window to the top.
@@ -126,10 +133,17 @@ function aiEnableHeight() {
  * @param showElement the id, class (jQuery syntax) of the element that should be displayed. 
  */ 
 function aiShowElementOnly( iframeId, showElement ) {
-  var iframe = jQuery(iframeId).contents().find("body"); 
-  var selectedBox = iframe.find(showElement).clone(); 
-  iframe.find("*").remove(); 
-  iframe.append(selectedBox);
+  try {
+    var iframe = jQuery(iframeId).contents().find("body"); 
+    var selectedBox = iframe.find(showElement).clone(); 
+    iframe.find("*").remove(); 
+    iframe.append(selectedBox);
+  }  catch(e) {
+    if (console && console.log) {
+      console.log("Advanced iframe configuration error: You have enabled to show only one element of the iframe for pages on the same domain. But you use an iframe page on a different domain. You need to use the pro version of the external workaround like described in the settings.");
+      console.log(e);
+    } 
+  }
 }
 
 function checkIfValidTarget(evt, elements) {
@@ -170,7 +184,7 @@ function openSelectorWindow (url) {
    if (local_height.indexOf("%") >= 0) {
        local_height = screen.height;   
    } else {
-        local_height =  Number(local_height) + 440; 
+        local_height =  Number(local_height) + 480; 
    }
    if ( local_height > (screen.height-50)) {
        local_height = screen.height-50; 
@@ -178,4 +192,97 @@ function openSelectorWindow (url) {
    var options = "width="+local_width+",height="+local_height+",left=0,top=0,resizable=1,scrollbars=1";
    var popup_window = window.open(url, "", options);
    popup_window.focus();
+}
+
+/**
+ *  This function initializes all checks that are done by Javascript
+ *  on the admin page like enabling disabling fields... 
+ */ 
+function initAdminConfiguration() {
+  
+    // enable checkbox of onload_resize_delay and if resize is set to true external workaround is set to false
+    if (jQuery('input[type=radio][name=onload_resize]:checked').val() == 'false') {
+        jQuery('#onload_resize_delay').prop('readonly',true);
+    }     
+    jQuery('input[type=radio][name=onload_resize]').click( function(){
+    if (jQuery(this).val() == 'true') {
+           jQuery('#onload_resize_delay').prop('readonly', false);
+           jQuery('input:radio[name=enable_external_height_workaround]')[1].checked = true;
+        } else {
+           jQuery('#onload_resize_delay').prop('readonly', true);
+           jQuery('#onload_resize_delay').val('');
+        }
+    });
+    
+    // if external workaround is set to to true resize on load is set to false and the 
+    // onload_resize_delay is made readonly
+    jQuery('input[type=radio][name=enable_external_height_workaround]').click( function(){
+    if (jQuery(this).val() == 'true') {
+           jQuery('input:radio[name=onload_resize]')[1].checked = true;
+           jQuery('#onload_resize_delay').prop('readonly', true);
+           jQuery('#onload_resize_delay').val('');
+        }
+    });
+ 
+    // Show only a part of the iframe enable/disable
+     if (jQuery('input[type=radio][name=show_part_of_iframe]:checked').val() == 'false') {
+        jQuery('#show_part_of_iframe_x').prop('readonly',true);
+        jQuery('#show_part_of_iframe_y').prop('readonly',true);
+        jQuery('#show_part_of_iframe_height').prop('readonly',true);
+        jQuery('#show_part_of_iframe_width').prop('readonly',true);         
+        jQuery('input[id=show_part_of_iframe_allow_scrollbar_horizontal]:radio').attr('disabled',true);  
+        jQuery('input[id=show_part_of_iframe_allow_scrollbar_vertical]:radio').attr('disabled',true);  
+        jQuery('#show_part_of_iframe_next_viewports').prop('readonly',true);
+        jQuery('input[id=show_part_of_iframe_next_viewports_loop]:radio').attr('disabled',true);
+        jQuery('#show_part_of_iframe_new_window').prop('readonly',true);
+        jQuery('#show_part_of_iframe_new_url').prop('readonly',true);
+        jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',true);  
+     }
+      jQuery('input[type=radio][name=show_part_of_iframe]').click( function(){
+    if (jQuery(this).val() == 'false') {
+          jQuery('#show_part_of_iframe_x').prop('readonly',true);
+          jQuery('#show_part_of_iframe_y').prop('readonly',true);
+          jQuery('#show_part_of_iframe_height').prop('readonly',true);
+          jQuery('#show_part_of_iframe_width').prop('readonly',true);
+          jQuery('input[id=show_part_of_iframe_allow_scrollbar_horizontal]:radio').attr('disabled',true);  
+          jQuery('input[id=show_part_of_iframe_allow_scrollbar_vertical]:radio').attr('disabled',true);  
+          jQuery('#show_part_of_iframe_next_viewports').prop('readonly',true);
+          jQuery('input[id=show_part_of_iframe_next_viewports_loop]:radio').attr('disabled',true);
+          jQuery('#show_part_of_iframe_new_window').prop('readonly',true);
+          jQuery('#show_part_of_iframe_new_url').prop('readonly',true);
+          jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',true);
+        } else {
+          jQuery('#show_part_of_iframe_x').prop('readonly',false);
+          jQuery('#show_part_of_iframe_y').prop('readonly',false);
+          jQuery('#show_part_of_iframe_height').prop('readonly',false);
+          jQuery('#show_part_of_iframe_width').prop('readonly',false);
+          jQuery('input[id=show_part_of_iframe_allow_scrollbar_horizontal]:radio').attr('disabled',false);  
+          jQuery('input[id=show_part_of_iframe_allow_scrollbar_vertical]:radio').attr('disabled',false);  
+          jQuery('#show_part_of_iframe_next_viewports').prop('readonly',false);
+          jQuery('input[id=show_part_of_iframe_next_viewports_loop]:radio').attr('disabled',false);
+          jQuery('#show_part_of_iframe_new_window').prop('readonly',false);
+          jQuery('#show_part_of_iframe_new_url').prop('readonly',false);
+          jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',false);
+        }
+    }); 
+    
+    // if expert mode
+    if (jQuery('input[type=radio][name=expert_mode]:checked').val() == 'true') {
+      jQuery('.description').css('display','none');
+      jQuery('table.form-table th').css('cursor','pointer');
+    }
+    jQuery('input[type=radio][name=expert_mode]').click( function(){
+      if (jQuery(this).val() == 'false') {
+        jQuery('.description').css('display','block');
+        jQuery('table.form-table th').css('cursor','auto');
+        jQuery('table.form-table tr').off("click");
+      } else {
+        jQuery('.description').css('display','none'); 
+        jQuery('table.form-table tr').click(function() {
+           jQuery('.description').css('display','none');
+           jQuery('.description', this).css('display','block');
+        }); 
+      }
+    });
+
 }
