@@ -5,11 +5,13 @@
 		return parts[nr];
 	}
   var nHeight = getParamFromLocation(1);
+  
   if (nHeight != undefined) {
     try {
       var id = getParamFromLocation(2);
       if (id != undefined) {
-          window.parent.parent.aiResizeIframeHeightById(id, nHeight);
+          iHeight = parseInt(nHeight);
+          window.parent.parent.aiResizeIframeHeightById(id, iHeight);
           window.parent.parent.aiShowIframe( '#' + id);
       } else {
           // To be compatible with older versions of advanced iframe 

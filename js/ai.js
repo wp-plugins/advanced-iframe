@@ -37,7 +37,7 @@ function aiResizeIframe(obj, resize_width) {
     }
   } catch(e) {
     if (console && console.log) {
-      console.log("Advanced iframe configuration error: You have enabled the resize of the iframe for pages on the same domain. But you use an iframe page on a different domain. You need to use the external workaround like described in the settings.");
+      console.log("Advanced iframe configuration error: You have enabled the resize of the iframe for pages on the same domain. But you use an iframe page on a different domain. You need to use the external workaround like described in the settings. Also check the next log. There the browser message for this error is displayed.");
       console.log(e);
     } 
   }
@@ -51,7 +51,7 @@ function aiResizeIframe(obj, resize_width) {
 function aiResizeIframeHeightById(id, nHeight) {
     var height = parseInt(nHeight) + aiExtraSpace;
     var iframe = document.getElementById(id);
-		var oldScrollposition = jQuery(document).scrollTop();     
+		var oldScrollposition = jQuery(document).scrollTop();
     iframe.setAttribute('height', height + 'px');
     jQuery(document).scrollTop(oldScrollposition);
     if (aiEnableCookie && aiExtraSpace == 0) {
@@ -140,7 +140,7 @@ function aiShowElementOnly( iframeId, showElement ) {
     iframe.append(selectedBox);
   }  catch(e) {
     if (console && console.log) {
-      console.log("Advanced iframe configuration error: You have enabled to show only one element of the iframe for pages on the same domain. But you use an iframe page on a different domain. You need to use the pro version of the external workaround like described in the settings.");
+      console.log("Advanced iframe configuration error: You have enabled to show only one element of the iframe for pages on the same domain. But you use an iframe page on a different domain. You need to use the pro version of the external workaround like described in the settings. Also check the next log. There the browser message for this error is displayed.");
       console.log(e);
     } 
   }
@@ -236,7 +236,8 @@ function initAdminConfiguration() {
         jQuery('input[id=show_part_of_iframe_next_viewports_loop]:radio').attr('disabled',true);
         jQuery('#show_part_of_iframe_new_window').prop('readonly',true);
         jQuery('#show_part_of_iframe_new_url').prop('readonly',true);
-        jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',true);  
+        jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',true); 
+        jQuery('#show_part_of_iframe_style').prop('readonly',true);         
      }
       jQuery('input[type=radio][name=show_part_of_iframe]').click( function(){
     if (jQuery(this).val() == 'false') {
@@ -251,6 +252,7 @@ function initAdminConfiguration() {
           jQuery('#show_part_of_iframe_new_window').prop('readonly',true);
           jQuery('#show_part_of_iframe_new_url').prop('readonly',true);
           jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',true);
+          jQuery('#show_part_of_iframe_style').prop('readonly',true);         
         } else {
           jQuery('#show_part_of_iframe_x').prop('readonly',false);
           jQuery('#show_part_of_iframe_y').prop('readonly',false);
@@ -263,6 +265,8 @@ function initAdminConfiguration() {
           jQuery('#show_part_of_iframe_new_window').prop('readonly',false);
           jQuery('#show_part_of_iframe_new_url').prop('readonly',false);
           jQuery('input[id=show_part_of_iframe_next_viewports_hide]:radio').attr('disabled',false);
+          jQuery('#show_part_of_iframe_style').prop('readonly',false);         
+    
         }
     }); 
     

@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.8
-Stable tag: 5.2
+Stable tag: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - Widget support
 - No view limit
 - Hide areas of an iframe
+- Browser detection 
+- Change link targets
+- Url forward parameter mapping.
+- And much more...
 
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
 
@@ -143,6 +147,21 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.3 =
+- New: Browser detection added. You can now specify browser specific iframes. This is important especially for the "Show only part of the iframe" where browser differences of a few pixels can matter. Also mobile, iphone, ipad can be detected. A modified version of php-browser-detection is used which uses browscap.org as data! Important: Read the documentation at "Browser detection" in the plugin how to use this! (Pro) 
+- New: Change link targets on the parent that they open inside the iframe. Shortcode: change_parent_links_target (Pro)
+- New: Change link targets inside the iframe if the iframe page is on the same domain or if you can use the external workaround. Shortcodes: change_iframe_links, change_iframe_links_target (Pro)
+- New: Redirect direct access of the iframe page to the parent page. Does also add existing parameter to the parent url (Pro)
+- New: url forward parameter mapping. Wordpress has many reserved word in the url so they cannot be used. Now parameters can be mapped to a different one in the confiuration. so e.g. name is e.g. a reserved word an cannot be used. using ainame|name in the configuration will forward 'ainame=hallo' as 'name=hallo' to the iframe (Pro). 
+- New: "Show only a part of an iframe" has now a new setting $show_part_of_iframe_style where a style can be set for e.g. a border (Pro).
+- New: Integrated jQuery help (Pro)
+- New: Improved error messages
+- Fix: Area selector does now select 'Yes' at the "Show only part of the iframe" when data is chosen (Pro).
+- Fix: Area selector does now enable all disabled radio elements when data is chosen (Pro).  
+- Fix: Additional spaces are removed when used in jQuery attributes 
+- Fix: Typos in the descriptions where fixed.
+- Fix: ereg was replaced by preg_match to avoid deprecated warnings with php < 5.3
+
 = 5.2 =
 - New: New feature "Hide a part of the iframe". Extra layers can be placed over the iframe. This enables you to e.g. hide a logo or even place your own logo on an iframe. See the pro demo for examples (Pro)
 - New: Try catch is now used at features which could fail when features for the same domain are used on external domains. Now the exceptions are catched and logged to the console.   

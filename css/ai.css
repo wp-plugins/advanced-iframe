@@ -135,12 +135,17 @@
 	border: 1px solid #EEE;
 }
 
-ul.pro {
+ul.pro, ul#browser-list {
   list-style-type: square;
   margin-left:1em; 
   padding-left:0px; 
   margin-bottom:-5px; 
 }
+
+ul#browser-list {
+ padding-left:10px; 
+}
+
 
 #last .signup_inner_desc, #last li {
   margin-bottom:0; 
@@ -151,7 +156,7 @@ ul.pro {
 }
 
 
-#details-workaround, #details-javascript {
+#details-workaround, #details-javascript, #jquery-help, #browser-help {
   background: #F2F7F9;
 	border: 1px solid #d2d7d9;
   padding:10px; 
@@ -166,4 +171,8 @@ ul.pro {
 
 a.signup_inner_button:active, a.signup_inner_button:hover {
   color:#cccccc;
+}
+
+.left_th_colored {
+width:100px;
 }
