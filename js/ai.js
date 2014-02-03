@@ -20,6 +20,12 @@ function aiResizeIframe(obj, resize_width) {
         obj.contentWindow.document.documentElement.offsetHeight);
       var newheight = bodyHeight + aiExtraSpace;
       obj.height = newheight + 'px'; 
+      // set the height of the zoom div
+      if (jQuery('#ai-zoom-div-' + obj.id).length != 0) {
+         var zoom = eval("zoom_" + obj.id)
+         jQuery('#ai-zoom-div-' + obj.id).css("height", newheight * zoom);
+      }
+      
       if (aiEnableCookie && aiExtraSpace == 0 ) {  
           aiWriteCookie(newheight);
       }
@@ -194,11 +200,15 @@ function openSelectorWindow (url) {
    popup_window.focus();
 }
 
+function openTab(id) {
+    jQuery(id).next().show(); 
+}
+
 /**
  *  This function initializes all checks that are done by Javascript
  *  on the admin page like enabling disabling fields... 
  */ 
-function initAdminConfiguration() {
+function initAdminConfiguration(isPro, acc_type) {
   
     // enable checkbox of onload_resize_delay and if resize is set to true external workaround is set to false
     if (jQuery('input[type=radio][name=onload_resize]:checked').val() == 'false') {
@@ -274,19 +284,48 @@ function initAdminConfiguration() {
     if (jQuery('input[type=radio][name=expert_mode]:checked').val() == 'true') {
       jQuery('.description').css('display','none');
       jQuery('table.form-table th').css('cursor','pointer');
+      jQuery('table.form-table th').css('padding-top','8px').css('padding-bottom','2px'); 
+      jQuery('table.form-table td').css('padding-top','5px').css('padding-bottom','5px'); 
+      jQuery('table.form-table th').click(function() {
+           jQuery('.description').css('display','none');
+           jQuery('.description', jQuery(this).parent()).css('display','block');
+        }); 
     }
     jQuery('input[type=radio][name=expert_mode]').click( function(){
       if (jQuery(this).val() == 'false') {
         jQuery('.description').css('display','block');
         jQuery('table.form-table th').css('cursor','auto');
-        jQuery('table.form-table tr').off("click");
+        jQuery('table.form-table th').off("click");
+        jQuery('table.form-table th').css('padding-top','20px').css('padding-bottom','20px'); 
+        jQuery('table.form-table td').css('padding-top','15px').css('padding-bottom','15px'); 
       } else {
-        jQuery('.description').css('display','none'); 
-        jQuery('table.form-table tr').click(function() {
+        jQuery('.description').css('display','none');
+        jQuery('table.form-table th').css('cursor','pointer');  
+        jQuery('table.form-table th').css('padding-top','8px').css('padding-bottom','2px'); 
+        jQuery('table.form-table td').css('padding-top','5px').css('padding-bottom','5px'); 
+        jQuery('table.form-table th').click(function() {
            jQuery('.description').css('display','none');
-           jQuery('.description', this).css('display','block');
+           jQuery('.description', jQuery(this).parent()).css('display','block');
         }); 
       }
     });
 
+   
+   if (isPro && (acc_type !== "false")) {
+       jQuery('#accordion').find('h1').click(function(){
+           jQuery(this).next().slideToggle();
+       }).next().hide(); 
+       
+       jQuery('#accordion').find('a').click(function(){
+           var hash = jQuery(this).prop("hash");
+           var hash_only = "#h1-" + hash.substring(1);
+           jQuery(hash_only).next().show(); 
+           location.hash = hash_only;
+       });
+       var hash = jQuery("#" + acc_type).next().show(); 
+        
+   } else {
+      jQuery('#accordion').find('h1').hide();
+      jQuery('#accordion').attr("id","noacc");
+   }  
 }

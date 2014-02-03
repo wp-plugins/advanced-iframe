@@ -176,3 +176,30 @@ a.signup_inner_button:active, a.signup_inner_button:hover {
 .left_th_colored {
 width:100px;
 }
+
+#accordion{border: 1px solid #ddd; border-top: none; margin: 10px 0; width: 100%;}
+#accordion > a{display: block; text-decoration: none;}
+#accordion > h1, .accordion > a{background-color: #fff; background-image: url(../img/gradient.jpg);
+background-image: -moz-linear-gradient(bottom, #f1f1f1, #fff);
+background-image: -ms-linear-gradient(bottom, #f1f1f1, #fff);
+background-image: -o-linear-gradient(bottom, #f1f1f1, #fff);
+background-image: -webkit-linear-gradient(bottom, #f1f1f1, #fff);
+background-image: linear-gradient(bottom, #f1f1f1, #fff); border-top: 1px solid #ddd;
+color: #222; font: 15px/30px 'Verdana', sans-serif; height: 32px; margin: 0; padding: 0; text-indent: 10px;
+cursor:pointer}
+
+#accordion > h1:hover, .accordion > a{background-color: #fff; background-image: url(../img/gradient.jpg);
+background-image: -moz-linear-gradient(bottom, #e1e1e1, #fff);
+background-image: -ms-linear-gradient(bottom, #e1e1e1, #fff);
+background-image: -o-linear-gradient(bottom, #e1e1e1, #fff);
+background-image: -webkit-linear-gradient(bottom, #e1e1e1, #fff);
+background-image: linear-gradient(bottom, #e1e1e1, #fff); border-top: 1px solid #ddd;
+color: #222; font: 15px/30px 'Verdana', sans-serif; height: 32px; margin: 0; padding: 0; text-indent: 10px;
+cursor:pointer}
+
+
+#accordion > div { padding: 5px; padding-left:10px; padding-right:10px; background-color: #fff;}
+
+input[type=text] {
+   width: 98%
+}

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Advanced iFrame
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 5.3
+Version: 5.4
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
@@ -75,7 +75,9 @@ if (!class_exists('advancediFrame')) {
                 'hide_part_of_iframe' => '', 'change_parent_links_target' => '',
                 'change_iframe_links' => '','change_iframe_links_target' => '',
                 'browser' => '', 'show_part_of_iframe_style' => '',
-                'map_parameter_to_url' => ''
+                'map_parameter_to_url' => '', 'iframe_zoom' => '',
+                'accordeon_menu' => '', 'accordeon_menu' => 'false',
+                'show_iframe_loader' => 'false'
                 );
             return $iframeAdminOptions;
         }
@@ -151,6 +153,15 @@ if (!class_exists('advancediFrame')) {
                 return $value;
             } else {
                 return urlencode($value);
+            }
+        }
+        
+        function scale_value($value, $iframe_zoom) {
+            if (strpos($value, '%') === false) {       
+                return (intval($value) * floatval($iframe_zoom)) . 'px';      
+            } else {
+                $value = substr($value, 0, -1);  
+                return (intval($value) * floatval($iframe_zoom)) . '%';    
             }
         }
 
@@ -229,6 +240,8 @@ if (!class_exists('advancediFrame')) {
                 'browser'  => $options['browser'],
                 'show_part_of_iframe_style'  => $options['show_part_of_iframe_style'],
                 'map_parameter_to_url'  => $options['map_parameter_to_url'],
+                'iframe_zoom'  => $options['iframe_zoom'],
+                'show_iframe_loader'  => $options['show_iframe_loader'],
                  $atts));
             }
 
@@ -311,7 +324,9 @@ if (!class_exists('advancediFrame')) {
                     'change_iframe_links_target'  => $options['change_iframe_links_target'],
                     'browser'  => $options['browser'],
                     'show_part_of_iframe_style'  => $options['show_part_of_iframe_style'],
-                    'map_parameter_to_url'  => $options['map_parameter_to_url']
+                    'map_parameter_to_url'  => $options['map_parameter_to_url'],
+                    'iframe_zoom'  => $options['iframe_zoom'],
+                    'show_iframe_loader'  => $options['show_iframe_loader']
                      )
                     , $atts));
 
@@ -363,7 +378,7 @@ if (!class_exists('advancediFrame')) {
                 $include_url = '';
                 $change_parent_links_target = '';
                 $change_iframe_links = '';
-                $change_iframe_links_target = '';
+                $change_iframe_links_target = ''; 
             }
 
             $default_options = get_option('default_a_options');
@@ -379,9 +394,16 @@ if (!class_exists('advancediFrame')) {
                 $url_forward_parameter = str_replace('|',',',$url_forward_parameter);
                 $browser='';
                 $map_parameter_to_url = '';
+                $iframe_zoom = '';
+                $show_iframe_loader = 'false';
                 
             } else { $default_options = 0; }
+            
+            if (!empty($iframe_zoom)) {
+                $iframe_zoom = str_replace(',','.',$iframe_zoom);   
+            }
 
+            
             // settings defaults
             $id = (empty ($id)) ? 'advanced_iframe' : preg_replace("/[^a-zA-Z0-9]/", "_", $id);
             $name = (empty ($name)) ? 'advanced_iframe'  : preg_replace("/[^a-zA-Z0-9]/", "_", $name);
@@ -430,22 +452,109 @@ if (!class_exists('advancediFrame')) {
                   }
                   ';
              }
+             
+            if (!empty($iframe_zoom)) {
+                 if ($width != 'not set' && $width != '') {
+                     $scale_width = $this->scale_value($width, $iframe_zoom); 
+                 } else {
+                    echo 'Configration error: Zoom does need a specified width';          
+                 }
+                 if ($height != 'not set' && $height != '') {
+                      $scale_height = $this->scale_value($height, $iframe_zoom); 
+                 } else {
+                     echo 'Configration error: Zoom does need a specified height';   
+                 }
+                 
+                 
+                 echo '
+                  #ai-zoom-div-'.esc_html($id).'
+                  {
+                    width: '.$scale_width.';
+                    height: '.$scale_height.'; 
+                    padding: 0;
+                    overflow: hidden;
+                  }
+                  #'.esc_html($id).'
+                  {
+                    ';
+                     if (is_ie(8)) {
+                       echo '
+                        -ms-zoom:'.$iframe_zoom.';'; 
+                     }
+                     echo '
+                        -ms-transform: scale('.$iframe_zoom.');
+                        -ms-transform-origin: 0 0;
+                        -moz-transform: scale('.$iframe_zoom.');
+                        -moz-transform-origin: 0 0;
+                        -o-transform: scale('.$iframe_zoom.');
+                        -o-transform-origin: 0 0;
+                        -webkit-transform: scale('.$iframe_zoom.');
+                        -webkit-transform-origin: 0 0;
+                        transform: scale('.$iframe_zoom.');
+                        transform-origin: 0 0;
+                  }
+                  ';         
+            } 
+            
+            if ($show_iframe_loader == 'true') {
+                    // div for the loader 
+                    if ($show_part_of_iframe == 'true') {  // size is show part of the iframe  
+                        $loader_width = $show_part_of_iframe_width;
+                        $loader_height = $show_part_of_iframe_height; 
+                    } else  if (!empty($iframe_zoom)) { // or zoom size
+                        $loader_width = $scale_width;
+                        $loader_height = $scale_height; 
+                    } else { // the iframe size.
+                        $loader_width = $width;
+                        $loader_height = $height;
+                    }   
+                 }
+                 
+                 echo '
+                 #ai-div-container-'.$id.'
+                 { 
+                     position: relative;
+                     width: '.$loader_width.'px;
+                 }
+                 #ai-div-loader-'.$id.'
+                 {
+                    position: absolute;
+                    z-index:1000;
+                    margin-left:-33px;
+                    left: 50%;
+                    top: 150px;
+                 }
+                  #ai-div-loader-'.$id.' img
+                 {
+                    border: none;
+                 }
+                 ';
 
             echo '</style>';
             echo '<script type="text/javascript" src="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/js/ai.js" ></script>';
 
+            
+            echo '<script type="text/javascript">';
             if ($store_height_in_cookie == 'true') {
-                echo  '<script type="text/javascript">aiEnableCookie=true; aiId="' . esc_html($id) . '";</script>';
+                echo  'var aiEnableCookie=true; aiId="' . esc_html($id) . '";';
             }
             if ($additional_height != 0) {
-                echo  '<script type="text/javascript">aiExtraSpace=' . esc_html($additional_height) . ';</script>';
+                echo  'var aiExtraSpace=' . esc_html($additional_height) . ';';
             }
-            echo '<script type="text/javascript">';
+            if (!empty($iframe_zoom)) {
+                echo ' var zoom_' . esc_html($id).' = ' .esc_html($iframe_zoom). ';'; 
+            }
             echo '    function aiShowIframe() { jQuery("#'.esc_html($id).'").css("visibility", "visible");}';
             echo '    function aiShowIframe(id_iframe) { jQuery(id_iframe).css("visibility", "visible");}';
-            echo '    function aiResizeIframeHeight(height) { aiResizeIframeHeightById("'.esc_html($id).'",height); }
+            echo '    function aiResizeIframeHeight(height) { aiResizeIframeHeight(height,'.esc_html($id).'); }'; 
+            echo '    function aiResizeIframeHeight(height,id) {'; 
+                      if (!empty($iframe_zoom)) { 
+                        echo ' var zoom_height = parseInt(height * parseFloat('.$iframe_zoom.'))+1;';
+                        echo ' jQuery(\'#ai-zoom-div-\' + id).css("height",zoom_height);';
+                      }
+            echo '
+                  aiResizeIframeHeightById(id,height); }
                   </script>';
-
             if ($options['securitykey'] != $securitykey) {
                 echo '<div class="errordiv">' . __('An invalid security key was specified. Please use at least the following shortcode:<br>[advanced_iframe securitykey="&lt;your security key - see settings&gt;"]. Please also check in the html mode that your shortcode does only contain notmal spaces and not a &amp;nbsp; instead.', 'advanced-iframe') . '</div>';
                 return;
@@ -602,6 +711,13 @@ if (!class_exists('advancediFrame')) {
                     $html .= '</script>';
                     }
                 }
+                if ($show_iframe_loader == 'true') {
+                   // div around 
+                   $html .= '<div id="ai-div-container-'.$id.'">';
+                   // div for the loader 
+                   $html .= '<div id="ai-div-loader-'.$id.'"><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/img/loader.gif" width="66" height="66" title="Loading" alt="Loading"></div> ';
+                 }
+                
 
                  if (!empty($hide_part_of_iframe)) {
                       $rectangles = explode('|' , $hide_part_of_iframe);
@@ -618,6 +734,9 @@ if (!class_exists('advancediFrame')) {
 
                 if ($show_part_of_iframe == 'true') {
                     $html .= '<div id="ai-div-'.$id.'">';
+                }
+                if (!empty($iframe_zoom)) {
+                     $html .= '<div id="ai-zoom-div-'.$id.'">';
                 }
                 $html .= "<iframe id='" . esc_html($id) . "' ";
                 if (!empty ($name)) {
@@ -663,6 +782,10 @@ if (!class_exists('advancediFrame')) {
                  if (!empty ($onload)) {
                     $onload_str .= esc_html($onload);
                 }
+                if ($show_iframe_loader == 'true') {
+                    $onload_str .= ';jQuery("#ai-div-loader-'.$id.'").hide();';
+                }
+                
                 if ($show_part_of_iframe == 'true' && (!empty ($show_part_of_iframe_new_window) ||
                     !empty ($show_part_of_iframe_new_url) || !empty ($show_part_of_iframe_next_viewports) ||
                     ($show_part_of_iframe_next_viewports_hide == true) ) ) {
@@ -689,16 +812,23 @@ if (!class_exists('advancediFrame')) {
                 if ($hide_page_until_loaded  == 'true'  && $hide_page_until_loaded_external == 'false') {
                     $onload_str .= ';jQuery("#'.$id.'").css("visibility", "visible");';
                 }
+                
                 if ($onload_str != '') {
                    $html .= " onload='" . esc_js($onload_str) . "' ";
                 }
 
                 $html .= '></iframe>';
+                if (!empty($iframe_zoom)) {
+                    $html .= '</div>';
+                }
                 if ($show_part_of_iframe == 'true') {
                     $html .= '</div>';
                 }
                 if ($hide_part_of_iframe == 'true') {
                     $html .= '</div>';
+                }
+                if ($show_iframe_loader == 'true') {
+                   $html .= '</div>';
                 }
 
                 $html .= '<script type="text/javascript">var ifrm_'.$id.' = document.getElementById("'.$id.'");</script>';

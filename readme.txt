@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.8
-Stable tag: 5.3
+Tested up to: 3.8.1
+Stable tag: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,7 +26,7 @@ The following cool features compared to a normal iframe are implemented:
 - Scroll the parent to the top when the iframe is loaded
 - Hide the content until it is fully loaded 
 - Add a css and js file to the parent page
-- Widget support (Pro)
+- Many additional cool features are available the pro version - see http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart 
 
 Please note: Modification inside the iframe are only possible if you are on the same domain or use a workaround like described in the settings.
 
@@ -53,13 +53,15 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - Browser detection 
 - Change link targets
 - Url forward parameter mapping.
+- Zoom iframe content
+- Accordion menu
+- jQuery help
 - And much more...
 
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
 
 See the pro demo here: 
 http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
-
 = Administration =  
 * Go to Settings -> Advanced iFrame
 
@@ -147,6 +149,19 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.4 =
+- New: The default security key is now based on the AUTH_KEY of Wordpress and the current time. Please change the default key to your own to increase security. 
+- New: Zoom of iframe content: This feature is supported for the following browsers: IE8-11, Firefox, Chrome, Safari, Opera. Older versions of IE are not supported. Please test all the browsers you want to support with your page because not all pages do look good in a zoomed mode! This feature is also part of the demo. So you can test your browsers there! (Pro)
+- New: iframe loading icon. You can now show a loding icon while the iframe is loaded. If you use the "hide until loaded feature" your users does see that something is happening. You can use your own image (loader.gif) with a size of 66x66 px by replacing the one in the img folder (Pro).
+- New: Accordeon menu (Pro).
+- New: Map parameter/value pairs to urls. You can specify parameter/value/url tripples which are used the following way.  If the parent has ?parameter=value than the url of the setting is used as src for the iframe (Pro).
+- New: Reading of browser detection file is cached (Pro).
+- New: Improved padding and better handling in expert mode (Pro)
+- New: Input text fields have now dynamic sizes. So if you enlage the screen they should always fit. Textfields with numbers only are now much shorter as the numbers there never get longer.
+- Fix: Administration was not shown properly on MAC.
+- Fix: Expert mode description fixed (Pro)
+- Fix: Error message when saving a special setting was fixed 
+
 = 5.3 =
 - New: Browser detection added. You can now specify browser specific iframes. This is important especially for the "Show only part of the iframe" where browser differences of a few pixels can matter. Also mobile, iphone, ipad can be detected. A modified version of php-browser-detection is used which uses browscap.org as data! Important: Read the documentation at "Browser detection" in the plugin how to use this! (Pro) 
 - New: Change link targets on the parent that they open inside the iframe. Shortcode: change_parent_links_target (Pro)
