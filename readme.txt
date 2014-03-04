@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.8.1
-Stable tag: 5.4
+Stable tag: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,15 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.5 =
+- New: Support to resize to content height for iframes on hidden tabs (Pro). Works with e.g. Tabby Responsive Tabs and Post UI Tabs. This can also be used for simple hidden divs which opens e.g. on a mouse click or accordeon menus. Please read the documentation in the settings for details. 
+- New: Loading of css and Javascript in the admin section is it only loaded when needed. 
+- New: Loading of the additional css and Javascript in the page are also only loaded when you use Wordpress >= 3.3. Before the files are always included to all pages because wordpress api does not allow this differently. 
+- New: Added updated browsecap.ini: 5023 (2nd Feb 2014)
+- Fix: Loader css was always written even if not configured. Now only when this feature is enabled.
+- Fix: renamed internally is_browser to ai_is_browser to avoid problems when e.g. a theme does define is_ie()...
+- Fix: Area selector does now look good again. 
+
 = 5.4 =
 - New: The default security key is now based on the AUTH_KEY of Wordpress and the current time. Please change the default key to your own to increase security. 
 - New: Zoom of iframe content: This feature is supported for the following browsers: IE8-11, Firefox, Chrome, Safari, Opera. Older versions of IE are not supported. Please test all the browsers you want to support with your page because not all pages do look good in a zoomed mode! This feature is also part of the demo. So you can test your browsers there! (Pro)

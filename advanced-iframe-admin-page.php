@@ -191,7 +191,8 @@ if (is_user_logged_in() && is_admin()) {
             'hide_part_of_iframe','change_parent_links_target',
             'change_iframe_links','change_iframe_links_target',
             'iframe_redirect_url', 'show_part_of_iframe_style',
-            'map_parameter_to_url', 'iframe_zoom'
+            'map_parameter_to_url', 'iframe_zoom',
+            'tab_visible', 'tab_hidden' 
             );  
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
@@ -247,15 +248,29 @@ if (is_user_logged_in() && is_admin()) {
 
         $new_content = str_replace('PARAM_JQUERY_PATH', $jquery_path , $new_content);
        
+        if (file_exists($script_name)) {
+            @unlink($script_name);
+        }
         $fh = fopen($script_name, 'w');
         if ($fh) {
             fwrite($fh, $new_content);
             fclose($fh);
+        } else {
+        echo '   
+           <div class="error">
+              <p><strong>';
+                 _e('The file "advanced-iframe/js/ai_external.js" can not be saved. Please check the permissions of the js folder and save the settings again. This file is needed for the external workaround!', "advanced-iframe");
+                 echo  '
+                 </strong>
+              </p>
+           </div>';
         }
         ?>
 <div class="updated">
-  <p><strong>
-      <?php _e("Settings Updated.", "advanced-iframe");?></strong>
+  <p>
+     <strong>
+      <?php _e("Settings Updated.", "advanced-iframe");?>
+     </strong>
   </p>
 </div>
 <?php
@@ -333,8 +348,9 @@ if ($devOptions['donation_bottom'] === 'false') {
       <?php _e('Please use the following shortcode to include a page to your page: ', 'advanced-iframe'); ?>
       <span> [advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>"]
       </span>
-      
+      <p>
       Examples if you want to use several iframes with different settings. Also read the <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-faq">FAQ</a>:
+      </p>
       <ul>
       <li>[advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>" src="http://www.tinywebgallery.com"] </li>
       <li>[advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>" src="http://www.tinywebgallery.com" width="100%" height="600"]</li>
@@ -463,14 +479,13 @@ echo '</p><table class="form-table">';
         printTextInput($devOptions, __('Content id', 'advanced-iframe'), 'content_id', __('Some templates do not use the full width for their content and even most \'One column, no sidebar Page Template\' templates only remove the sidebar but do not change the content width. Set the e.g. id of the div starting with a hash (#) that defines the content.  You can use any valid <a href="#jqh">jQuery selector pattern</a> here! In the field below you then define the style you want to overwrite. For Twenty Ten and WordPress Default the id is #content, for iNove it is #main. You can also define more than one element. Please separate them with | and provide the styles below. Please read the note below how to find this id for other templates. #content|h2 means that you want to set a new style for the div content and the heading h2 below. Shortcode attribute: content_id=""', 'advanced-iframe'));
         printTextInput($devOptions, __('Content styles', 'advanced-iframe'), 'content_styles', __('Define the styles that have to be overwritten to enable the full width. Most of the time you have to modify some of the following attributes: width, margin-left, margin-right, padding-left. Please use ; as separator between styles. If you have defined more than one element above (Content id) please separate the different style sets with |. The default values are: Wordpress default: \'width:450px;padding-left:45px;\'. Twenty Ten: \'margin-left:20px;margin-right:240px\'. iNove: \'width:605px\'. Read the note below how to find these styles for other templates. If you have defined #content|h2 at the Content id you can e.g. set \'width:650px;padding-left:25px;|padding-left:15px;\'. Shortcode attribute: content_styles=""', 'advanced-iframe'));
         if ($evanto) {
-          printTextInput($devOptions, __('Change parent links target', 'advanced-iframe'), 'change_parent_links_target', __('Change links of the parent page to open the url inside the iframe. This option does add the attribute target="your id" to the links you define. You can use any valid <a href="#jqh">jQuery selector pattern</a> here! So if your link e.g. has an id="link1" you have to use "a#link1". If you want to change all links e.g. in the div with the id="menu-div" you have to use "#menu-div a". You can also define more than one element. Please separate them with |.  Shortcode attribute: change_parent_links_target=""', 'advanced-iframe'));
+          printTextInput($devOptions, __('Change parent links target', 'advanced-iframe'), 'change_parent_links_target', __('Change links of the parent page to open the url inside the iframe. This option does add the attribute target="your id" to the links you define. You can use any valid <a href="#jqh">jQuery selector pattern</a> here! So if your link e.g. has an id="link1" you have to use "a#link1". If you want to change all links e.g. in the div with the id="menu-div" you have to use "#menu-div a". You can also define more than one element. Please separate them with |. <span id="howtoid"Shortcode</span> attribute: change_parent_links_target=""', 'advanced-iframe'));
         }
-
       ?>
     </table>
 
-     <br id="howtoid" />
-    
+     
+
       <?php _e('<strong>How to find the id and the attributes:</strong><ol><li>Manually: Go to Appearance -> Editor and select the page template. Then you have to look which div elements are defined. e.g. container, content, main. Also classes can be defined here. Then you have to select the style sheet below and search for this ids and classes and look which one does define the width of you content.</li><li>Firebug: For Firefox you can use the plugin firebug to select the content element directly in the page. On the right side the styles are always shown. Look for the styles that set the width or any bigger margins. These are the values you can then overwrite by the settings above.</li><li><strong>Small jquery help</strong><br>Above you have to use the jQuery syntax:<p><ul><li>- tags - if you want to hide/modify a tag directly (e.g. h1, h2) simply use it directly e.g. h1,h2</li><li>- id - if you want to hide/modify an element where you have the id use #id</li><li>- class - if you want to hide/modify an element where you have the class use .class</li></ul></p>For more complex selectors please read the jQuery documentation.</li></ol>', 'advanced-iframe'); ?>
     
     <p>
@@ -586,6 +601,23 @@ echo '</p><table class="form-table">';
         printTextInput($devOptions, __('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elements where the clicks<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are intercepted', 'advanced-iframe'), 'resize_on_click_elements', __('You can define the tags and ids where the clicks should be intercepted. By default all links "a" are intercepted. To define a specific id you have to add the id with a :. So intercepting all links with the id "testid" you have to enter "a:testid". The id you specify is compared with "contains". So if you use "a:test" all links with an id containing test are intercepted. You can add several tags separated by ",". So "a:test,button:submitid" would work fine. Always try to specify the elements as exactly as possible to avoid any problems with other Javascript on the site. If you leave this field empty resize on click events is NOT enabled at all! Shortcode attribute: resize_on_click_elements=""', 'advanced-iframe'));
 ?>
     </table>
+ <?php
+    if ($evanto) {
+ ?>    
+     <h3><?php _e('Resize hidden iframes on tabs', 'advanced-iframe') ?></h3>
+     <p><?php _e('Elements that are hidden with display:none return a size of 0 when the height is measured. This is very often the case when tabs are used and you place an iframe on a tab that is not shown by default. The next settings are needed for a workaround that moves the hidden element out of the viewport, shows and measures the iframe and moves everything back. To get this working you need to provide the id or class of the tab that is hidden and depending on the tabs plugin also the id or class of the tab that is visible by default to get the correct width. Please read the section "<a href="#howtoid">How to find the id and the attributes</a>" above how to find the right id or class. E.g. Tabby Responsive Tabs and Post UI Tabs work fine with this solution. Even nested tabs do work! If you need a custom solution please contact me for an offer.', 'advanced-iframe') ?>
+    </p>
+    <p><?php _e('IMPORTANT: If you use this feature with the external workaround you NEED to set a resize delay because otherwise the height is measured while the element is still hidden. This can be done by setting "var onload_resize_delay = 200;" before the external workaround script. Depending on the size of your page you might have to increase this value. As the tab is hidden this should not be a problem. For details please see <a href="#xss">here</a>.', 'advanced-iframe') ?>
+    </p>
+    <table class="form-table">
+<?php
+      printTextInput($devOptions, __('Hidden tab(s) with iframe', 'advanced-iframe'), 'tab_hidden', __('The id or class of the tab that is hidden. You need to define the element that has display:none set. E.g. For "Tabby Responsive Tabs" this would be #tablist1-panel2 if the iframe is on the 2nd tab. For "Post UI Tabs" it would be #tabs-1-2. If you have nested hidden elements all elements need to be defined here. You need to specify each hidden element starting from the outermost. e.g. #tablist1-panel2,#tabs-1-2 if you use "Tabby Responsive Tabs" and inside the tabs "Post UI Tabs. Shortcode attribute: tab_hidden=""', 'advanced-iframe'));
+      printTextInput($devOptions, __('Visible tab', 'advanced-iframe'), 'tab_visible', __('The id or class of the tab that is visible by default. This is needed to preserve the width of the first hidden tab. Depending on your css this is not needed but e.g. for "Tabby Responsive Tabs" you would need #tablist1-panel1 in the default setup. If you have defined several elements at "Hidden tab(s) with iframe" you need to specify the element that has the same width as the hidden element you have defined first above. Shortcode attribute: tab_visible=""', 'advanced-iframe'));      
+      ?>
+      </table> 
+<?php
+   }
+ ?> 
     <p>
       <input id="xss" class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>
     </p>
@@ -706,7 +738,7 @@ _e('to open this file and check the variable <b>domain</b> at the top. If not pl
           <li>&nbsp;&nbsp;&nbsp;- iframe_content_styles - See <a href="#modifycontent">Content styles in iframe</a></li>
           <li>&nbsp;&nbsp;&nbsp;- change_iframe_links - See <a href="#modifycontent">Change iframe links</a></li>
           <li>&nbsp;&nbsp;&nbsp;- change_iframe_links_target - See <a href="#modifycontent">Change iframe links target</a></li>
-          <li>&nbsp;&nbsp;&nbsp;- onload_resize_delay - See <a href="#rt">Resize delay</a>. This setting is not stored in ai_external.js as default because if you enable the external workaround this setting is disabled above because of configuration inconsistencies! So this setting has to be done in the external page. e.g. var onload_resize_delay=100; means 100 ms resize delay</li>
+          <li>&nbsp;&nbsp;&nbsp;- onload_resize_delay - See <a href="#rt">Resize delay</a>. This setting is not stored in ai_external.js as default because if you enable the external workaround this setting is disabled above because of configuration inconsistencies! So this setting has to be done in the external page. e.g. var onload_resize_delay=100; means 100 ms resize delay. You also need this setting when you use the hidden tabs feature.</li>
           <li>&nbsp;&nbsp;&nbsp;- iframe_redirect_url - Defines an url which is loaded if the page is not included in an iframe. See "Iframe redirect url" above.</li>', 'advanced-iframe');
     }
       _e('
@@ -954,7 +986,7 @@ Omitting E is identical to *#i.</td>
 
       <h3>Credit and update</h3>
       <p>
-        Advanced iFrame Pro uses an integrated browser detection which is based on the wordpress plugin "<a target="_blank" href="http://wordpress.org/extend/plugins/php-browser-detection/">php-browser-detection 2.2.3</a>" and the browser detection file (24th Jan 2014, 5022) from browscap.org.
+        Advanced iFrame Pro uses an integrated browser detection which is based on the wordpress plugin "<a target="_blank" href="http://wordpress.org/extend/plugins/php-browser-detection/">php-browser-detection 2.2.3</a>" and the browser detection file (2nd Feb 2014, 5023) from browscap.org.
       </p>
       <p>
          You can get an updated version of the browsercap.ini file here: http://tempdownloads.browserscap.com/<br />

@@ -20,6 +20,7 @@ function aiResizeIframe(obj, resize_width) {
         obj.contentWindow.document.documentElement.offsetHeight);
       var newheight = bodyHeight + aiExtraSpace;
       obj.height = newheight + 'px'; 
+      
       // set the height of the zoom div
       if (jQuery('#ai-zoom-div-' + obj.id).length != 0) {
          var zoom = eval("zoom_" + obj.id)
@@ -37,6 +38,8 @@ function aiResizeIframe(obj, resize_width) {
           obj.contentWindow.document.documentElement.offsetWidth); 
         obj.width = (bodyWidth + aiExtraSpace) + 'px';
       }
+      eval ("resizeCallback" + obj.id + "()");
+     
     } else {
       // body is not loaded yet - we wait 100 ms.
       setTimeout(function() { aiResizeIframe(obj, resize_width); },100); 
@@ -55,8 +58,9 @@ function aiResizeIframe(obj, resize_width) {
  *  Please read the documentation!   
  */ 
 function aiResizeIframeHeightById(id, nHeight) {
+    eval ("resizeCallback" + id + "()");
     var height = parseInt(nHeight) + aiExtraSpace;
-    var iframe = document.getElementById(id);
+    var iframe = document.getElementById(id); 
 		var oldScrollposition = jQuery(document).scrollTop();
     iframe.setAttribute('height', height + 'px');
     jQuery(document).scrollTop(oldScrollposition);
