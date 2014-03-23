@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.8.1
-Stable tag: 5.5
+Stable tag: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,7 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - Widget support
 - No view limit
 - Hide areas of an iframe
+- Responsive iframes
 - Browser detection 
 - Change link targets
 - Url forward parameter mapping.
@@ -149,6 +150,15 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.6 =
+- New: Support that the height of responsive iframes is automatically set to the new content height. This means that if you resize the parent page and the iframe width changes, the height of the iframe is adopted automatically like when loaded the first time! Please note that both pages (parent and iframe page) needs to be responsive. Please also read the blog entry about responsive iframes here:   (Pro)
+- New: Read-only iframes: hide_part_of_iframe does now support also %. This means together with color "transparent" you can create read-only iframes! See the following demo:  (Pro)
+- New: No output (except conguration errors) is done in the script function anymore. Everything is returned as return value. 
+- New: Added updated browsecap.ini: 5024 (2nd March 2014) from browscap.org
+- Fix: Improved documentation in the administration.
+- Fix: Loader is now displayed better for small iframes. See example 2. 
+- Fix: additional_css and additional_js are now again supported as shortcode attribute if Wordpress >= 3.3. Before WP 3.3 you can only set this feature in the administration. 
+
 = 5.5 =
 - New: Support to resize to content height for iframes on hidden tabs (Pro). Works with e.g. Tabby Responsive Tabs and Post UI Tabs. This can also be used for simple hidden divs which opens e.g. on a mouse click or accordeon menus. Please read the documentation in the settings for details. 
 - New: Loading of css and Javascript in the admin section is it only loaded when needed. 

@@ -80,8 +80,8 @@ function aiExecuteWorkaround_PARAM_ID() {
         var newElement = aiCreate(newElementStr);
         document.body.appendChild(newElement);
       }
-      // In case the body was hidden. 
-      document.body.style.visibility="visible";
+      // In case html was hidden. 
+      document.documentElement.style.visibility = 'visible';   
     }
 }
 
@@ -90,7 +90,7 @@ function aiExecuteWorkaround_PARAM_ID() {
  *  what avoiding scrollbars during resize. 
  */ 
 function removeOverflowHidden() {
-    document.body.style.overflow="visible";
+    document.body.style.overflow="auto";
 }
 
 /**
@@ -192,3 +192,6 @@ function addOnloadEvent(fnc){
 
 // add the aiUpdateIframeHeight to the onload of the site.
 addOnloadEvent(aiExecuteWorkaround_PARAM_ID);
+
+
+ 

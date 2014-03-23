@@ -1,6 +1,6 @@
 <?php
 /*
-Advanced iFrame Pro
+Advanced iFrame
 http://www.tinywebgallery.com/blog/advanced-iframe
 Michael Dempfle
 Administration include
@@ -134,7 +134,7 @@ echo '
 
 				<div class="signup_inner_desc">
            <ul class="pro"><li>';
-           _e('Show/Hide specific areas of the iframe if the iframe is on a different domain<br /><a target="_blank" href="http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html">Show the new graphical selector</a></li><li>Widget support, change link targets</li><li>External workaround supports iframe modifications</li><li>Browser dependant settings</li><li>No view limit, zoom, <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-support">Support</a></li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">See the pro demo</a><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart">Compare versions for all features</a>', 'advanced-iframe');
+           _e('<a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/show-only-a-part-of-the-iframe" target="_blank">Show/Hide specific areas of the iframe</a> if the iframe is on a different domain<br /><a target="_blank" href="http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html">Show the graphical selector</a></li><li><a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/widgets" target="_blank">Widget support</a>, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/change-links-targets" target="_blank">change link targets</a></li><li>External workaround supports <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/external-workaround-auto-height-and-css-modifications" target="_blank">iframe modifications</a> and <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/responsive-iframes" target="_blank">responsive iframes</a></li><li><a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/browser-detection" target="_blank">Browser dependant settings</a></li><li>No view limit, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/zoom-iframe-content" target="_blank">zoom</a>, <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-support">Support</a></li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">See the pro demo</a><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart">Compare versions for all features</a>', 'advanced-iframe');
            echo '</li></ul>
         </div>
 			</div>
@@ -192,7 +192,8 @@ if (is_user_logged_in() && is_admin()) {
             'change_iframe_links','change_iframe_links_target',
             'iframe_redirect_url', 'show_part_of_iframe_style',
             'map_parameter_to_url', 'iframe_zoom',
-            'tab_visible', 'tab_hidden' 
+            'tab_visible', 'tab_hidden','enable_responsive_iframe',
+            'allowfullscreen' 
             );  
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
@@ -245,6 +246,7 @@ if (is_user_logged_in() && is_admin()) {
         $new_content = str_replace('PARAM_KEEP_OVERFLOW_HIDDEN', $devOptions['keep_overflow_hidden'], $new_content);
         $new_content = str_replace('PARAM_HIDE_PAGE_UNTIL_LOADED_EXTERNAL', $devOptions['hide_page_until_loaded_external'], $new_content);
         $new_content = str_replace('PARAM_IFRAME_REDIRECT_URL', $devOptions['iframe_redirect_url'] , $new_content);
+        $new_content = str_replace('PARAM_ENABLE_RESPONSIVE_IFRAME', $devOptions['enable_responsive_iframe'] , $new_content);
 
         $new_content = str_replace('PARAM_JQUERY_PATH', $jquery_path , $new_content);
        
@@ -361,7 +363,7 @@ if ($devOptions['donation_bottom'] === 'false') {
     <table class="form-table">
 <?php
         printTextInput($devOptions, __('Security key', 'advanced-iframe'), 'securitykey', __('This is the security key which has to be used in the shorttag. This is mandatory because otherwise anyone who can create an article can insert an iframe.  The default security key was randomly generated during installation. Please change the key if you like. You should use this in combination with e.g. Page security to make sure that only the users you define can modify pages.', 'advanced-iframe'));
-        printTextInput($devOptions, __('<b>Url</b>', 'advanced-iframe'), 'src', __('Enter the full URL to your page. e.g. http://www.tinywebgallery.com. <strong>Make sure not to mix http and https!</strong> Many browsers do not show anything anymore or e.g. block Javascript or show unexpected behavior. Also use the free url checker below to make sure that you can include the page. You can also add parameters to this url like http://www.tinywebgallery.com/test.php?iframe=true. then you can check this variable and use it to e.g. hide some elements in the iframe. Shortcode attribute: src=""', 'advanced-iframe'));
+        printTextInput($devOptions, __('<b>Url</b>', 'advanced-iframe'), 'src', __('Enter the full URL to your page. e.g. http://www.tinywebgallery.com. <strong>Please do not use a different protocol for the iframe: Do not mix http and https if possible!</strong> Please read <a href="http://www.tinywebgallery.com/blog/iframe-do-not-mix-http-and-https" target="_blank">this post</a> for details. Also use the free url checker below to make sure that you can include the page. You can also add parameters to this url like http://www.tinywebgallery.com/test.php?iframe=true. then you can check this variable and use it to e.g. hide some elements in the iframe. Shortcode attribute: src=""', 'advanced-iframe'));
 ?>
       <tr>
         <th scope="row"><strong><?php _e('Free url checker', 'advanced-iframe'); ?></strong>
@@ -381,6 +383,10 @@ if ($devOptions['donation_bottom'] === 'false') {
 
         printTextInput($devOptions, __('Id', 'advanced-iframe'), 'id', __('Enter the \'id\' attribute of the iframe. Allowed values are only a-zA-Z0-9_. Do NOT use any other characters because the id is also used to generate unique javascript functions! Other characters will be removed when you save! If a src directly in a shortcode is set and no id than an id is generated automatically if several iframes are on one page to avoid configuration problems. Shortcode attribute: id=""', 'advanced-iframe'));
         printTextInput($devOptions, __('Name', 'advanced-iframe'), 'name', __('Enter the \'name\' attribute of the iframe. Shortcode attribute: name=""', 'advanced-iframe'));
+        
+if ($evanto) {        
+        printTrueFalse($devOptions, __('Allow full screen', 'advanced-iframe'), 'allowfullscreen', __('allowfullscreen is an HTML attribute that enables videos to be displayed in fullscreen mode. Currently this is a new html attribute not supported by all browsers. So please check  all of the browsers you want to support. Shortcode attribute: allowfullscreen="true" or allowfullscreen="false"', 'advanced-iframe'));
+}              
         printTrueFalse($devOptions, __('Allow shortcode attributes', 'advanced-iframe'), 'shortcode_attributes', __('Allow to set attributes in the shortcode. All of the attributes can be overwritten in the shortcode if you set \'Yes\'. Otherwise the settings you specify here are used.', 'advanced-iframe'));
         printTrueFalse($devOptions, __('Use shortcode attributes only', 'advanced-iframe'), 'use_shortcode_attributes_only', __('All iframes you use in your pages use the settings below. With shortcode attributes you can overwrite these settings. When you use several iframes with different settings this can lead to strange behavior because you do not see the whole configuration in the shortcode. By setting this option to true only the parameters defined as attributes are used. So the minimum you need to define is: securitykey and src of the iframe. You can set this for a single iframe as well with the shortcode attribute use_shortcode_attributes_only="true". A minimal shortcode would then look like this: [advanced_iframe securitykey="', 'advanced-iframe') . $devOptions['securitykey'] . __('" use_shortcode_attributes_only="yes" src="http://www.tinywebgallery.com"].  Shortcode attribute: use_shortcode_attributes_only="true" or use_shortcode_attributes_only="false"', 'advanced-iframe'));
 ?>
@@ -441,6 +447,8 @@ if ($devOptions['donation_bottom'] === 'false') {
     if ($evanto) {        
         printTrueFalse($devOptions, __('Show loading icon', 'advanced-iframe'), 'show_iframe_loader', __('You can show a loading icon until the page in the iframe is fully loaded. You can use your own image with the size of 66 x 66 px by replacing the file img/loader.gif. Shortcode attribute: show_iframe_loader="true" or show_iframe_loader="false" ', 'advanced-iframe'));
         printNumberInput($devOptions, __('Zoom iframe', 'advanced-iframe'), 'iframe_zoom', __('You can zoom the content of the iframe with this setting. E.g. entering 0.5 does resize the iframe to 50%. At the iframe width and height you need to enter the FULL size of the iframe. So if you enter width = 1000, height = 500 and zoom = 0.5 than the result will be 500x250. The following browsers are supported: IE8-11, Firefox, Chrome, Safari, Opera. Older versions of IE are not supported. Please test all the browsers you want to support with your page because not all pages do look good in a zoomed mode! "Show only a part of an iframe" and "Resize iframe to content height" are supported. Shortcode attribute: iframe_zoom=""', 'advanced-iframe'));
+        printTrueFalse($devOptions, __('Enable responsive iframe', 'advanced-iframe'), 'enable_responsive_iframe', __('You can enable that the width of iframe is responsive. This features adds a max-width:100% to the iframe. So the defined  width is the maximum width of the iframe. But if the surrounding element gets smaller than this, the iframe is responsive and does shrink! But this is not the interesting part of this feature. When you enable this feature and also the resize the iframe to the content height (directt or by external workaround), the height does get responsive too! And this is the big difference to any other pure css solution which only work for iframes with a certain ratio e.g. for videos. Please read <a href="" target="_blank">this post</a> for details and take a look <a href="" target="_blank">pro demo</a>. Please note that this feature does NOT work together with "Show only a part of an iframe". Shortcode attribute: enable_responsive_iframe="true" or enable_responsive_iframe="false" ', 'advanced-iframe'));
+   
     } 
     ?> 
      <tr>
@@ -767,8 +775,8 @@ _e('to open this file and check the variable <b>domain</b> at the top. If not pl
     </p>
     <table class="form-table">
 <?php
-        printTextInput($devOptions, __('Additional css', 'advanced-iframe'), 'additional_css', __('If you want to include an additional css into the parent page please specify the path to this file here. The css file will be added into the header of the page. You can specify a full or relative url. If you specify a relative one /style.css means that the style.css is located in the main directory of Wordpress. Start relative urls with /. Shortcode attribute: additional_css=""', 'advanced-iframe'));
-        printTextInput($devOptions, __('Additional js', 'advanced-iframe'), 'additional_js', __('If you want to include an additional Javascript into the parent page please specify the path to this file here. The Javascript will be added after the iframe or if you use Wordpress >= 3.3 in the footer section. You can specify a full or relative url. If you specify a relative one /javascript.js means that the javascript.js is located in the main directory of Wordpress. Start relative urls with /. Shortcode attribute: additional_js=""', 'advanced-iframe'));
+        printTextInput($devOptions, __('Additional css', 'advanced-iframe'), 'additional_css', __('If you want to include an additional css into the parent page please specify the path to this file here. The css file will be added into the header of the page. You can specify a full or relative url. If you specify a relative one /style.css means that the style.css is located in the main directory of Wordpress. Start relative urls with /. Please note: Before Wordpress 3.3 the shortcode attribute cannot be used. You can only set it here. Shortcode attribute: additional_css=""', 'advanced-iframe'));
+        printTextInput($devOptions, __('Additional js', 'advanced-iframe'), 'additional_js', __('If you want to include an additional Javascript into the parent page please specify the path to this file here. The Javascript will be added after the iframe or if you use Wordpress >= 3.3 in the footer section. You can specify a full or relative url. If you specify a relative one /javascript.js means that the javascript.js is located in the main directory of Wordpress. Start relative urls with /. Please note: Before Wordpress 3.3 the shortcode attribute cannot be used. You can only set it here. Shortcode attribute: additional_js=""', 'advanced-iframe'));
                           ?>
     </table>
     <p>

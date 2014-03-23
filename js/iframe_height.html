@@ -6,13 +6,14 @@
 	}
   var nHeight = getParamFromLocation(1);
   
+  
   if (nHeight != undefined) {
     try {
       var id = getParamFromLocation(2);
       if (id != undefined) {
           iHeight = parseInt(nHeight);
-          window.parent.parent.aiResizeIframeHeight(iHeight,id);
-          window.parent.parent.aiShowIframe( '#' + id);
+          window.parent.parent.aiResizeIframeHeightId(iHeight,id);
+          window.parent.parent.aiShowIframeId( '#' + id);
       } else {
           // To be compatible with older versions of advanced iframe 
           window.parent.parent.aiResizeIframeHeight(nHeight);

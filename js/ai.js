@@ -31,12 +31,8 @@ function aiResizeIframe(obj, resize_width) {
           aiWriteCookie(newheight);
       }
       jQuery(document).scrollTop(oldScrollposition);
-      if (resize_width == 'true') {
-        var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
-          obj.contentWindow.document.body.offsetWidth, 
-          obj.contentWindow.document.documentElement.scrollWidth, 
-          obj.contentWindow.document.documentElement.offsetWidth); 
-        obj.width = (bodyWidth + aiExtraSpace) + 'px';
+      if (resize_width == 'true') { 
+        obj.width = aiGetIframeWidth(obj) + 'px';
       }
       eval ("resizeCallback" + obj.id + "()");
      
@@ -50,6 +46,17 @@ function aiResizeIframe(obj, resize_width) {
       console.log(e);
     } 
   }
+}
+
+/**
+ *  Get the iframe width
+ */ 
+function aiGetIframeWidth(obj) {
+    var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
+          obj.contentWindow.document.body.offsetWidth, 
+          obj.contentWindow.document.documentElement.scrollWidth, 
+          obj.contentWindow.document.documentElement.offsetWidth);
+    return bodyWidth + aiExtraSpace
 }
 
 /**
