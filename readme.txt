@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.8.1
-Stable tag: 5.6
+Tested up to: 3.8.2
+Stable tag: 5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,13 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.7 =
+- New: html attribute allowfullscreen is now supported.
+- New: Zoom and auto height with the external workaround with several iframes on the same page is now supported.
+- New: Tested with Wordpress 3.8.2
+- Fix: Advanced iframe pro can now be used together with php-browser-detection. Before using both where leading to a function redeclaration. 
+- Fix: Functions of the old and new workaround had the same name with different parameters. Now this functions have different names and also work properly with several iframes on the same page. 
+
 = 5.6 =
 - New: Support that the height of responsive iframes is automatically set to the new content height. This means that if you resize the parent page and the iframe width changes, the height of the iframe is adopted automatically like when loaded the first time! Please note that both pages (parent and iframe page) needs to be responsive. Please also read the blog entry about responsive iframes here:   (Pro)
 - New: Read-only iframes: hide_part_of_iframe does now support also %. This means together with color "transparent" you can create read-only iframes! See the following demo:  (Pro)
