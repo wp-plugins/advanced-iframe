@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.8.2
-Stable tag: 5.7
+Tested up to: 3.9
+Stable tag: 5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,7 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - Zoom iframe content
 - Accordion menu
 - jQuery help
+- Lazy load 
 - And much more...
 
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
@@ -150,6 +151,14 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.8 =
+- New: Shortcode generator! In the administration you can now generate a default independent shortcode from the current settings.(Pro)
+- New: Set Iframe height by ratio (iframe_height_ratio). This can be used to make resonsive iframes where the content has a certain ratio like swf's, videos... (Pro)
+- New: Wordpress 3.9 is supported 
+- New: map_parameter_to_url does now also support that an url can be passed to the iframe directly. So show=http%3A%2F%2Fwww.tinywebgallery.com would open http://wwww.tinywebgallery.com inside the iframe. (Pro)
+- New: Browscap version 5027 lite 24th Apr 2014 is now included. (Pro)  
+- Fix: Documentation impovements.
+
 = 5.7 =
 - New: html attribute allowfullscreen is now supported.
 - New: Zoom and auto height with the external workaround with several iframes on the same page is now supported.
@@ -158,8 +167,8 @@ select the one you like and save again.
 - Fix: Functions of the old and new workaround had the same name with different parameters. Now this functions have different names and also work properly with several iframes on the same page. 
 
 = 5.6 =
-- New: Support that the height of responsive iframes is automatically set to the new content height. This means that if you resize the parent page and the iframe width changes, the height of the iframe is adopted automatically like when loaded the first time! Please note that both pages (parent and iframe page) needs to be responsive. Please also read the blog entry about responsive iframes here:   (Pro)
-- New: Read-only iframes: hide_part_of_iframe does now support also %. This means together with color "transparent" you can create read-only iframes! See the following demo:  (Pro)
+- New: Support that the height of responsive iframes is automatically set to the new content height. This means that if you resize the parent page and the iframe width changes, the height of the iframe is adopted automatically like when loaded the first time! Please note that both pages (parent and iframe page) needs to be responsive. Please also read the blog entry about responsive iframes. (Pro)
+- New: Read-only iframes: hide_part_of_iframe does now support also %. This means together with color "transparent" you can create read-only iframes! See the pro demo. (Pro)
 - New: No output (except conguration errors) is done in the script function anymore. Everything is returned as return value. 
 - New: Added updated browsecap.ini: 5024 (2nd March 2014) from browscap.org
 - Fix: Improved documentation in the administration.

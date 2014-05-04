@@ -56,7 +56,7 @@ function aiGetIframeWidth(obj) {
           obj.contentWindow.document.body.offsetWidth, 
           obj.contentWindow.document.documentElement.scrollWidth, 
           obj.contentWindow.document.documentElement.offsetWidth);
-    return bodyWidth + aiExtraSpace
+    return bodyWidth;
 }
 
 /**
