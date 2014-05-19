@@ -50,11 +50,11 @@
   border: 2px solid #fefefe;
 }
 .signup_account_container#last .signup_inner {
-	width: 235px!important;
+	width: 245px!important;
 }
 
 .signup_account_container#last {
-  width: 297px!important;
+  width: 307px!important;
 }
 
 .signup_account_container:hover, .signup_account_container_active {
@@ -156,7 +156,7 @@ ul#browser-list {
 }
 
 
-#details-workaround, #details-javascript, #jquery-help, #browser-help {
+#details-workaround, #details-javascript, #jquery-help, #browser-help, #jquery-gen {
   background: #F2F7F9;
 	border: 1px solid #d2d7d9;
   padding:10px; 

@@ -2,10 +2,10 @@
 /*
 Plugin Name: Advanced iFrame
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 5.8
+Version: 5.9
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
-Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly. Please update this plugin with versions from codecanyon only. Otherwise you get the free version again.
+Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -80,7 +80,9 @@ if (!class_exists('advancediFrame')) {
                 'show_iframe_loader' => 'false',
                 'tab_visible' => '', 'tab_hidden' => '',
                 'enable_responsive_iframe' => 'false',
-                'allowfullscreen' => 'false' 
+                'allowfullscreen' => 'false', 'iframe_height_ratio' => '',
+                'enable_lazy_load' => 'false', 'enable_lazy_load_threshold' => '3000',
+                'enable_lazy_load_fadetime' => '0' 
                 );
             return $iframeAdminOptions;
         }
@@ -255,6 +257,11 @@ if (!class_exists('advancediFrame')) {
                 'tab_hidden'  => $options['tab_hidden'],
                 'enable_responsive_iframe'  => $options['enable_responsive_iframe'],
                 'allowfullscreen'  => $options['allowfullscreen'],
+                'iframe_height_ratio'  => $options['iframe_height_ratio'],
+                'enable_lazy_load'  => $options['enable_lazy_load'],
+                'enable_lazy_load_threshold'  => $options['enable_lazy_load_threshold'],
+                'enable_lazy_load_fadetime'  => $options['enable_lazy_load_fadetime'],
+ 
                  $atts));
             }
 
@@ -343,7 +350,12 @@ if (!class_exists('advancediFrame')) {
                     'tab_visible'  => $options['tab_visible'],
                     'tab_hidden'  => $options['tab_hidden'],
                     'enable_responsive_iframe'  => $options['enable_responsive_iframe'],
-                    'allowfullscreen'  => $options['allowfullscreen']
+                    'allowfullscreen'  => $options['allowfullscreen'],
+                    'iframe_height_ratio'  => $options['iframe_height_ratio'],
+                    'enable_lazy_load'  => $options['enable_lazy_load'],
+                    'enable_lazy_load_threshold'  => $options['enable_lazy_load_threshold'],
+                    'enable_lazy_load_fadetime'  => $options['enable_lazy_load_fadetime']
+ 
                      )
                     , $atts));
 
@@ -397,6 +409,15 @@ if (!class_exists('advancediFrame')) {
                 $change_iframe_links = '';
                 $change_iframe_links_target = ''; 
             }
+            
+            if (!empty($iframe_height_ratio)) {
+               $onload_resize = 'false';
+               $resize_on_ajax = '';
+               $resize_on_click = '';
+            }
+            if (empty($resize_on_click_elements)) {
+               $resize_on_click_elements = 'a';
+            }
 
             $default_options = get_option('default_a_options');
             if (!file_exists(dirname(__FILE__) . "/includes/class-cw-envato-api.php")) {
@@ -417,17 +438,25 @@ if (!class_exists('advancediFrame')) {
                 $tab_hidden = ''; 
                 $enable_responsive_iframe = 'false'; 
                 $allowfullscreen = 'false'; 
+                $iframe_height_ratio = '';
+                $enable_lazy_load = 'false';
             } else { $default_options = 0; }
             
             if (!empty($iframe_zoom)) {
                 $iframe_zoom = str_replace(',','.',$iframe_zoom);   
             }
             
-            $html = ''; // the output
+            // check ratio
+            if ($iframe_height_ratio == 'false') {
+                $iframe_height_ratio = '';
+            }
+            
             // settings defaults
             $id = (empty ($id)) ? 'advanced_iframe' : preg_replace("/[^a-zA-Z0-9]/", "_", $id);
             $name = (empty ($name)) ? 'advanced_iframe'  : preg_replace("/[^a-zA-Z0-9]/", "_", $name);
 
+            $html = ''; // the output
+            
             if (file_exists(dirname(__FILE__) . "/includes/advanced-iframe-browser-detection.php")) {
                 if ( !defined( 'AIP' ) ) {
                     define("AIP", "Advanced iFrame Pro");
@@ -475,6 +504,9 @@ if (!class_exists('advancediFrame')) {
                   }
                   ';
              }
+             
+            $scale_width = $width; 
+            $scale_height = $height; 
              
             if (!empty($iframe_zoom)) {
                  if ($width != 'not set' && $width != '') {
@@ -534,7 +566,11 @@ if (!class_exists('advancediFrame')) {
                  $html .= '#ai-div-container-'.$id.'
                  { 
                      position: relative;
-                     width: '.$loader_width.'px;
+                     width: '.$loader_width.'px;';
+                     if ($enable_responsive_iframe == 'true') {
+                      $html .= ' max-width: 100%;';
+                     }
+                 $html .= '    
                  }
                  #ai-div-loader-'.$id.'
                  {
@@ -559,9 +595,25 @@ if (!class_exists('advancediFrame')) {
                  }
                  ';
             }
+            
+             if ($enable_lazy_load == 'true') {
+                 $html .= '.ai-lazy-load-'.$id.'
+                 {
+                    width: '.$scale_width.';
+                    height: '.$scale_height.'; 
+                    padding: 0;
+                    margin: 0;
+                 }
+                 ';
+             }
+            
+            
             $html .= '</style>';
-            $html .= '<script type="text/javascript" src="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/js/ai.js" ></script>';
- 
+            $html .= '<script type="text/javascript" src="' . site_url() . '/wp-content/plugins/advanced-iframe/js/ai.js" ></script>';
+            if ($enable_lazy_load == 'true') {
+                $html .= '<script type="text/javascript" src="' . site_url() . '/wp-content/plugins/advanced-iframe/includes/scripts/jquery.lazyload-any.min.js" ></script>';
+            }
+             
             $html .= '<script type="text/javascript">';
             if ($store_height_in_cookie == 'true') {
                 $html .=  'var aiEnableCookie=true; aiId="' . esc_html($id) . '";';
@@ -576,10 +628,10 @@ if (!class_exists('advancediFrame')) {
             $html .= '    function aiShowIframeId(id_iframe) { jQuery(id_iframe).css("visibility", "visible");}';
             $html .= '    function aiResizeIframeHeight(height) { aiResizeIframeHeight(height,'.esc_html($id).'); }'; 
             $html .= '    function aiResizeIframeHeightId(height,id) {'; 
-                if (!empty($iframe_zoom)) { 
-                  $html .= ' var zoom_height = parseInt(height * parseFloat(eval("zoom_" + id)))+1;';
-                  $html .= ' jQuery(\'#ai-zoom-div-\' + id).css("height",zoom_height);';
-                }
+            if (!empty($iframe_zoom)) { 
+              $html .= ' var zoom_height = parseInt(height * parseFloat(window["zoom_" + id]))+1;';
+              $html .= ' jQuery(\'#ai-zoom-div-\' + id).css("height",zoom_height);';
+            }
             $html .= '
                   aiResizeIframeHeightById(id,height); }
                   </script>';
@@ -618,15 +670,22 @@ if (!class_exists('advancediFrame')) {
                             if ($read_param_url == $parameter_url_mapping[1]) {
                                 $src = $parameter_url_mapping[2]; 
                             }  
+                         } else if (count($parameter_url_mapping) == 1) {
+                            $src_url = $this->param($parameter_url_mapping[0]);
+                            if (!empty($src_url)) {
+                                $src = $src_url; 
+                            }
                          } else {
-                            return $error_css . '<div class="errordiv">' . __('ERROR: map_parameter_to_url does not have the requeired 3 parameters', 'advanced-iframe') . '</div>';
+                            return $error_css . '<div class="errordiv">' . __('ERROR: map_parameter_to_url does not have the required 1 or 3 parameters', 'advanced-iframe') . '</div>';
                          }
                     }        
                 }
 
                 if (empty($include_url)) {
                   if ((!empty($content_id) && !empty($content_styles)) ||
-                       !empty($hide_elements) || !empty($change_parent_links_target)) {
+                       !empty($hide_elements) || !empty($change_parent_links_target)
+                       || $enable_lazy_load == 'true'
+                       ) {
 
                     // hide elements is called directy in the page to hide elements as fast as quickly
                     $hidehtml = '';
@@ -652,6 +711,18 @@ if (!class_exists('advancediFrame')) {
                     }
 
                     $html .= '<script type="text/javascript">';
+                    $html .= '
+                     function loadElem_'.$id.'(elem)
+                     {'; 
+                     if ($enable_lazy_load_fadetime != '0') {
+                     $html .= ' 
+                        elem.fadeOut(0, function() {
+                          elem.fadeIn('.$enable_lazy_load_fadetime.');
+                        });';
+                     }
+                     $html .= '}';
+                    
+                    
                     $html .= 'function aiModifyParent_' . esc_html($id) . '() { ';
                     $html .=  $hidehtml;
                     $html .= '}';
@@ -664,6 +735,10 @@ if (!class_exists('advancediFrame')) {
                       }
                     }
                     $html .= 'aiModifyParent_' . esc_html($id) . '();';
+                    
+                    if ($enable_lazy_load == 'true') {
+                       $html .= 'jQuery("#ai-lazy-load-'.$id.'").lazyload({threshold: '.$enable_lazy_load_threshold.', load: loadElem_'.$id.'});';  
+                    }
                     $html .= ' });';
                     $html .= 'aiModifyParent_' . esc_html($id) . '();';
                     $html .= '</script>';
@@ -736,7 +811,7 @@ if (!class_exists('advancediFrame')) {
                    // div around 
                    $html .= '<div id="ai-div-container-'.$id.'">';
                    // div for the loader 
-                   $html .= '<div id="ai-div-loader-'.$id.'"><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/advanced-iframe/img/loader.gif" width="66" height="66" title="Loading" alt="Loading"></div> ';
+                   $html .= '<div id="ai-div-loader-'.$id.'"><img src="' . site_url()  . '/wp-content/plugins/advanced-iframe/img/loader.gif" width="66" height="66" title="Loading" alt="Loading"></div> ';
                  }
                 
                  if (!empty($hide_part_of_iframe)) {
@@ -761,6 +836,10 @@ if (!class_exists('advancediFrame')) {
                 if (!empty($iframe_zoom)) {
                      $html .= '<div id="ai-zoom-div-'.$id.'">';
                 }
+                if ($enable_lazy_load == 'true') {
+                     $html .= '<div id="ai-lazy-load-'.$id.'" class="ai-lazy-load-'.$id.'"><!--';
+                } 
+                
                 $html .= "<iframe id='" . esc_html($id) . "' ";
                 if (!empty ($name)) {
                     $html .= " name='" . esc_html($name) . "' ";
@@ -844,7 +923,7 @@ if (!class_exists('advancediFrame')) {
                 if ($show_part_of_iframe == 'true' && (!empty ($show_part_of_iframe_new_window) ||
                     !empty ($show_part_of_iframe_new_url) || !empty ($show_part_of_iframe_next_viewports) ||
                     ($show_part_of_iframe_next_viewports_hide == true) ) ) {
-                   $onload_str .= ';evaluateOnLoad'.$id.'();';
+                   $onload_str .= ';modifyOnLoad'.$id.'();';
                 }
                 if ($hideiframehtml) {
                     $onload_str .= ';aiModifyIframe_' . esc_html($id) . '();';
@@ -860,6 +939,11 @@ if (!class_exists('advancediFrame')) {
                         $onload_str .= ';aiResizeIframe(this, "'.$onload_resize_width.'");';
                     }
                 }
+                
+                if (!empty($iframe_height_ratio)) {
+                    $onload_str .= ';aiResizeIframeRatio(this, "'.$iframe_height_ratio.'");';
+                }
+                
                 if ($onload_scroll_top == 'true') {
                     $onload_str .= ';aiScrollToTop();';
                 }
@@ -874,6 +958,9 @@ if (!class_exists('advancediFrame')) {
                 }
 
                 $html .= '></iframe>';
+                if ($enable_lazy_load == 'true') {
+                    $html .= '--></div>';
+                } 
                 if (!empty($iframe_zoom)) {
                     $html .= '</div>';
                 }
@@ -890,17 +977,23 @@ if (!class_exists('advancediFrame')) {
                 $html .= '<script type="text/javascript">var ifrm_'.$id.' = document.getElementById("'.$id.'");</script>';
 
                 $html .= '<script type="text/javascript">
+                var hiddenTabsDone'.$id.' = false;
                 function resizeCallback'.$id.'() {';
                 if (!empty ($tab_hidden)) {
                   $split_hidden_array = explode(',', $tab_hidden);   
                   $hidden_counter = 0;
+                  $html .= 'if (!hiddenTabsDone'.$id.') { '; 
                   foreach ($split_hidden_array as $split_hidden) { 
                       if ($hidden_counter++ == 0) {
-                          $html .= ' jQuery("' . $split_hidden . '").css("position", "static").hide().css("visibility", "visible");';
+                          $html .= 'jQuery("' . $split_hidden . '").css("position", "static").hide().css("visibility", "visible");';
+                          // for one level resize works mu
+                          $html .= 'hiddenTabsDone'.$id.' = false;';
                       } else {
                           $html .= ';jQuery("'. $split_hidden .'").hide();';
+                          $html .= 'hiddenTabsDone'.$id.' = true;';
                       }
                   }
+                  $html .= '}';
                 }
                 $html .= '}</script>';
                                   
@@ -916,7 +1009,7 @@ if (!class_exists('advancediFrame')) {
                    $html .= '<script type="text/javascript">
                       var countAlert'.$id.' = 0;
                       var maxStep'.$id.' = getViewPortCount'.$id.'();
-                      function evaluateOnLoad'.$id.'() {
+                      function modifyOnLoad'.$id.'() {
                             if (maxStep'.$id.' == countAlert'.$id.') {';
                             if ($show_part_of_iframe_next_viewports_loop == 'true') {
                                 $html .= '
@@ -977,13 +1070,21 @@ if (!class_exists('advancediFrame')) {
                  
                  if ($enable_responsive_iframe == 'true') {
                      $html .= '<script type="text/javascript">
-                        var ai_iframe_width_'.$id.' = aiGetIframeWidth(ifrm_'.$id.');
-                        jQuery(window).resize(function() {
-                            // check if the iframe width has changed
-                            if (ai_iframe_width_'.$id.' != aiGetIframeWidth(ifrm_'.$id.')) {
-                                ai_iframe_width_'.$id.' = aiGetIframeWidth(ifrm_'.$id.'); 
+                        var ai_iframe_width_'.$id.' = aiGetParentIframeWidth(ifrm_'.$id.');
+                        jQuery(window).resize(function() {'; 
+                     if ($enable_lazy_load == 'true') {
+                         $html .= 'ifrm_'.$id.' = document.getElementById("'.$id.'");';
+                     }
+                     // check if the iframe width has changed
+                     $html .= 'if (ai_iframe_width_'.$id.' != aiGetParentIframeWidth(ifrm_'.$id.')) {
+                                ai_iframe_width_'.$id.' = aiGetParentIframeWidth(ifrm_'.$id.');';
                                 // resize the iframe 
-                                aiResizeIframe(ifrm_'.$id.', "'.$onload_resize_width.'");
+                                if (!empty($iframe_height_ratio)) {           
+                                    $html .= '  aiResizeIframeRatio(ifrm_'.$id.', "'.$iframe_height_ratio.'");';
+                                } else if ($onload_resize) {            
+                                    $html .= '  aiResizeIframe(ifrm_'.$id.', "'.$onload_resize_width.'");';
+                                }
+                      $html .= '
                             }
                         });
                         </script>';

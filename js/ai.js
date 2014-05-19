@@ -23,7 +23,7 @@ function aiResizeIframe(obj, resize_width) {
       
       // set the height of the zoom div
       if (jQuery('#ai-zoom-div-' + obj.id).length != 0) {
-         var zoom = eval("zoom_" + obj.id)
+         var zoom = window["zoom_" + obj.id];
          jQuery('#ai-zoom-div-' + obj.id).css("height", newheight * zoom);
       }
       
@@ -34,7 +34,8 @@ function aiResizeIframe(obj, resize_width) {
       if (resize_width == 'true') { 
         obj.width = aiGetIframeWidth(obj) + 'px';
       }
-      eval ("resizeCallback" + obj.id + "()");
+      fCallback = window["resizeCallback" + obj.id];
+      fCallback();
      
     } else {
       // body is not loaded yet - we wait 100 ms.
@@ -60,12 +61,25 @@ function aiGetIframeWidth(obj) {
 }
 
 /**
+ *  Get the current width of the iframe inside the parent. 
+ */ 
+function aiGetParentIframeWidth(obj) {
+    if (obj != null && jQuery("#" + obj.id).length != 0) {
+        return jQuery("#" + obj.id).width(); 
+    } else {
+        return -1;
+    } 
+}
+
+
+/**
  *  Resizes an iframe to a given height.
  *  this is used for xss enabled iframes.
  *  Please read the documentation!   
  */ 
 function aiResizeIframeHeightById(id, nHeight) {
-    eval ("resizeCallback" + id + "()");
+    fCallback = window["resizeCallback" + id];
+    fCallback();
     var height = parseInt(nHeight) + aiExtraSpace;
     var iframe = document.getElementById(id); 
 		var oldScrollposition = jQuery(document).scrollTop();

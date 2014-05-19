@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.9
-Stable tag: 5.8
+Tested up to: 3.9.1
+Stable tag: 5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,7 @@ You can find the comparison chart here: http://www.tinywebgallery.com/blog/advan
 
 See the pro demo here: 
 http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
+
 = Administration =  
 * Go to Settings -> Advanced iFrame
 
@@ -151,13 +152,27 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.9 =
+- New: Lazy load of iframes with treshold and fadein. Iframes can be loaded after the parent is done or the iframe is shown in the viewport! (Pro)
+- New: Better input validation. Avoids configuration errors.
+- New: Wordpress 3.9.1 is supported
+- New: An alternative to the eval function is now used in Javascript to improve security and speed.
+- New: Browscap version 5029 lite 8th May 2014 is now included. (Pro) 
+- Fix: Code improvements found with the plugin checker plugin
+- Fix: Hidden tabs was not working because of the responsive iframe feature. Now both do work independant again. (Pro)
+- Fix: Improved shortcode generator (Pro) 
+- Fix: Width is now measured without the extra space (which was 0 by default anyway ;))
+- Fix: Whitelist for params was extended by :,? and &
+- Fix: Wrong default for Set Iframe height by ratio (iframe_height_ratio) was fixed (Pro) 
+- Fix: loader icon and responsive iframe do now work together! (Pro)
+
 = 5.8 =
 - New: Shortcode generator! In the administration you can now generate a default independent shortcode from the current settings.(Pro)
 - New: Set Iframe height by ratio (iframe_height_ratio). This can be used to make resonsive iframes where the content has a certain ratio like swf's, videos... (Pro)
 - New: Wordpress 3.9 is supported 
 - New: map_parameter_to_url does now also support that an url can be passed to the iframe directly. So show=http%3A%2F%2Fwww.tinywebgallery.com would open http://wwww.tinywebgallery.com inside the iframe. (Pro)
 - New: Browscap version 5027 lite 24th Apr 2014 is now included. (Pro)  
-- Fix: Documentation impovements.
+- Fix: Documentation improvements.
 
 = 5.7 =
 - New: html attribute allowfullscreen is now supported.

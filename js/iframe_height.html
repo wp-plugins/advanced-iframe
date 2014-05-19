@@ -11,7 +11,7 @@
     try {
       var id = getParamFromLocation(2);
       if (id != undefined) {
-          iHeight = parseInt(nHeight);
+          var iHeight = parseInt(nHeight);
           window.parent.parent.aiResizeIframeHeightId(iHeight,id);
           window.parent.parent.aiShowIframeId( '#' + id);
       } else {

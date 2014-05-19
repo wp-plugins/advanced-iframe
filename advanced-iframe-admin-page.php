@@ -7,13 +7,14 @@ Administration include
 */
 ?>
 <script type="text/javascript">
-    function aiCheckInputNumber(intputField) {
-        intputField.value = intputField.value.split(' ').join('');
-        var f = intputField.value;
-        if (intputField.value == '') return;
+    function aiCheckInputNumber(inputField) {
+        inputField.value = inputField.value.split(' ').join('');
+        var f = inputField.value;
+        if (inputField.value == '') return;
         var match = f.match(/^(\-){0,1}([\d\.]+)(px|%|em|pt)?$/);
         if (!match) {
             alert("<?php _e("Please check the value you have entered. Only numbers with a dot or with an optional px, %, em or pt are allowed", "advanced-iframe");?>");
+            setTimeout(function(){inputField.focus();}, 10);
         }
     }
 </script>
@@ -134,7 +135,7 @@ echo '
 
 				<div class="signup_inner_desc">
            <ul class="pro"><li>';
-           _e('<a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/show-only-a-part-of-the-iframe" target="_blank">Show/Hide specific areas of the iframe</a> if the iframe is on a different domain<br /><a target="_blank" href="http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html">Show the graphical selector</a></li><li><a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/widgets" target="_blank">Widget support</a>, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/change-links-targets" target="_blank">change link targets</a></li><li>External workaround supports <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/external-workaround-auto-height-and-css-modifications" target="_blank">iframe modifications</a> and <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/responsive-iframes" target="_blank">responsive iframes</a></li><li><a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/browser-detection" target="_blank">Browser dependant settings</a></li><li>No view limit, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/zoom-iframe-content" target="_blank">zoom</a>, <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-support">Support</a></li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">See the pro demo</a><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart">Compare versions for all features</a>', 'advanced-iframe');
+           _e('<a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/show-only-a-part-of-the-iframe" target="_blank">Show/Hide specific areas of the iframe</a> if the iframe is on a different domain<br /><a target="_blank" href="http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html">Show the graphical selector</a></li><li><a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/widgets" target="_blank">Widget support</a>, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/change-links-targets" target="_blank">change link targets</a></li><li>External workaround supports <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/external-workaround-auto-height-and-css-modifications" target="_blank">iframe modifications</a> and <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/responsive-iframes" target="_blank">responsive iframes</a></li><li><a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/browser-detection" target="_blank">Browser dependant settings</a>, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/lazy-loading" target="_blank">Lazy load</a></li><li>No view limit, <a href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/zoom-iframe-content" target="_blank">zoom</a>, <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-support">Support</a></li><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo">See the pro demo</a><li><a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart">Compare versions for all features</a>', 'advanced-iframe');
            echo '</li></ul>
         </div>
 			</div>
@@ -193,7 +194,10 @@ if (is_user_logged_in() && is_admin()) {
             'iframe_redirect_url', 'show_part_of_iframe_style',
             'map_parameter_to_url', 'iframe_zoom',
             'tab_visible', 'tab_hidden','enable_responsive_iframe',
-            'allowfullscreen' 
+            'allowfullscreen','iframe_height_ratio',
+            'show_iframe_loader', 'enable_lazy_load',
+            'enable_lazy_load_threshold','enable_lazy_load_fadetime'
+
             );  
         if (!wp_verify_nonce($_POST['twg-options'], 'twg-options')) die('Sorry, your nonce did not verify.');
         foreach ($adminSettings as $item) {
@@ -304,7 +308,7 @@ _e('
 </div>
 <div style="float:left; margin-right:30px;;height:60px;">
 <a href="#mp">Modify the parent page</a><br />
-<a href="#so">Show only a part of the iframe</a><br />
+<a href="#so">Show only a part of the iframe or modify it</a><br />
 <a href="#rt">Resize the iframe to the content height/width</a><br />
 </div>
 <div style="float:left;height:60px;">
@@ -350,6 +354,18 @@ if ($devOptions['donation_bottom'] === 'false') {
       <?php _e('Please use the following shortcode to include a page to your page: ', 'advanced-iframe'); ?>
       <span> [advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>"]
       </span>
+      <?php if ($evanto) { ?> 
+      <p>You can also generate a shortcode which does include all settings as shortcode attributes. This shortcode does not use any of the defaults. <input id="gen" class="button-primary" type="button" name="generate" value="Generate a shortcode for the current settings" onclick="aiGenerateShortcode(); jQuery('#jquery-gen').show(); return false;"  /></p>
+      <div id="jquery-gen">
+      <p>
+      Copy the following shortcode to your page:
+      </p>
+      <p id="gen-shortcode">
+          [advanced_iframe securitykey="<?php echo $devOptions['securitykey']; ?>"]
+      </p>
+      
+      </div>
+      <?php } ?>
       <p>
       Examples if you want to use several iframes with different settings. Also read the <a target="_blank" href="http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-faq">FAQ</a>:
       </p>
@@ -388,7 +404,7 @@ if ($evanto) {
         printTrueFalse($devOptions, __('Allow full screen', 'advanced-iframe'), 'allowfullscreen', __('allowfullscreen is an HTML attribute that enables videos to be displayed in fullscreen mode. Currently this is a new html attribute not supported by all browsers. So please check  all of the browsers you want to support. Shortcode attribute: allowfullscreen="true" or allowfullscreen="false"', 'advanced-iframe'));
 }              
         printTrueFalse($devOptions, __('Allow shortcode attributes', 'advanced-iframe'), 'shortcode_attributes', __('Allow to set attributes in the shortcode. All of the attributes can be overwritten in the shortcode if you set \'Yes\'. Otherwise the settings you specify here are used.', 'advanced-iframe'));
-        printTrueFalse($devOptions, __('Use shortcode attributes only', 'advanced-iframe'), 'use_shortcode_attributes_only', __('All iframes you use in your pages use the settings below. With shortcode attributes you can overwrite these settings. When you use several iframes with different settings this can lead to strange behavior because you do not see the whole configuration in the shortcode. By setting this option to true only the parameters defined as attributes are used. So the minimum you need to define is: securitykey and src of the iframe. You can set this for a single iframe as well with the shortcode attribute use_shortcode_attributes_only="true". A minimal shortcode would then look like this: [advanced_iframe securitykey="', 'advanced-iframe') . $devOptions['securitykey'] . __('" use_shortcode_attributes_only="yes" src="http://www.tinywebgallery.com"].  Shortcode attribute: use_shortcode_attributes_only="true" or use_shortcode_attributes_only="false"', 'advanced-iframe'));
+        printTrueFalse($devOptions, __('Use shortcode attributes only', 'advanced-iframe'), 'use_shortcode_attributes_only', __('All iframes you use in your pages use the settings below. With shortcode attributes you can overwrite these settings. When you use several iframes with different settings this can lead to strange behavior because you do not see the whole configuration in the shortcode. By setting this option to true only the parameters defined as attributes are used. So the minimum you need to define is: securitykey and src of the iframe. You can set this for a single iframe as well with the shortcode attribute use_shortcode_attributes_only="true". A minimal shortcode would then look like this: [advanced_iframe securitykey="', 'advanced-iframe') . $devOptions['securitykey'] . __('" use_shortcode_attributes_only="true" src="http://www.tinywebgallery.com"].  Shortcode attribute: use_shortcode_attributes_only="true" or use_shortcode_attributes_only="false"', 'advanced-iframe'));
 ?>
     </table>
     <p>
@@ -439,7 +455,7 @@ if ($evanto) {
     <?php    
         printTextInput($devOptions, __('URL forward parameters', 'advanced-iframe'), 'url_forward_parameter', __('Define the parameters that should be passed from the browser url to the iframe url. Please separate the parameters by \',\'. <br />Pro users can also map incoming parameters to a different parameter. Wordpress has a couple of <href="http://codex.wordpress.org/Function_Reference/register_taxonomy#Reserved_Terms" target="_blank">reserved words</a> which canot be used in urls. So if you want to pass the parameter "name" (reserved word) to your iframe you can do a mapping with "ainame|name". Than the parameter "ainame=hallo" will be passed as "name=hallo" to the iframe. This can also be used if the parameters of the 2 pages do not match. Several mappings can be seperated with \',\' like normal parameters. In e.g. TinyWebGallery this enables you to jump directly to an album or image although TinyWebGallery is included in an iframe. Shortcode attribute: url_forward_parameter=""', 'advanced-iframe'));
     if ($evanto) {        
-        printTextInput($devOptions, __('Map parameter to url', 'advanced-iframe'), 'map_parameter_to_url', __('You can map an url parameter value pair to an url which should be opened in the iframe. If you e.g. have a page with the iframe and you like to have different content in the iframe depending on an url parameter than this is the setting you have to use. You have to specify this setting in the following syntax "parameter|value|url" e.g. "show|1|http://www.tinywebgallery.com". If you than open the parent page with ?show=1 than http://www.tinywebgallery.com is opened inside the iframe. You can also specify several mappings by separating them by \',\'. If no parameter/avlue pair does match the normal src attribute of the configuration is used. Shortcode attribute: map_parameter_to_url=""', 'advanced-iframe'));
+        printTextInput($devOptions, __('Map parameter to url', 'advanced-iframe'), 'map_parameter_to_url', __('You can map an url parameter value pair to an url or pass the url directly which should be opened in the iframe. If you e.g. have a page with the iframe and you like to have different content in the iframe depending on an url parameter than this is the setting you have to use. You have to specify this setting in the following syntax "parameter|value|url" e.g. "show|1|http://www.tinywebgallery.com". If you than open the parent page with ?show=1 than http://www.tinywebgallery.com is opened inside the iframe. You can also specify several mappings by separating them by \',\'. You can also only specify 1 parameter here! The value of this paramter is than used as iframe url. e.g. show=http%3A%2F%2Fwww.tinywebgallery.com%3Fparam=value. You need to encode the url if you pass it in the url. Especially ? (%3F) and & (%26)! Please note that because of security reason only whitelisted chars [a-zA-Z0-9/:?&.] are allowed. Encoded parameters in the passed urls are not supported because all input is decoded and checked. If no parameter/value pair does match the normal src attribute of the configuration is used. Shortcode attribute: map_parameter_to_url=""', 'advanced-iframe'));
     }           
         printTrueFalse($devOptions, __('Scrolls the parent window to the top', 'advanced-iframe'), 'onload_scroll_top', __('If you like that if you click on a link in the iframe the parent page should scroll to the top you should set this to \'Yes\'. Please note that this is done by Javascript! So if a user has Javascript deactivated no scrolling is done.   This setting generates the code onload="aiScrollToTop();" to the iframe. If you select the resize iframe as well then onload="aiResizeIframe(this);aiScrollToTop();" is generated. If you like a different order please enter the javascript functions directly in the onload parameter in the order you like. Shortcode attribute: onload_scroll_top="true" or onload_scroll_top="false" ', 'advanced-iframe'));
 
@@ -447,8 +463,13 @@ if ($evanto) {
     if ($evanto) {        
         printTrueFalse($devOptions, __('Show loading icon', 'advanced-iframe'), 'show_iframe_loader', __('You can show a loading icon until the page in the iframe is fully loaded. You can use your own image with the size of 66 x 66 px by replacing the file img/loader.gif. Shortcode attribute: show_iframe_loader="true" or show_iframe_loader="false" ', 'advanced-iframe'));
         printNumberInput($devOptions, __('Zoom iframe', 'advanced-iframe'), 'iframe_zoom', __('You can zoom the content of the iframe with this setting. E.g. entering 0.5 does resize the iframe to 50%. At the iframe width and height you need to enter the FULL size of the iframe. So if you enter width = 1000, height = 500 and zoom = 0.5 than the result will be 500x250. The following browsers are supported: IE8-11, Firefox, Chrome, Safari, Opera. Older versions of IE are not supported. Please test all the browsers you want to support with your page because not all pages do look good in a zoomed mode! "Show only a part of an iframe" and "Resize iframe to content height" are supported. Shortcode attribute: iframe_zoom=""', 'advanced-iframe'));
-        printTrueFalse($devOptions, __('Enable responsive iframe', 'advanced-iframe'), 'enable_responsive_iframe', __('You can enable that the width of iframe is responsive. This features adds a max-width:100% to the iframe. So the defined  width is the maximum width of the iframe. But if the surrounding element gets smaller than this, the iframe is responsive and does shrink! But this is not the interesting part of this feature. When you enable this feature and also the resize the iframe to the content height (directt or by external workaround), the height does get responsive too! And this is the big difference to any other pure css solution which only work for iframes with a certain ratio e.g. for videos. Please read <a href="" target="_blank">this post</a> for details and take a look <a href="" target="_blank">pro demo</a>. Please note that this feature does NOT work together with "Show only a part of an iframe". Shortcode attribute: enable_responsive_iframe="true" or enable_responsive_iframe="false" ', 'advanced-iframe'));
+        printTrueFalse($devOptions, __('Enable responsive iframe', 'advanced-iframe'), 'enable_responsive_iframe', __('You can enable that the width of iframe is responsive. This features adds a max-width:100% to the iframe. So the defined  width is the maximum width of the iframe. But if the surrounding element gets smaller than this, the iframe is responsive and does shrink! But this is not the interesting part of this feature. When you enable this feature and also the resize the iframe to the content height (directt or by external workaround), the height does get responsive too! And this is the big difference to any other pure css solution which only work for iframes with a certain ratio e.g. for videos. Please read <a href="" target="_blank">this post</a> for details and take a look <a href="" target="_blank">pro demo</a>. Please note that this feature does NOT work together with "Show only a part of an iframe" and "Hidden tabs". Shortcode attribute: enable_responsive_iframe="true" or enable_responsive_iframe="false" ', 'advanced-iframe'));
+        printNumberInput($devOptions, __('Set Iframe height by ratio', 'advanced-iframe'), 'iframe_height_ratio', __('This setting enables you to set the height of an iframe depending on the width of an iframe. If you have a static site you know the width of an iframe and you can set the heigt to a fix value. But if you e.g. have an iframe width of 100% and responsive layout you do not know the height. Using auto heigt does solve this most of the time but sometimes the content inside the iframe is fully dynamic too (like a video which does scale). If this is the case you can define a ratio here. e.g. 0.5 means that if you have a width of 1000 you have a height of 500. If the width changes to 800 the height changes to 400. Please use a . as decimal char. This setting does also work together with "Enable responsive iframe". So scalling the browser does change the height also if you enable the setting above. If you enable this setting the local resize settings are disabled! Shortcode attribute: iframe_height_ratio="" ', 'advanced-iframe'));
    
+     // lazy load
+     printTrueFalse($devOptions, __('Enable lazy load', 'advanced-iframe'), 'enable_lazy_load', __('You can enable that iframes are lazy loaded. If you enable this, the iframe is loaded either after the ready event of the parent or if the iframe gets visible. Please check the "Enable lazy load threshold" setting below how to configure this. Shortcode attribute: enable_lazy_load="true" or enable_lazy_load="false" ', 'advanced-iframe'));
+     printNumberInput($devOptions, __('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lazy load threshold', 'advanced-iframe'), 'enable_lazy_load_threshold', __('This setting sets the pixels to load earlier. Setting the value e.g. to 200 causes iframe to load 200 pixels before it appears in the viewport. It should be greater or equal zero. The default is set to 3000 which normally is a lazy load after the parent finished loading. If you set this value higher then the distance of the iframe to the top, the iframe is lazy loaded after the parent document ready event is fired. If you leave this field empty 0 is used. Shortcode attribute: enable_lazy_load_threshold="" ', 'advanced-iframe'), 'text', '3000');
+     printNumberInput($devOptions, __('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lazy load fadein time', 'advanced-iframe'), 'enable_lazy_load_fadetime', __('This setting enables you to fade in the iframe after it is lazy loaded. Enter the time in milliseconds.  Depending on the content of the iframe this looks good or not. Please test if you like the behaviour. If you leave this field empty 0 is used. Shortcode attribute: enable_lazy_load_fadetime="" ', 'advanced-iframe'), 'text', '0');
     } 
     ?> 
      <tr>
@@ -500,12 +521,12 @@ echo '</p><table class="form-table">';
       <input id="so" class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>
     </p>
 </div>
-<h1 id="h1-so"><?php _e('Show only a part of the iframe', 'advanced-iframe'); ?></h1>
+<h1 id="h1-so"><?php _e('Show only a part of the iframe or modify it', 'advanced-iframe'); ?></h1>
 <div>
     <div id="icon-options-general" class="icon_ai">
       <br>
     </div><h2>
-      <?php _e('Show only a part of the iframe', 'advanced-iframe'); ?></h2>
+      <?php _e('Show only a part of the iframe or modify it', 'advanced-iframe'); ?></h2>
        <h3><?php _e('Options if the iframe is on a different OR the same domain', 'advanced-iframe') ?></h3>
 <?php if ($evanto) { ?>
     <p>
@@ -544,7 +565,7 @@ echo '</p><table class="form-table">';
 echo '</table>';
            ?>
     <p>
-        <input id="onload" class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>
+        <input id="onload-button" class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>
     </p>
     <?php } else { ?>
     <p>
@@ -616,6 +637,8 @@ echo '</p><table class="form-table">';
      <p><?php _e('Elements that are hidden with display:none return a size of 0 when the height is measured. This is very often the case when tabs are used and you place an iframe on a tab that is not shown by default. The next settings are needed for a workaround that moves the hidden element out of the viewport, shows and measures the iframe and moves everything back. To get this working you need to provide the id or class of the tab that is hidden and depending on the tabs plugin also the id or class of the tab that is visible by default to get the correct width. Please read the section "<a href="#howtoid">How to find the id and the attributes</a>" above how to find the right id or class. E.g. Tabby Responsive Tabs and Post UI Tabs work fine with this solution. Even nested tabs do work! If you need a custom solution please contact me for an offer.', 'advanced-iframe') ?>
     </p>
     <p><?php _e('IMPORTANT: If you use this feature with the external workaround you NEED to set a resize delay because otherwise the height is measured while the element is still hidden. This can be done by setting "var onload_resize_delay = 200;" before the external workaround script. Depending on the size of your page you might have to increase this value. As the tab is hidden this should not be a problem. For details please see <a href="#xss">here</a>.', 'advanced-iframe') ?>
+    </p>
+    <p><?php _e('Please note: This feature is not supported for responsive iframes because the size of the hidden tabs are not calculated at each resize.', 'advanced-iframe') ?>
     </p>
     <table class="form-table">
 <?php
@@ -704,14 +727,14 @@ _e('to open this file and check the variable <b>domain</b> at the top. If not pl
 <?php
         printTrueFalse($devOptions, __('Enable the height workaround', 'advanced-iframe'), 'enable_external_height_workaround', __('Enable the height workaround in the generated Javascript file. If you want to use several iframes please use the description below for configuration. This settings only works if you have included the Javascript to the remote page.<br>IMPORTANT: If you set this setting to true the settings from "Options if the iframe is on the same domain" and "Modify the content of the iframe if the iframe page is on the same domain" are disabled. The settings of ""Modify the content of the iframe if the iframe page is on the same domain" are used in the pro version in the external workaround. These settings would generated Javascipt security errors if set for an external domain! Shortcode attribute: enable_external_height_workaround="false". The shortcode can only be used to enable the disabled functionality describe before!', 'advanced-iframe'), "false");
         printTrueFalse($devOptions, __('Keep overflow:hidden after resize', 'advanced-iframe'), 'keep_overflow_hidden', __('By default overflow:hidden (removes any scrollbars inside the iframe) is set during the resize to avoid scrollbars and is removed afterwards to allow scrollbars if e.g. the content changes because of dynamic elements. If you set this setting to true the overflow:hidden is not removed and any scrollbars are not shown. This is e.g. helpful if the page is still to wide! If you want to use several iframes please use the description below for configuration. These settings only works if you have included the Javascript to the remote page. This setting cannot be set by a shortcode. Please see below.', 'advanced-iframe'), "false");
-        printTrueFalse($devOptions, __('Hide the iframe until it is completely modified.', 'advanced-iframe'), 'hide_page_until_loaded_external', __('This setting hides the iframe until the external workaround is completely done. This prevents that you see the original site before any modifications. The normal "Hide the iframe until it is loaded" shows the iframe after all modifications are done which are all done by a local script. This way cannot be used for the external workaround because the exact time when the external modifications are done is unknown. Therefore the external workaround does call iaShowIframe after all modifications are done. This setting cannot be set by a shortcode. Please see below. Shortcode attribute: hide_page_until_loaded_external="true", hide_page_until_loaded_external="false". Make sure that if you use different settings on different iframes the value of the shortcode matches the setting you make below because otherwise the iframe is not hidden.', 'advanced-iframe'), "false");
+        printTrueFalse($devOptions, __('Hide the iframe until it is completely modified.', 'advanced-iframe'), 'hide_page_until_loaded_external', __('This setting hides the iframe until the external workaround is completely done. This prevents that you see the original site before any modifications. The normal "Hide the iframe until it is loaded" shows the iframe after all modifications are done which are all done by a local script. This way cannot be used for the external workaround because the exact time when the external modifications are done is unknown. Therefore the external workaround does call iaShowIframe after all modifications are done. This setting cannot be set by a shortcode. Make sure that if you use different settings on different iframes the id of the shortcode matches the setting you make below because otherwise the iframe is not hidden.', 'advanced-iframe'), "false");
     if ($evanto) {
          printTextInput($devOptions, __('Iframe redirect url', 'advanced-iframe'), 'iframe_redirect_url', __('If you like that the page you want to include can only be viewed in your iframe you can define the parent url here. If someone tries to open the url directly he will be redirected to this url. Existing parameters from the original url are added to the new url. You need to add the possible parameters to the "URL forward parameters" that they will be passed to the iframe again. This settting does use Javascript for the redirect. If Javascript is turned off the user can still access the site. If you also want to avoid this add "html {visibility:hidden;}" to the style sheet of your iframe page. Than the page is simply white. The Javascript does set the page visible after it is loaded!', 'advanced-iframe'));
     }
     ?></table>
     <?php _e('<strong>Please note:</strong> If you change the settings above make sure to do a full reload the page in the iframe!', 'advanced-iframe') ?>
      <p>
-      <input id="onload" class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>
+      <input id="external-button" class="button-primary" type="submit" name="update_iframe-loader" value="<?php _e('Update Settings', 'advanced-iframe') ?>"/>
     </p>
     <p>
       <?php _e('Please test with <strong>all</strong> browsers! If the wrapper div is needed (It has a transparent border of 1px!) and it causes layout problems you have to remove the wrapper div in the Javascript file and you have to measure the body. The alternative solution is stored as comment in the Javascript file. The Javascript file is regenerated each time you save the settings on this page.<br />The workaround only supports one iframe on one page currently.', 'advanced-iframe') ?>
@@ -811,11 +834,11 @@ echo '<table class="form-table">';
     </div><h2>
       <?php _e('Small jQuery help', 'advanced-iframe'); ?></h2>
       <p>
-     You can use jquery selector patterns directly to identify the elements you want to modify at some of the settings. This plugin does use this selectors than at the right place. This is already an advanced topic if you are not familiar with jQuery.
+     <?php _e('You can use jquery selector patterns directly to identify the elements you want to modify at some of the settings. This plugin does use this selectors than at the right place. This is already an advanced topic if you are not familiar with jQuery.', 'advanced-iframe') ?>
       </p>
 <?php if ($evanto) {  ?>
     <p>
-    <a href="#" onclick="jQuery('#jquery-help').show(); return false;" > <?php _e('Show me a small jQuery selector help.') ?></a>
+    <a href="#" onclick="jQuery('#jquery-help').show(); return false;" > <?php _e('Show me a small jQuery selector help.', 'advanced-iframe') ?></a>
     </p>
       <?php
       _e('<div id="jquery-help">
@@ -994,7 +1017,7 @@ Omitting E is identical to *#i.</td>
 
       <h3>Credit and update</h3>
       <p>
-        Advanced iFrame Pro uses an integrated browser detection which is based on the wordpress plugin "<a target="_blank" href="http://wordpress.org/extend/plugins/php-browser-detection/">php-browser-detection 2.2.3</a>" and the browser detection file (2nd Feb 2014, 5023) from browscap.org.
+        Advanced iFrame Pro uses an integrated browser detection which is based on the wordpress plugin "<a target="_blank" href="http://wordpress.org/extend/plugins/php-browser-detection/">php-browser-detection 2.2.3</a>" and the browser detection file (8nd May 2014, 5029) from browscap.org.
       </p>
       <p>
          You can get an updated version of the browsercap.ini file here: http://tempdownloads.browserscap.com/<br />
@@ -1115,9 +1138,12 @@ function printTextInput($options, $label, $id, $description, $type = 'text') {
 /**
  *  Prints an input field that acepts only numbers and does a validation
  */
-function printNumberInput($options, $label, $id, $description, $type = 'text') {
+function printNumberInput($options, $label, $id, $description, $type = 'text', $default = '') {
     if (!isset($options[$id])) {
-      $options[$id] = 'false';
+        $options[$id] = '0';
+    }
+    if ($options[$id] == '' && $default != '') {
+        $options[$id] = $default;
     }
     echo '
       <tr>
@@ -1177,7 +1203,6 @@ function printHeightNumberInput($options, $label, $id, $description, $type = 'te
 
 function printAccordeon($options, $label, $id, $description, $default = 'false') {
     if (!isset($options[$id]) || empty($options[$id])) {
-     echo "ddd";
       $options[$id] = $default;
     }
     
