@@ -2,7 +2,7 @@
 /*
 Plugin Name: Advanced iFrame
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 5.9
+Version: 5.9.1
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
@@ -925,7 +925,7 @@ if (!class_exists('advancediFrame')) {
                     ($show_part_of_iframe_next_viewports_hide == true) ) ) {
                    $onload_str .= ';modifyOnLoad'.$id.'();';
                 }
-                if ($hideiframehtml) {
+                if ($hideiframehtml != '') {
                     $onload_str .= ';aiModifyIframe_' . esc_html($id) . '();';
                 }
 
@@ -1035,8 +1035,7 @@ if (!class_exists('advancediFrame')) {
                                    } // else nothing to do
                                 }
                             }
-                     $html .= '
-                          } else if (countAlert'.$id.' > 0)  { // viewport change!
+                     $html .= '} else if (countAlert'.$id.' > 0)  { // viewport change!
                               setNewViewPort'.$id.'(countAlert'.$id.'-1);
                           }
                           countAlert'.$id.'++;
@@ -1213,8 +1212,7 @@ if (!class_exists('advancediFrame')) {
                 $val .= 'local_resize_'.$iframe_id.'('.$timeout.');';
                 $val .= 'return retValue;
                     }
-                }
-                ';
+                }';
                 $val .= '  ifrm_'.$iframe_id.'.contentWindow.XMLHttpRequest.prototype.send = sendReplacement_'.$iframe_id.';';
                 $val .= '</script>';
                 }

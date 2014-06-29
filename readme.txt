@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
-Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
+Tags: iframe, shortcode, resize, embed, content, advanced, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 3.9.1
-Stable tag: 5.9
+Stable tag: 5.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,6 +152,10 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.9.1 =
+- Fix: Removed returns which could lead to unwanted spaces around the iframe
+- Fix: Fixed wrong comparison of parameter. 
+
 = 5.9 =
 - New: Lazy load of iframes with treshold and fadein. Iframes can be loaded after the parent is done or the iframe is shown in the viewport! (Pro)
 - New: Better input validation. Avoids configuration errors.
