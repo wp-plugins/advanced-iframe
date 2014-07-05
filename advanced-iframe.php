@@ -5,7 +5,7 @@ Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
 Version: 5.9.1
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
-Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
+Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly | <a target="_blank" href="http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle">Upgrade to Pro</a>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
