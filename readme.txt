@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, shortcode, resize, embed, content, advanced, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 3.9.1
-Stable tag: 5.9.1
+Tested up to: 4.0
+Stable tag: 5.9.2      
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,6 +152,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.9.2 =
+- Tested with Wordpress 4.0
+
 = 5.9.1 =
 - Fix: Removed returns which could lead to unwanted spaces around the iframe
 - Fix: Fixed wrong comparison of parameter. 
