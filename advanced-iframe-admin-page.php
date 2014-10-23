@@ -112,7 +112,7 @@ echo '
         _e('Pro', 'advanced-iframe');
         echo '</div>
 				<div class="signup_inner_price">
-					<strong>$14</strong> (one time fee)
+					<strong>$16</strong> (one time fee)
 				</div>
 				<div class="signup_inner_header">';
         _e('For commercial, business, and professional sites', 'advanced-iframe');

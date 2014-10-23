@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, shortcode, resize, embed, content, advanced, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 4.0
-Stable tag: 5.9.2      
+Stable tag: 5.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,6 +152,22 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 5.10 =
+- New: Resize on element resize is now supported. This enables you to resize the iframe if e.g. the content of the iframe changes because of div which expands. This feature is more powerfull and easier to configure than the "Resize on click/Ajax" setting and is also supported for the external workaround (Pro)
+- New: Trigger loading manually (enable_lazy_load_manual) added. Now lazy loaded iframes can be shown manually. See the lazy load demo for an example. (Pro)
+- New: Write css as script directly to the header. See the description (Write css directly) of the external workaround for details. (Pro)
+- New: Add a css style to each parent element of the iframe (add_css_class_parent) to be able to find and modify the parent even when no styles exist or classes are not used exclusively (Pro)
+- New: Support of shortcodes in the src attribute. Please note. Needed encodings have to be done in the shortcode! (Pro)
+- New: Dynamic src parameters. You can define placeholders for the site, host and port. This is useful if you e.g. have a multidomain install where the host is dynamic. (Pro)
+- New: Add the id to the url of the iframe (pass_id_by_url). This feature adds the id of the iframe to the iframe url. The id is than extracted on the iframe and used as value for the callback to find the right iframe on the parent side. (Pro)
+- New: additional_js_iframe - The ai_external.js can also write additional Javscript. This is loaded at the end of ai_external.js. The advantage using this is that the Javascript is only loaded if the page is inside the iframe and is not loaded when accessed directly. (Pro)
+- New: additional_js_file_iframe - The ai_external.js can also load an additional Javascript file. This is loaded at the end of ai_external.js. The advantage using this is that the file is only loaded if the page is inside the iframe and is not loaded when accessed directly. Please note that the file is loaded asynchronously. (Pro)
+- New: URL forward parameters (url_forward_parameter) does now also support ALL as setting. This does simply add all incoming parameters to the iframe url (Pro)
+- New: Browscap version 5030 lite 17th June 2014 is now included. (Pro)
+- New: Price update of the pro version: codecanyon has increased the price of the plugin.
+- Fix: Removed spaces in the code which could lead to unwanted p tags in Wordpress
+- Fix: All css/Javascript are now loaded to header for all Wordpress versions the wordpress way
+
 = 5.9.2 =
 - Tested with Wordpress 4.0
 
