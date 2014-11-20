@@ -2,6 +2,9 @@ var aiEnableCookie=false;
 var aiId='';
 var aiExtraSpace = 0;
 
+aiReadyCallbacks = ( typeof aiReadyCallbacks != 'undefined' && aiReadyCallbacks instanceof Array ) ? aiReadyCallbacks : [];
+                    
+
 /**
  *  This function resizes the iframe after loading to the height 
  *  of then content of the iframe. 
@@ -9,16 +12,12 @@ var aiExtraSpace = 0;
  *  The extra space is not stored in the cookie! The height would 
  *  be added every time otherwise and the iframe would grow,  
  */ 
-function aiResizeIframe(obj, resize_width) {
+function aiResizeIframe(obj, resize_width) { 
   try {
     if (obj.contentWindow.document.body != null) {
       var oldScrollposition = jQuery(document).scrollTop();     
       obj.height = 1; // set to 1 because otherwise the iframe does never get smaller.
-      var bodyHeight = Math.max(obj.contentWindow.document.body.scrollHeight, 
-        obj.contentWindow.document.body.offsetHeight, 
-        obj.contentWindow.document.documentElement.scrollHeight, 
-        obj.contentWindow.document.documentElement.offsetHeight);
-      var newheight = bodyHeight + aiExtraSpace;
+      var newheight = aiGetIframeHeight(obj);
       obj.height = newheight + 'px'; 
       
       // set the height of the zoom div
@@ -34,9 +33,8 @@ function aiResizeIframe(obj, resize_width) {
       if (resize_width == 'true') { 
         obj.width = aiGetIframeWidth(obj) + 'px';
       }
-      fCallback = window["resizeCallback" + obj.id];
+      var fCallback = window["resizeCallback" + obj.id];
       fCallback();
-     
     } else {
       // body is not loaded yet - we wait 100 ms.
       setTimeout(function() { aiResizeIframe(obj, resize_width); },100); 
@@ -50,13 +48,27 @@ function aiResizeIframe(obj, resize_width) {
 }
 
 /**
+ *  Get the iframe height
+ */ 
+function aiGetIframeHeight(obj) {
+      var bodyHeight = Math.max(obj.contentWindow.document.body.scrollHeight, 
+       obj.contentWindow.document.body.offsetHeight, 
+       obj.contentWindow.document.documentElement.scrollHeight, 
+       obj.contentWindow.document.documentElement.offsetHeight);
+       var newheight = bodyHeight + aiExtraSpace;
+       return newheight; 
+}
+
+/**
  *  Get the iframe width
  */ 
 function aiGetIframeWidth(obj) {
+    obj.width = 1; // set to 1 because otherwise I don't get the minimum width 
     var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
           obj.contentWindow.document.body.offsetWidth, 
           obj.contentWindow.document.documentElement.scrollWidth, 
           obj.contentWindow.document.documentElement.offsetWidth);
+    obj.width = bodyWidth + 'px';        
     return bodyWidth;
 }
 
@@ -65,7 +77,7 @@ function aiGetIframeWidth(obj) {
  */ 
 function aiGetParentIframeWidth(obj) {
     if (obj != null && jQuery("#" + obj.id).length != 0) {
-        return jQuery("#" + obj.id).width(); 
+        return jQuery("#" + obj.id).width();
     } else {
         return -1;
     } 
@@ -78,7 +90,7 @@ function aiGetParentIframeWidth(obj) {
  *  Please read the documentation!   
  */ 
 function aiResizeIframeHeightById(id, nHeight) {
-    fCallback = window["resizeCallback" + id];
+    var fCallback = window["resizeCallback" + id];
     fCallback();
     var height = parseInt(nHeight) + aiExtraSpace;
     var iframe = document.getElementById(id); 
@@ -166,7 +178,7 @@ function aiEnableHeight() {
 function aiShowElementOnly( iframeId, showElement ) {
   try {
     var iframe = jQuery(iframeId).contents().find("body"); 
-    var selectedBox = iframe.find(showElement).clone(); 
+    var selectedBox = iframe.find(showElement).clone(true,true); 
     iframe.find("*").remove(); 
     iframe.append(selectedBox);
   }  catch(e) {
@@ -354,3 +366,14 @@ function initAdminConfiguration(isPro, acc_type) {
       jQuery('#accordion').attr("id","noacc");
    }  
 }
+
+/**
+ * main ready function that calls all generated callbacks. 
+ * Add dynamically created functions that should be loaded 
+ * when the page is read to aiReadyCallbacks 
+ */ 
+jQuery(document).ready(function() {
+    jQuery.each(aiReadyCallbacks, function(index, callback){
+      callback(); 
+    });
+});

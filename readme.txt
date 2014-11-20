@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
-Tags: iframe, shortcode, resize, embed, content, advanced, modify css, widget 
+Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 4.0
-Stable tag: 5.10
+Tested up to: 4.0.1
+Stable tag: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,7 +64,6 @@ You can find the comparison chart here: http://www.tinywebgallery.com/blog/advan
 
 See the pro demo here: 
 http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
-
 = Administration =  
 * Go to Settings -> Advanced iFrame
 
@@ -152,18 +151,54 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 6.2 =
+- New: {adminemail} is available as replace parameters in the src attribute (Pro).
+- New: Tested with Wordpress 4.0.1
+- Fix: modifyOnLoad... was not always rendered because show_part_of_iframe_next_viewports_hide was not checked properly
+- Fix: The browser detection is now only used when the browser detection or zoom is used. browser detection needs quite some memory. So this reduces the memory usage of the plugin if these features are not used (Pro).  
+
+= 6.1 =
+- New {userid}, {username}, {useremail} are available as replace parameters in the src attribute (Pro).
+- Fix: {} in the src field could not be saved in the administration because of Wordpress esc_url. Now this works there too. It was always working in the shortcode attribute src.
+- Fix: In the external workaround the resizeLater function had a hardcoded id (advanced_iframe). When using a different one the callback with the size failed.
+- Fix: Browser detection needs at least php 5.3. Now a warning is shown when you don't have at least php 5.3 (Pro).
+- Fix: Plugin needed at least php 5.3 because the browser detection was used always to detect IE8. Now this check is only done if php 5.3 is available (Pro).
+- Fix: ?version=<internal version> it attached to js and css of the administration like in the site.
+
+= 6.0 =
+- New: Auto zoom. This feature does automatically calculates the needed zoom factor to fit the iframe page into the parent page. Works on the same and with the external workaround. Shortcode auto_zoom. See example 29-31 (Pro). 
+- New: Lazy load with hidden elements. So this is a very good alternative for hidden tabs. See example 28 (Pro).
+- New: You can define the element that should trigger manual lazy load. See example 25 (Pro).  
+- New: Static save button in a transparent footer (Pro).
+- New: Support for an alternative shortcode. So you can use e.g. "iframe" also if you want to switch/upgrade from iframe to advanced iframe pro. Please note: If you enable this, the security key is NOT checked anymore (Pro).
+- New: Support for the BBCode [iframe]url[/iframe] (Pro). 
+- New: Automatic retry 500 ms later in the external workaround if the measured height is < 10 (Pro)
+- New: You can define the element you want to measure + a offset for fix content. This is sometimes needed for some themes where e.g. chrome returns 0 as height (Pro).
+- New: You can set additional styles to the wrapper div like overflow:auto with additional_styles_wrapper_div in the external workaround (Pro).
+- New: Show only one element does now also clones attached event listeners (Pro).
+- New: Browser detection now supports tablets, android, androidtablet and browsecap version 5033, 23 Sep 2014 was added (Pro).
+- Fix: transparent border of the wrapper div removed as it is not needed anymore. 
+- Fix: Improved documentation for hide_part_of_iframe how to make a read only iframe (Pro).
+- Fix: $include_scripts_in_footer and $add_css_class_parent or store_height_in_cookie could cause a config error. You need to set include_scripts_in_footer to false if you want to use add_css_class_parent or store_height_in_cookie. Now this is added to the documentation and also the script does not fail anymore if you do set this wrong. 
+- Fix: Added stripcslashes() when reading parameters when magic_quotes_gpc is on. 
+- Fix: Removed the detection at resize if the iframe width has changed because at auto zoom the detection was wrong (Pro).
+
 = 5.10 =
 - New: Resize on element resize is now supported. This enables you to resize the iframe if e.g. the content of the iframe changes because of div which expands. This feature is more powerfull and easier to configure than the "Resize on click/Ajax" setting and is also supported for the external workaround (Pro)
 - New: Trigger loading manually (enable_lazy_load_manual) added. Now lazy loaded iframes can be shown manually. See the lazy load demo for an example. (Pro)
 - New: Write css as script directly to the header. See the description (Write css directly) of the external workaround for details. (Pro)
-- New: Add a css style to each parent element of the iframe (add_css_class_parent) to be able to find and modify the parent even when no styles exist or classes are not used exclusively (Pro)
-- New: Support of shortcodes in the src attribute. Please note. Needed encodings have to be done in the shortcode! (Pro)
-- New: Dynamic src parameters. You can define placeholders for the site, host and port. This is useful if you e.g. have a multidomain install where the host is dynamic. (Pro)
-- New: Add the id to the url of the iframe (pass_id_by_url). This feature adds the id of the iframe to the iframe url. The id is than extracted on the iframe and used as value for the callback to find the right iframe on the parent side. (Pro)
+- New: Add a css style to each parent element of the iframe (add_css_class_parent) to be able to find and modify the parent even when no styles exist or classes are not used exclusively. (Pro) 
+- New: Support of shortcodes in the src attribute. Please note. Needed encodings have to be done in the shortcode! (Pro) 
+- New: Dynamic src parameters. You can define placeholders for the site, host and port. This is useful if you e.g. have a multidomain install where the host is dynamic (Pro) 
+- New: Add the id to the url of the iframe (pass_id_by_url). This feature adds the id of the iframe to the iframe url. The id is than extracted on the iframe and used as value for the callback to find the right iframe on the parent side.add_css_class_parent (Pro)        
 - New: additional_js_iframe - The ai_external.js can also write additional Javscript. This is loaded at the end of ai_external.js. The advantage using this is that the Javascript is only loaded if the page is inside the iframe and is not loaded when accessed directly. (Pro)
 - New: additional_js_file_iframe - The ai_external.js can also load an additional Javascript file. This is loaded at the end of ai_external.js. The advantage using this is that the file is only loaded if the page is inside the iframe and is not loaded when accessed directly. Please note that the file is loaded asynchronously. (Pro)
-- New: URL forward parameters (url_forward_parameter) does now also support ALL as setting. This does simply add all incoming parameters to the iframe url (Pro)
+- New: URL forward parameters (url_forward_parameter) does now also support ALL as setting. This does simply add all incoming parameters to the iframe url.
+- New: Scripts can now be loaded to the footer (include_scripts_in_footer). This is now default.
+- New: Height is only sent by the external workaround when the height does change and not everytime a configured event is triggered.
 - New: Browscap version 5030 lite 17th June 2014 is now included. (Pro)
+- Fix: All css/Javascript are now loaded to header/footer for all Wordpress versions the wordpress way
+- Fix: Improved documentation.
 - New: Price update of the pro version: codecanyon has increased the price of the plugin.
 - Fix: Removed spaces in the code which could lead to unwanted p tags in Wordpress
 - Fix: All css/Javascript are now loaded to header for all Wordpress versions the wordpress way

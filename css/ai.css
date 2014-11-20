@@ -31,6 +31,13 @@
 .shortcode span {
 	font-weight: bold;
 }
+.shortcode {
+	background: #E2FFE2;
+	border: 1px solid #00FF00;
+	padding: 10px;
+	padding-bottom: 10px;
+	margin: 10px;
+}
 .signup_account_container {
 	float: left;
 	width: 225px;
@@ -40,23 +47,21 @@
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	cursor: pointer;
-  height: 260px;
+	height: 260px;
 }
 .signup_account_container#first {
 	margin-left: 50px;
 }
 .signup_account_container#last {
 	margin-right: 0px;
-  border: 2px solid #fefefe;
+	border: 2px solid #fefefe;
 }
 .signup_account_container#last .signup_inner {
 	width: 245px!important;
 }
-
 .signup_account_container#last {
-  width: 307px!important;
+	width: 307px!important;
 }
-
 .signup_account_container:hover, .signup_account_container_active {
 	border: 2px solid #80B8D9;
 }
@@ -75,7 +80,7 @@
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
-  height: 206px;
+	height: 206px;
 }
 .signup_inner_desc {
 	color: #484848;
@@ -129,77 +134,152 @@
 	background: #F2F7F9;
 	border: 1px solid #FFF;
 }
-
 #last .signup_inner:hover {
 	background: #FFFFFF;
 	border: 1px solid #EEE;
 }
-
 ul.pro, ul#browser-list {
-  list-style-type: square;
-  margin-left:1em; 
-  padding-left:0px; 
-  margin-bottom:-5px; 
+	list-style-type: square;
+	margin-left: 1em;
+	padding-left: 0px;
+	margin-bottom: -5px;
 }
-
 ul#browser-list {
- padding-left:10px; 
+	padding-left: 10px;
 }
-
-
 #last .signup_inner_desc, #last li {
-  margin-bottom:0; 
+	margin-bottom: 0;
 }
-
 #last .signup_account_container {
-  width: auto;
+	width: auto;
 }
-
-
-#details-workaround, #details-javascript, #jquery-help, #browser-help, #jquery-gen {
-  background: #F2F7F9;
+#details-workaround, #details-javascript, #jquery-help, #browser-help, #jquery-gen, #all-parameters {
+	background: #F2F7F9;
 	border: 1px solid #d2d7d9;
-  padding:10px; 
-  padding-bottom:5px; 
-  margin: 10px;
-  display:none;
+	padding: 10px;
+	padding-bottom: 5px;
+	margin: 10px;
+	display: none;
 }
-
 #ai .nounderline a {
 	text-decoration: none;
 }
-
 a.signup_inner_button:active, a.signup_inner_button:hover {
-  color:#cccccc;
+	color: #cccccc;
 }
-
 .left_th_colored {
-width:100px;
+	width: 100px;
 }
-
-#accordion{border: 1px solid #ddd; border-top: none; margin: 10px 0; width: 100%;}
-#accordion > a{display: block; text-decoration: none;}
-#accordion > h1, .accordion > a{background-color: #fff; background-image: url(../img/gradient.jpg);
-background-image: -moz-linear-gradient(bottom, #f1f1f1, #fff);
-background-image: -ms-linear-gradient(bottom, #f1f1f1, #fff);
-background-image: -o-linear-gradient(bottom, #f1f1f1, #fff);
-background-image: -webkit-linear-gradient(bottom, #f1f1f1, #fff);
-background-image: linear-gradient(bottom, #f1f1f1, #fff); border-top: 1px solid #ddd;
-color: #222; font: 15px/30px 'Verdana', sans-serif; height: 32px; margin: 0; padding: 0; text-indent: 10px;
-cursor:pointer}
-
-#accordion > h1:hover, .accordion > a{background-color: #fff; background-image: url(../img/gradient.jpg);
-background-image: -moz-linear-gradient(bottom, #e1e1e1, #fff);
-background-image: -ms-linear-gradient(bottom, #e1e1e1, #fff);
-background-image: -o-linear-gradient(bottom, #e1e1e1, #fff);
-background-image: -webkit-linear-gradient(bottom, #e1e1e1, #fff);
-background-image: linear-gradient(bottom, #e1e1e1, #fff); border-top: 1px solid #ddd;
-color: #222; font: 15px/30px 'Verdana', sans-serif; height: 32px; margin: 0; padding: 0; text-indent: 10px;
-cursor:pointer}
-
-
-#accordion > div { padding: 5px; padding-left:10px; padding-right:10px; background-color: #fff;}
-
+#accordion {
+	border: 1px solid #ddd;
+	border-top: none;
+	margin: 10px 0;
+	width: 100%;
+}
+#accordion > a {
+	display: block;
+	text-decoration: none;
+}
+#accordion > h1, .accordion > a {
+	background-color: #fff;
+	background-image: url(../img/gradient.jpg);
+	background-image: -moz-linear-gradient(bottom, #f1f1f1, #fff);
+	background-image: -ms-linear-gradient(bottom, #f1f1f1, #fff);
+	background-image: -o-linear-gradient(bottom, #f1f1f1, #fff);
+	background-image: -webkit-linear-gradient(bottom, #f1f1f1, #fff);
+	background-image: linear-gradient(bottom, #f1f1f1, #fff);
+	border-top: 1px solid #ddd;
+	color: #222;
+	font: 15px/30px 'Verdana', sans-serif;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+	text-indent: 10px;
+	cursor: pointer
+}
+#accordion > h1:hover, .accordion > a {
+	background-color: #fff;
+	background-image: url(../img/gradient.jpg);
+	background-image: -moz-linear-gradient(bottom, #e1e1e1, #fff);
+	background-image: -ms-linear-gradient(bottom, #e1e1e1, #fff);
+	background-image: -o-linear-gradient(bottom, #e1e1e1, #fff);
+	background-image: -webkit-linear-gradient(bottom, #e1e1e1, #fff);
+	background-image: linear-gradient(bottom, #e1e1e1, #fff);
+	border-top: 1px solid #ddd;
+	color: #222;
+	font: 15px/30px 'Verdana', sans-serif;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+	text-indent: 10px;
+	cursor: pointer
+}
+#accordion > div {
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #fff;
+}
 #ai input[type=text] {
-   width: 98%
+	width: 98%
 }
+.ulli li {
+	margin-left: 20px;
+	list-style-type: disc;
+}
+#wpadminbar.ai-save-bar {
+	top: auto;
+	bottom: 0px;
+	left: auto;
+	margin-left: -22px;
+	height: 46px;
+	border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+	background: rgb(225, 225, 225);
+	background: rgba(225, 225, 225, .5);
+	text-align: left;
+  position: fixed;
+  width:106%;
+}
+#wpadminbar.ai-save-bar>div {
+	margin: 7px;
+}
+#updated_text {
+	color: #090;
+	display: inline-block;
+	line-height: 28px;
+	margin-left: 30px;
+	margin-right: 20px;
+	padding-left: 10px;
+	border: 1px ridge #aaa;
+	background-color: #fff;
+	width: 160px;
+	font-weight: bold;
+}
+#wpbarbutton {
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 26px;
+	border-radius: 3px;
+}
+
+#ds, #gs, #mp ,#so ,#rt ,#xss ,#ad ,#ic {
+margin-top:-50px;
+margin-bottom:50px;
+}
+
+.ai-eye {
+    background-image:url(../img/eye.png);
+    display:inline-table;
+    height:16px;
+    text-indent:-9999px;
+    width:16px;
+    background-repeat: no-repeat;
+    margin-left: 3px;
+}
+
+.ai-eye:hover {
+    background-image:url(../img/eye-hover.png);
+}
+
+

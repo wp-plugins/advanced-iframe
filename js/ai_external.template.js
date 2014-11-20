@@ -1,5 +1,5 @@
 /**
- *  Advanced iframe external workaround file 
+ *  Advanced iframe external workaround file 6.2 free 
 */ 
 
 var domain_PARAM_ID = 'WORDPRESS_SITE_URL'; // Check if this is your wordpress root
@@ -130,7 +130,7 @@ function createAiWrapperDiv() {
     	document.body.appendChild(div);
       
       // set the style
-      div.style.cssText = "margin:0px;padding:0px;border: 1px solid transparent;";
+      div.style.cssText = "margin:0px;padding:0px;border: none;";
     }
 }
 

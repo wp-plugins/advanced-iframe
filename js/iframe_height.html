@@ -9,15 +9,15 @@
   
   if (nHeight != undefined) {
     try {
-      var id = getParamFromLocation(2);
+      var id = getParamFromLocation(3);
+      var nWidth = getParamFromLocation(2); 
       if (id != undefined) {
           var iHeight = parseInt(nHeight);
-          window.parent.parent.aiResizeIframeHeightId(iHeight,id);
+          var iWidth = parseInt(nWidth);
+          window.parent.parent.aiResizeIframeHeightId(iHeight,iWidth, id);
           window.parent.parent.aiShowIframeId( '#' + id);
       } else {
-          // To be compatible with older versions of advanced iframe 
-          window.parent.parent.aiResizeIframeHeight(nHeight);
-          window.parent.parent.aiShowIframe();
+          alert("Please update the ai_external.js to the current version.");
       }  
   	} catch(e) {
       if (console && console.log) {
