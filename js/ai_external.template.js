@@ -40,8 +40,9 @@ function aiExecuteWorkaround_PARAM_ID() {
       if (updateIframeHeight == 'true') { 
         // add the iframe dynamically
         var url = domain_PARAM_ID+'/wp-content/plugins/advanced-iframe/js/iframe_height.html';
-        var newElementStr = '<iframe id="ai_hidden_iframe_PARAM_ID" style="display:none;" width="0" height="0" src="';
-        newElementStr += url+'">Iframes not supported.</iframe>';
+        var empty_url = 'javascript:false;';
+        var newElementStr = '<iframe id="ai_hidden_iframe_PARAM_ID" style="display:none;clear:both" width="0" height="0" src="';
+        newElementStr += empty_url +'">Iframes not supported.</iframe>';
         var newElement = aiCreate(newElementStr);
         document.body.appendChild(newElement);
              
@@ -61,12 +62,14 @@ function aiExecuteWorkaround_PARAM_ID() {
         //  remove everything from createAiWrapperDiv() until here for the alternative solution. 
         //  var newHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight,
         //    document.documentElement.scrollHeight, document.documentElement.offsetHeight);  
+        //  This is the width - need to detect a change of the iframe width at a browser resize!
+        iframeWidth = getIframeWidth();
     
         var iframe = document.getElementById('ai_hidden_iframe_PARAM_ID');
         // 4 pixels extra are needed because of IE! (2 for Chrome)
         // If you still have scrollbars add a little bit more offset.
-       
-        iframe.src = url + '?height=' + (newHeight + 4) + "&id=" + iframe_id_PARAM_ID;
+        var url_str = url + '?height=' + (newHeight + 4) + "&width=" + iframeWidth + "&id=" + iframe_id_PARAM_ID; 
+        iframe.src = url_str; 
         
         // set overflow to visible again.
         if (keepOverflowHidden == 'false') {
@@ -146,6 +149,12 @@ function aiCreate(htmlStr) {
     }
     return frag;
 }
+function getIframeWidth() { 
+  var wrapperElement = document.body.children[0];
+  var newWidthRaw =  Math.max(wrapperElement.scrollWidth, wrapperElement.offsetWidth, 
+                              wrapperElement.scrollWidth, wrapperElement.offsetWidth);
+  return parseInt(newWidthRaw,10);
+} 
 
 /**
  *  Adds a css style to the head 

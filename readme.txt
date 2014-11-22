@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 4.0.1
-Stable tag: 6.2
+Stable tag: 6.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -151,6 +151,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 6.2.1 =
+- Fix: Autoheight was not working because the wrong template was submited. Please update if you us the external workaround. Pro users are fine becaushe this file belongs to teir version ;). 
+
 = 6.2 =
 - New: {adminemail} is available as replace parameters in the src attribute (Pro).
 - New: Tested with Wordpress 4.0.1
