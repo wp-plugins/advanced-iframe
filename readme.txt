@@ -58,6 +58,7 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - Accordion menu
 - jQuery help
 - Lazy load 
+- Standalone version - can be used in ANY php page!
 - And much more...
 
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
