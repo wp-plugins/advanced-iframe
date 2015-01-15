@@ -2,7 +2,7 @@
 /*
 Plugin Name: Advanced iFrame
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 6.2.2
+Version: 6.2.3
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly. Please update this plugin with versions from codecanyon only. Otherwise you get the free version again.
@@ -49,7 +49,7 @@ if (!class_exists('advancediFrame')) {
         function iframe_defaults() {
             $iframeAdminOptions = array(
                 'securitykey' => sha1(AUTH_KEY . time() ),
-                'src' => 'http://www.tinywebgallery.com', 'width' => '100%',
+                'src' => '//www.tinywebgallery.com', 'width' => '100%',
                 'height' => '600', 'scrolling' => 'auto', 'marginwidth' => '0', 'marginheight' => '0',
                 'frameborder' => '0', 'transparency' => 'true', 'content_id' => '', 'content_styles' => '',
                 'hide_elements' => '', 'class' => '', 'shortcode_attributes' => 'true', 'url_forward_parameter' => '',

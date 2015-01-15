@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 4.1
-Stable tag: 6.2.2
+Stable tag: 6.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,6 +152,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 6.2.3 =
+- Fix: Changed the default src http://www.tinywebgallery.com to //www.tinywebgallery.com because http:// is blocked by some mod_security setups. If you can not save a full path and you need this please specify the full url in the src attribute of the shortcode.
+
 = 6.2.2 =
 - Tested with Wordpress 4.1
 
