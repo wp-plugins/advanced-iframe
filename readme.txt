@@ -41,24 +41,24 @@ All settings can be set with shortcode attributes as well. If you only use one i
 **[Quick overview of all advanced iframe attributes](http://wordpress.org/extend/plugins/advanced-iframe/other_notes/)**
 
 = Upgrading to Advanced IFrame Pro =
-It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get:
+It's quick and painless to get Advanced iFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get:
 
-- Show only specific areas of the iframe even when the iframe is on different domain
-- Graphical content selector: http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html
-- External workaround supports iframe modifications
-- Widget support
-- No view limit
-- Hide areas of an iframe
-- Responsive iframes
-- Browser detection 
-- Change link targets
-- Url forward parameter mapping.
-- Zoom iframe content
-- Accordion menu
-- jQuery help
-- Lazy load 
-- Standalone version - can be used in ANY php page!
-- And much more...
+* Show only specific areas of the iframe even when the iframe is on different domain
+* Graphical content selector: http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html
+* External workaround supports iframe modifications
+* Widget support
+* No view limit
+* Hide areas of an iframe
+* Responsive iframes
+* Browser detection 
+* Change link targets
+* Url forward parameter mapping.
+* Zoom iframe content
+* Accordion menu
+* jQuery help
+* Lazy load 
+* Standalone version - can be used in ANY php page!
+* And much more...
 
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
 See the pro demo here: 
