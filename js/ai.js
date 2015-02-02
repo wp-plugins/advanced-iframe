@@ -364,7 +364,351 @@ function initAdminConfiguration(isPro, acc_type) {
    } else {
       jQuery('#accordion').find('h1').hide();
       jQuery('#accordion').attr("id","noacc");
-   }  
+   }
+   
+    // lazy load
+    if (jQuery('input[type=radio][name=enable_lazy_load_manual]:checked').val() == 'false') {
+        jQuery('#enable_lazy_load_manual_element').prop('readonly',true);
+    }  
+   
+    jQuery('input[type=radio][name=enable_lazy_load_manual]').click( function(){
+    if (jQuery(this).val() == 'false' || jQuery(this).val() == 'auto') {
+           jQuery('#enable_lazy_load_manual_element').prop('readonly',true);            
+        } else {
+           jQuery('#enable_lazy_load_manual_element').prop('readonly',false);
+        }
+    });
+    
+    if (jQuery('input[type=radio][name=enable_lazy_load]:checked').val() == 'false') {
+        jQuery('#enable_lazy_load_threshold').prop('readonly',true);
+        jQuery('#enable_lazy_load_fadetime').prop('readonly',true);
+        jQuery('input[id=enable_lazy_load_manual1]:radio').attr('disabled',true);  
+        jQuery('input[id=enable_lazy_load_manual2]:radio').attr('disabled',true);  
+        jQuery('input[id=enable_lazy_load_manual3]:radio').attr('disabled',true);  
+        jQuery('#enable_lazy_load_manual_element').prop('readonly',true);
+    }  
+
+    jQuery('input[type=radio][name=enable_lazy_load]').click( function(){
+    if (jQuery(this).val() == 'false') {
+           jQuery('#enable_lazy_load_threshold').prop('readonly', true); 
+           jQuery('#enable_lazy_load_fadetime').prop('readonly', true); 
+           jQuery('input[id=enable_lazy_load_manual1]:radio').attr('disabled',true); 
+           jQuery('input[id=enable_lazy_load_manua12l]:radio').attr('disabled',true);  
+           jQuery('input[id=enable_lazy_load_manual3]:radio').attr('disabled',true);           
+           jQuery('#enable_lazy_load_manual_element').prop('readonly',true);            
+        } else {
+           jQuery('#enable_lazy_load_threshold').prop('readonly', false);
+           jQuery('#enable_lazy_load_fadetime').prop('readonly', false); 
+           jQuery('input[id=enable_lazy_load_manual1]:radio').attr('disabled',false);          
+           jQuery('input[id=enable_lazy_load_manual2]:radio').attr('disabled',false); 
+           jQuery('input[id=enable_lazy_load_manual3]:radio').attr('disabled',false); 
+           if (jQuery('input[type=radio][name=enable_lazy_load_manual]:checked').val() == 'false' ||
+               jQuery('input[type=radio][name=enable_lazy_load_manual]:checked').val() == 'auto' ) {
+             jQuery('#enable_lazy_load_manual_element').prop('readonly',true);
+           } else {
+             jQuery('#enable_lazy_load_manual_element').prop('readonly', false);
+           }
+        }
+    }); 
+    
+    jQuery('.confirmation').on('click', function () {
+        return confirm('Are you sure?');
+    }); 
+    
+     jQuery("a.post").click(function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          var href = this.href;
+          var parts = href.split('?');
+          var url = parts[0];
+          var params = parts[1].split('&');
+          var pp, inputs = '';
+          url += "?" + params[0]; 
+          for(var i = 1, n = params.length; i < n; i++) {
+              pp = params[i].split('=');
+              inputs += '<input type="hidden" name="' + pp[0] + '" value="' + pp[1] + '" />';
+          }
+          jQuery("body").append('<form action="'+url+'" method="post" id="poster">'+inputs+'</form>');
+          jQuery("#poster").submit();
+      });         
+}
+
+/**
+ *  Resizes the iframe with a certain ratio.
+ *  Width is read and the height is than calculated. 
+ */ 
+function aiResizeIframeRatio(obj, ratio) {
+   var width = jQuery("#" + obj.id).width();  
+   var valueRatio = parseFloat(ratio.replace(",", "."));
+   var newHeight = Math.ceil(width * valueRatio); 
+   obj.height = newHeight + 'px';  
+}
+
+/**
+ * Generate a shortcode string from the current settings.
+ */ 
+function aiGenerateShortcode() {
+    var output = '[advanced_iframe ';
+
+    // default section
+    output += 'securitykey="' + jQuery("#securitykey").val() + '" ';
+    output += 'use_shortcode_attributes_only="true" ';
+ 
+    var src = jQuery("#src").val();
+    if (src == "") {
+       alert("Required url is missing.");
+    } else {
+       output += 'src="' + src + '" ';
+    }
+    
+    output += aiGenerateTextShortcode("width");
+    output += aiGenerateTextShortcode("height");  
+    output += aiGenerateRadioShortcode("scrolling","auto");      
+    output += aiGenerateTextShortcode("marginwidth");
+    output += aiGenerateTextShortcode("marginheight");     
+    output += aiGenerateTextShortcode("frameborder");      
+    output += aiGenerateRadioShortcode("transparency","true"); 
+    output += aiGenerateTextShortcode("class");  
+    output += aiGenerateTextShortcode("style");  
+    output += aiGenerateTextShortcode("id");  
+    output += aiGenerateTextShortcode("name");  
+    output += aiGenerateRadioShortcode("allowfullscreen","false");
+   
+    // advanced settings
+    output += aiGenerateTextShortcode("url_forward_parameter");  
+    output += aiGenerateTextShortcode("map_parameter_to_url");  
+    // output += aiGenerateTextShortcode("dynamic_url_parameter");   
+    output += aiGenerateRadioShortcode("onload_scroll_top","false");
+    output += aiGenerateRadioShortcode("hide_page_until_loaded","false");
+    output += aiGenerateRadioShortcode("show_iframe_loader","false");   
+    output += aiGenerateTextShortcode("iframe_zoom");
+    output += aiGenerateRadioShortcode("auto_zoom", "false");
+    output += aiGenerateRadioShortcode("enable_responsive_iframe","false");
+    output += aiGenerateTextShortcode("iframe_height_ratio");
+    
+    output += aiGenerateRadioShortcode("enable_lazy_load","false");
+    output += aiGenerateTextShortcodeWithDefault("enable_lazy_load_threshold","3000");
+    output += aiGenerateTextShortcode("enable_lazy_load_fadetime");
+    output += aiGenerateRadioShortcode("enable_lazy_load_manual","false");
+    output += aiGenerateRadioShortcode("enable_lazy_load_manual_element","false");
+
+    // modify the parent page
+   output += aiGenerateTextShortcode("hide_elements");
+   output += aiGenerateTextShortcode("content_id");
+   output += aiGenerateTextShortcode("content_styles");
+   output += aiGenerateRadioShortcode("add_css_class_parent","false");  
+
+   output += aiGenerateTextShortcode("change_parent_links_target");
+   
+   // show only a part of the iframe
+   var showPartOfIframe = aiGenerateRadioShortcode("show_part_of_iframe","false");  
+   output += showPartOfIframe;  
+   
+   if (showPartOfIframe != '') {
+     output += aiGenerateTextShortcode("show_part_of_iframe_x");
+     output += aiGenerateTextShortcode("show_part_of_iframe_y");
+     output += aiGenerateTextShortcode("show_part_of_iframe_width");
+     output += aiGenerateTextShortcode("show_part_of_iframe_height");
+     output += aiGenerateRadioShortcode("show_part_of_iframe_allow_scrollbar_horizontal","false");  
+     output += aiGenerateRadioShortcode("show_part_of_iframe_allow_scrollbar_vertical","false");  
+     output += aiGenerateTextShortcode("show_part_of_iframe_style");
+     
+     output += aiGenerateTextShortcode("show_part_of_iframe_next_viewports");
+     output += aiGenerateRadioShortcode("show_part_of_iframe_next_viewports_loop","false");  
+     output += aiGenerateTextShortcode("show_part_of_iframe_new_window");
+     output += aiGenerateTextShortcode("show_part_of_iframe_new_url");
+     output += aiGenerateRadioShortcode("show_part_of_iframe_next_viewports_hide","false");  
+   }
+   output += aiGenerateTextShortcode("hide_part_of_iframe");
+   // same domain
+   output += aiGenerateTextShortcode("iframe_hide_elements");
+   output += aiGenerateTextShortcode("onload_show_element_only");
+   output += aiGenerateTextShortcode("iframe_content_id");
+   output += aiGenerateTextShortcode("iframe_content_styles");
+   output += aiGenerateTextShortcode("change_iframe_links");
+   output += aiGenerateTextShortcode("change_iframe_links_target");
+   // resize content height
+   output += aiGenerateTextShortcode("onload");
+   output += aiGenerateRadioShortcode("onload_resize","false");  
+   output += aiGenerateTextShortcode("onload_resize_delay");
+   output += aiGenerateRadioShortcode("store_height_in_cookie","false");  
+   output += aiGenerateTextShortcode("additional_height");
+   output += aiGenerateRadioShortcode("onload_resize_width","false");  
+   output += aiGenerateTextShortcode("resize_on_ajax");
+   output += aiGenerateRadioShortcode("resize_on_ajax_jquery","true");  
+   output += aiGenerateTextShortcode("resize_on_click");
+   output += aiGenerateTextShortcodeWithDefault("resize_on_click_elements","a");  
+   
+   output += aiGenerateTextShortcode("resize_on_element_resize");
+   output += aiGenerateTextShortcodeWithDefault("resize_on_element_resize_delay","250");  
+
+   // tabs
+   output += aiGenerateTextShortcode("tab_hidden");
+   output += aiGenerateTextShortcode("tab_visible");
+   // cross domain ....
+   output += aiGenerateRadioShortcode("enable_external_height_workaround","false");  
+   output += aiGenerateRadioShortcode("hide_page_until_loaded_external","false");  
+   output += aiGenerateTextShortcode("pass_id_by_url");
+   // additional files
+   output += aiGenerateTextShortcode("additional_css");
+   output += aiGenerateTextShortcode("additional_js");
+   // include content directly
+   output += aiGenerateTextShortcode("include_url");  
+   output += aiGenerateTextShortcode("include_content");
+   output += aiGenerateTextShortcode("include_height");
+   output += aiGenerateTextShortcode("include_fade");
+   output += aiGenerateRadioShortcode("include_hide_page_until_loaded","false");  
+    
+    output += "]";
+    jQuery('#gen-shortcode').html(output);
+    
+   
+}
+
+/**
+ * Generate a text shortcode with default
+ */ 
+function aiGenerateTextShortcodeWithDefault(field, defaultValue) {
+    var output = "";
+    var value = jQuery('#' + field);
+    var val = value.val();
+    if (value.length > 0 && val != '' && val != defaultValue) {
+        output = field + '="' + val + '" ';
+    }  
+    return output;     
+}
+
+/**
+ * Generate a text shortcode if the value is not empty or != 0
+ */ 
+function aiGenerateTextShortcode(field) {
+    var output = "";
+    var value = jQuery('#' + field);
+    var val = value.val();
+    if (value.length > 0 && val != '' && val != '0') {
+        output = field + '="' + val + '" ';
+    }    
+    return output;     
+}
+
+/**
+ * Generate a radio shortcode with default
+ */ 
+function aiGenerateRadioShortcode(field, defaultValue) {
+    var output = "";
+    var value = jQuery('input:radio[name='+field+']:checked');
+    var val = value.val();
+    if (value.length > 0 && val != defaultValue) {
+        output += field + '="' + val + '" ';
+    }
+    return output;    
+}
+
+/**
+ * Add a css class to the parents to enable that the iframe parents 
+ * can be identified very easy. Is an is ist set ai-class-<id> is used.
+ * Otherwise a-class-<number> with an increasing number is used.   
+ */ 
+function aiAddCssClassAllParents(element) {
+  var parents = jQuery(element).parentsUntil( "html" );
+  var ai_class= "ai-class-";
+  for(var i = 0; i < parents.length; i++){
+    var id = jQuery(parents[i]).attr('id');
+    if (typeof id !== 'undefined') {
+      if (!(id.indexOf('ai-') == 0)) {
+          jQuery(parents[i]).addClass(ai_class + id);
+      }
+    } else {
+      jQuery(parents[i]).addClass(ai_class + i);
+    } 
+  }
+}
+
+function aiAutoZoomExternalHeight(id, width, height, responsive) {
+    var parentWidth = aiAutoZoomExternal(id, width, responsive);
+    var zoomRatio = window["zoom_" + id] 
+    var oldScrollposition = jQuery(document).scrollTop();
+    var newHeight = Math.ceil(height*zoomRatio);
+    jQuery('#ai-zoom-div-' + id).css("height", newHeight);
+    jQuery(document).scrollTop(oldScrollposition);
+ return parentWidth; 
+} 
+
+
+function aiAutoZoomExternal(id, width, responsive) {
+   var obj =  document.getElementById(id);
+   var jObj = jQuery("#" + id);
+     
+   if (responsive === 'true') {
+    jObj.css('max-width', '100%'); 
+   }    
+   var iframeWidth = width;
+   var parentWidth = aiGetParentIframeWidth(obj);
+   var zoomRatio = parentWidth / iframeWidth;
+   var zoomRatioRounded = Math.floor(zoomRatio * 100) / 100;
+   
+   if (zoomRatioRounded > 1) {
+     zoomRatioRounded = 1;
+   }
+   
+   setZoom(id, zoomRatioRounded);   
+   window["zoom_" + id] = zoomRatioRounded;
+   jObj.width(iframeWidth).css('max-width', 'none');
+   return parentWidth;
+}
+function aiAutoZoom(id, responsive) { 
+   var obj =  document.getElementById(id); 
+   obj.width = 1; // set to 1 because otherwise the iframe does never get smaller. 
+   var iframeWidth = aiGetIframeWidth(obj);
+   obj.width = iframeWidth + 'px';  
+   var parentWidth = aiAutoZoomExternal(id, iframeWidth, responsive);  
+   aiResizeIframe(obj, false);
+   return parentWidth;   
+}
+
+/**
+ * Set the zoom div settings dynamically.
+ */ 
+function setZoom(id, zoom) {
+
+  var obj = jQuery('#' + id);
+
+  if (aiIsIe8 === true) {
+    obj.css('-ms-zoom', zoom);
+  }
+
+  obj.css({
+    '-ms-transform': 'scale(' + zoom + ')',
+    '-moz-transform': 'scale(' + zoom + ')',
+    '-o-transform': 'scale(' + zoom + ')',
+    '-webkit-transform': 'scale(' + zoom + ')',
+    'transform': 'scale(' + zoom + ')'
+  });
+}
+
+function resetAiSettings() {
+  jQuery('#action').val("reset");
+}
+
+function aiCheckInputNumber(inputField) {
+    inputField.value = inputField.value.split(' ').join('');
+    var f = inputField.value;
+    if (inputField.value == '') return;
+    var match = f.match(/^(\-){0,1}([\d\.]+)(px|%|em|pt)?$/);
+    if (!match) {
+        alert("Please check the value you have entered. Only numbers with a dot or with an optional px, %, em or pt are allowed.");
+        setTimeout(function(){inputField.focus();}, 10);
+    }
+}
+
+function setAiScrollposition() {
+  var scrollposition = jQuery(document).scrollTop();   
+  jQuery("#scrollposition").val(scrollposition);
+}
+
+function resetShowPartOfAnIframe(id) {
+  jQuery("#" + id).css("top","0px").css("left","0px").css("position","static");
+  jQuery("#ai-div-" + id).css("width","auto").css("height","auto").css("overflow","auto").css("position","static");
 }
 
 /**

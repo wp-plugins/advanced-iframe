@@ -1,5 +1,5 @@
 /**
- *  Advanced iframe external workaround file 6.2 free 
+ *  Advanced iframe external workaround file v6.3 free 
 */ 
 
 var domain_PARAM_ID = 'WORDPRESS_SITE_URL'; // Check if this is your wordpress root

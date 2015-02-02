@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 4.1
-Stable tag: 6.2.3
+Stable tag: 6.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,9 +41,7 @@ All settings can be set with shortcode attributes as well. If you only use one i
 **[Quick overview of all advanced iframe attributes](http://wordpress.org/extend/plugins/advanced-iframe/other_notes/)**
 
 = Upgrading to Advanced IFrame Pro =
-
 It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame Pro on CodeCanyon.net (http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle) and install your new plugin! You can than use the plugin on commercial, business, and professional sites and blogs. You furthermore get
-
 - Show only specific areas of the iframe even when the iframe is on different domain
 - Graphical content selector: http://examples.tinywebgallery.com/configurator/advanced-iframe-area-selector.html
 - External workaround supports iframe modifications
@@ -60,9 +58,7 @@ It's quick and painless to get Advanced IFrame Pro. Simply Get Advanced iFrame P
 - Lazy load 
 - Standalone version - can be used in ANY php page!
 - And much more...
-
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
-
 See the pro demo here: 
 http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
 = Administration =  
@@ -152,18 +148,39 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
-= 6.2.3 =
-- Fix: Changed the default src http://www.tinywebgallery.com to //www.tinywebgallery.com because http:// is blocked by some mod_security setups. If you can not save a full path and you need this please specify the full url in the src attribute of the shortcode.
+= 6.3.1 =
+- New: index.htm files where added to all directories to prevent directory listings if you server does allow this.
+- Fix: Standalone version was working fine in the standalone folder. The internal path handling was improved to make is easier to include it anywhere. (Pro)  
+- Fix: !important was removed for hide elements because this was is not supported in jQuery.
+- Fix: All iframe attributes are trimmed now. This avoids errors because of spaces e.g. at the beginning of the src.
+- Fix: Better error message if the security key was not found because of wrong quotes.
+- Fix: > could not be used in the shortcode for jQuery patterns. You can now use ## which internaly converted to > 
+- Fix: Save button was jumping when you try to click it on some browser. The css is fixed now.
+- Fix: Menu anchor fixed 
+- Fix: Save caused a php warning when normal save buttons where used.
 
-= 6.2.2 =
-- Tested with Wordpress 4.1
-
-= 6.2.1 =
-- Fix: Autoheight was not working because the wrong template was submited. Please update if you us the external workaround. Pro users are fine becaushe this file belongs to teir version ;). 
+= 6.3 =
+- New: Standalone version. See standalone/readme.html for details (Pro)
+- New: Config files for the external workaround. See example 7 (Pro) 
+- New: Create, view, edit and remove of config files added (Pro)
+- New: hide elements does now set !important when settings display:none as some themes have display:block !important somewhere.
+- New: Internal version check as Wordpress only checks the free version. (Pro)
+- New: Help for Advanced iFrame Pro Widget added. (Pro)
+- New: Reset to default settings was added. (Pro)
+- New: Settings are shown in the main menu now also. Can be turned off in the config.
+- New: Element_to_measure is now also supported when resized later or the width is used. (Pro)
+- New: "Hide until loaded" does now use css instead of jQuery to hide the iframe. 
+- New: strtolower was added when css styles are applyed on the same domain. This fixes problems if e.g. important is written Important which is invalid!   
+- New: Improved documentation
+- New: Hide elements is now used with !important because depending on your css the elements are not hidden otherwise. Make sure to save the config as this is also implemented for the external workaround.
+- New: Automatic resize 500 ms later in the external workaround if the measured height is > 10.000 as this is either an error or a huge page where the delay does not matter. (Pro)
+- Fix: Resize is only done if the detected height is > 10. Everything below is expected that the height is not measured correctly. (Pro)
+- Fix: Many typos fixed
+- Fix: show_one_element_only has # already set on the same domain. The # was removed as in the external workaround the # was not set.
+- Fix: hide_page_until_loaded_external is now not connected to hide_page_until_loaded anymore. Now hide_page_until_loaded has be set to false if hide_page_until_loaded_external is used. But the old way has caused that misconfguration was showing a blank page.  
 
 = 6.2 =
 - New: {adminemail} is available as replace parameters in the src attribute (Pro).
-- New: Tested with Wordpress 4.0.1
 - Fix: modifyOnLoad... was not always rendered because show_part_of_iframe_next_viewports_hide was not checked properly
 - Fix: The browser detection is now only used when the browser detection or zoom is used. browser detection needs quite some memory. So this reduces the memory usage of the plugin if these features are not used (Pro).  
 
@@ -182,7 +199,7 @@ select the one you like and save again.
 - New: Static save button in a transparent footer (Pro).
 - New: Support for an alternative shortcode. So you can use e.g. "iframe" also if you want to switch/upgrade from iframe to advanced iframe pro. Please note: If you enable this, the security key is NOT checked anymore (Pro).
 - New: Support for the BBCode [iframe]url[/iframe] (Pro). 
-- New: Automatic retry 500 ms later in the external workaround if the measured height is < 10 (Pro)
+- New: Automatic resize 500 ms later in the external workaround if the measured height is < 10 (Pro)
 - New: You can define the element you want to measure + a offset for fix content. This is sometimes needed for some themes where e.g. chrome returns 0 as height (Pro).
 - New: You can set additional styles to the wrapper div like overflow:auto with additional_styles_wrapper_div in the external workaround (Pro).
 - New: Show only one element does now also clones attached event listeners (Pro).
@@ -209,16 +226,6 @@ select the one you like and save again.
 - New: Browscap version 5030 lite 17th June 2014 is now included. (Pro)
 - Fix: All css/Javascript are now loaded to header/footer for all Wordpress versions the wordpress way
 - Fix: Improved documentation.
-- New: Price update of the pro version: codecanyon has increased the price of the plugin.
-- Fix: Removed spaces in the code which could lead to unwanted p tags in Wordpress
-- Fix: All css/Javascript are now loaded to header for all Wordpress versions the wordpress way
-
-= 5.9.2 =
-- Tested with Wordpress 4.0
-
-= 5.9.1 =
-- Fix: Removed returns which could lead to unwanted spaces around the iframe
-- Fix: Fixed wrong comparison of parameter. 
 
 = 5.9 =
 - New: Lazy load of iframes with treshold and fadein. Iframes can be loaded after the parent is done or the iframe is shown in the viewport! (Pro)
