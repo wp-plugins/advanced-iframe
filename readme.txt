@@ -3,8 +3,8 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 4.1
-Stable tag: 6.3.1
+Tested up to: 4.1.1
+Stable tag: 6.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,12 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 6.3.3 =
+- Fix: Measuring of width does now check if it is > 1 as some full responsive sites do return such a value that is not valid. 
+
+= 6.3.2 =
+- Fix: Show one element on the local domain was fixed.
+
 = 6.3.1 =
 - New: index.htm files where added to all directories to prevent directory listings if you server does allow this.
 - Fix: Standalone version was working fine in the standalone folder. The internal path handling was improved to make is easier to include it anywhere. (Pro)  

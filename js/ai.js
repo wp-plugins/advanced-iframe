@@ -63,12 +63,17 @@ function aiGetIframeHeight(obj) {
  *  Get the iframe width
  */ 
 function aiGetIframeWidth(obj) {
+    var oldWidth =  obj.width;
     obj.width = 1; // set to 1 because otherwise I don't get the minimum width 
     var bodyWidth = Math.max(obj.contentWindow.document.body.scrollWidth, 
           obj.contentWindow.document.body.offsetWidth, 
           obj.contentWindow.document.documentElement.scrollWidth, 
           obj.contentWindow.document.documentElement.offsetWidth);
-    obj.width = bodyWidth + 'px';        
+    if (bodyWidth != 1) { // avoid that fully responsive sites do not get displayed at all.
+      obj.width = bodyWidth + 'px'; 
+    } else {
+      obj.width = oldWidth;   
+    }       
     return bodyWidth;
 }
 

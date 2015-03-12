@@ -7,7 +7,7 @@ Administration include
 */
 ?>
 <?php
-$version = '6.3.1';
+$version = '6.3.3';
 $updated = false;
 $evanto = (file_exists(dirname(__FILE__) . "/includes/class-cw-envato-api.php"));
 if (is_user_logged_in() && is_admin()) {
