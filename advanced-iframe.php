@@ -2,7 +2,7 @@
 /*
 Plugin Name: Advanced iFrame
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 6.3.3
+Version: 6.3.4
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
@@ -1479,11 +1479,7 @@ if (isset($cons_advancediFrame)) {
     add_action('wp_footer',  array($cons_advancediFrame, 'add_script_footer'), 2);
     add_shortcode('advanced_iframe', array($cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode
     add_shortcode('advanced-iframe', array($cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode alternative style
-    $options = $cons_advancediFrame->getAdminOptions();
-    if (!empty($options['alternative_shortcode'])) {    
-        add_shortcode($options['alternative_shortcode'], array($cons_advancediFrame, 'do_iframe_script'), 1); // setup shortcode alternative style  
-    }
-    
+  
     register_activation_hook(__FILE__, array($cons_advancediFrame, 'activate'));
 
     add_filter( 'widget_text', 'shortcode_unautop');

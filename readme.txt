@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 4.1.1
-Stable tag: 6.3.3
+Stable tag: 6.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 6.3.4 =
+- Fix: Advanced iframe was not working together with the Royal theme as they where using a same variable name. Now they work fine together.
+
 = 6.3.3 =
 - Fix: Measuring of width does now check if it is > 1 as some full responsive sites do return such a value that is not valid. 
 
