@@ -3,7 +3,7 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 4.2.2
+Tested up to: 4.2.3
 Stable tag: 6.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -150,6 +150,9 @@ If you have some radio elements empty after the update simply
 select the one you like and save again.
 
 == Changelog ==
+= 6.3.7 =
+- Testet with 4.2.3
+
 = 6.3.6 =
 - Testet with 4.2.2
 
