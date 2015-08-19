@@ -1,5 +1,6 @@
 /**
- *  Advanced iframe external workaround file v6.3 free 
+ *  Advanced iframe external workaround file v6.5 free 
+ *  Created: PARAM_TIMESTAMP  
 */ 
 
 var domain_PARAM_ID = 'WORDPRESS_SITE_URL'; // Check if this is your wordpress root

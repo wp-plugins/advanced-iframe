@@ -1,4 +1,4 @@
-.errordiv {
+#ai .errordiv {
 	padding: 10px;
 	margin: 10px;
 	border: 1px solid #555555;
@@ -7,16 +7,16 @@
 	text-align: center;
 	width: 360px;
 }
-#im_test .text, #im_test img {
+#ai #im_test .text, #ai #im_test img {
 	vertical-align: middle;
 }
-.linepad p {
+#ai .linepad p {
 	line-height: 1.3em;
 }
-.updated p, .error p {
+#ai .updated p, #ai .error p {
 	line-height: 1.1;
 }
-.icon_ai {
+#ai .icon_ai {
 	float: left;
 	height: 36px;
 	margin-top: 8px;
@@ -28,17 +28,30 @@
 	background-repeat: no-repeat;
 	background-position: -0px -0px !important;
 }
-.shortcode span {
+#ai .shortcode span {
 	font-weight: bold;
 }
-.shortcode {
+#ai .shortcode {
 	background: #E2FFE2;
 	border: 1px solid #00FF00;
 	padding: 10px;
 	padding-bottom: 10px;
 	margin: 10px;
 }
-.signup_account_container {
+
+#ai .move-bottom {
+	background: #E2FFE2;
+	border: 1px solid #00FF00;
+	padding: 10px;
+	padding-bottom: 10px;
+	margin: 0px;
+  margin-top: 0px;
+  display:block;
+  max-width:400px;
+}
+
+
+#ai .signup_account_container {
 	float: left;
 	width: 225px;
 	margin-right: 20px;
@@ -49,30 +62,30 @@
 	cursor: pointer;
 	height: 260px;
 }
-.signup_account_container#first {
+#ai .signup_account_container#first {
 	margin-left: 50px;
 }
-.signup_account_container#last {
+#ai .signup_account_container#last {
 	margin-right: 0px;
 	border: 2px solid #fefefe;
 }
-.signup_account_container#last .signup_inner {
+#ai .signup_account_container#last .signup_inner {
 	width: 245px!important;
 }
-.signup_account_container#last {
+#ai .signup_account_container#last {
 	width: 307px!important;
 }
-.signup_account_container:hover, .signup_account_container_active {
+#ai .signup_account_container:hover, #ai .signup_account_container_active {
 	border: 2px solid #80B8D9;
 }
-.signup_button_desc {
+#ai .signup_button_desc {
 	color: #999;
 	font-size: 11px;
 	margin-top: 6px;
 }
-.signup_content {
+#ai .signup_content {
 }
-.signup_inner {
+#ai .signup_inner {
 	width: 163px;
 	padding: 26px 30px;
 	border: 1px solid #EEE;
@@ -82,29 +95,29 @@
 	-webkit-border-radius: 3px;
 	height: 206px;
 }
-.signup_inner_desc {
+#ai .signup_inner_desc {
 	color: #484848;
 	font-size: 12px;
 	margin-bottom: 16px;
 }
-.signup_inner_header {
+#ai .signup_inner_header {
 	color: #5E8C16;
 	font-size: 14px;
 	margin-bottom: 4px;
 }
-.signup_inner_plan {
+#ai .signup_inner_plan {
 	color: #24536F;
 	font-size: 14px;
 	margin-bottom: 11px;
 	text-shadow: 1px 1px 1px #FFF;
 }
-.signup_inner_price {
+#ai .signup_inner_price {
 	color: #494949;
 	font-size: 16px;
 	margin-bottom: 11px;
 	text-shadow: 1px 1px 1px #FFF;
 }
-.signup_inner_button {
+#ai .signup_inner_button {
 	display: block;
 	text-align: center;
 	background: rgb(2,157,214);
@@ -130,15 +143,15 @@
 	letter-spacing: 1px;
 	font-size: 14px;
 }
-.signup_inner:hover {
+#ai .signup_inner:hover {
 	background: #F2F7F9;
 	border: 1px solid #FFF;
 }
-#last .signup_inner:hover {
+#ai #last .signup_inner:hover {
 	background: #FFFFFF;
 	border: 1px solid #EEE;
 }
-ul.pro, ul#browser-list {
+#ai ul.pro, #ai ul#browser-list {
 	list-style-type: square;
 	margin-left: 1em;
 	padding-left: 0px;
@@ -147,13 +160,13 @@ ul.pro, ul#browser-list {
 ul#browser-list {
 	padding-left: 10px;
 }
-#last .signup_inner_desc, #last li {
+#ai #last .signup_inner_desc, #ai #last li {
 	margin-bottom: 0;
 }
-#last .signup_account_container {
+#ai #last .signup_account_container {
 	width: auto;
 }
-#details-workaround, #details-javascript, #jquery-help, #browser-help, #jquery-gen, #all-parameters, #details-config {
+#ai #details-workaround,#ai #details-javascript,#ai #jquery-help,#ai #browser-help,#ai #jquery-gen,#ai #all-parameters,#ai #details-config, #ai #user-help, #ai #meta-help {
 	background: #F2F7F9;
 	border: 1px solid #d2d7d9;
 	padding: 10px;
@@ -164,30 +177,34 @@ ul#browser-list {
 #ai .nounderline a {
 	text-decoration: none;
 }
-a.signup_inner_button:active, a.signup_inner_button:hover {
+#ai a.signup_inner_button:active, #ai a.signup_inner_button:hover {
 	color: #cccccc;
 }
-.left_th_colored {
+#ai .left_th_colored {
 	width: 100px;
 }
-#accordion {
+#ai #accordion {
 	border: 1px solid #ddd;
 	border-top: none;
 	margin: 10px 0;
 	width: 100%;
 }
-#accordion > a {
+
+#ai #acc h1 {
+  display:none;
+}
+
+#ai #accordion > a {
 	display: block;
 	text-decoration: none;
 }
-#accordion > h1, .accordion > a {
+#ai #accordion > h1,#ai .accordion > a {
 	background-color: #fff;
-	background-image: url(../img/gradient.jpg);
-	background-image: -moz-linear-gradient(bottom, #f1f1f1, #fff);
-	background-image: -ms-linear-gradient(bottom, #f1f1f1, #fff);
-	background-image: -o-linear-gradient(bottom, #f1f1f1, #fff);
-	background-image: -webkit-linear-gradient(bottom, #f1f1f1, #fff);
-	background-image: linear-gradient(bottom, #f1f1f1, #fff);
+	background-image: -moz-linear-gradient(bottom, #c1c1c1, #fff);
+	background-image: -ms-linear-gradient(bottom, #c1c1c1, #fff);
+	background-image: -o-linear-gradient(bottom, #c1c1c1, #fff);
+	background-image: -webkit-linear-gradient(bottom, #c1c1c1, #fff);
+	background-image: linear-gradient(bottom, #c1c1c1, #fff);
 	border-top: 1px solid #ddd;
 	color: #222;
 	font: 15px/30px 'Verdana', sans-serif;
@@ -197,14 +214,13 @@ a.signup_inner_button:active, a.signup_inner_button:hover {
 	text-indent: 10px;
 	cursor: pointer
 }
-#accordion > h1:hover, .accordion > a {
-	background-color: #fff;
-	background-image: url(../img/gradient.jpg);
-	background-image: -moz-linear-gradient(bottom, #e1e1e1, #fff);
-	background-image: -ms-linear-gradient(bottom, #e1e1e1, #fff);
-	background-image: -o-linear-gradient(bottom, #e1e1e1, #fff);
-	background-image: -webkit-linear-gradient(bottom, #e1e1e1, #fff);
-	background-image: linear-gradient(bottom, #e1e1e1, #fff);
+#ai #accordion > h1:hover,#ai .accordion > a {
+	background-color: #eee;
+  	background-image: -moz-linear-gradient(bottom, #b1b1b1, #eee);
+	background-image: -ms-linear-gradient(bottom, #b1b1b1, #eee);
+	background-image: -o-linear-gradient(bottom, #b1b1b1, #eee);
+	background-image: -webkit-linear-gradient(bottom, #b1b1b1, #eee);
+	background-image: linear-gradient(bottom, #b1b1b1, #eee);
 	border-top: 1px solid #ddd;
 	color: #222;
 	font: 15px/30px 'Verdana', sans-serif;
@@ -214,7 +230,7 @@ a.signup_inner_button:active, a.signup_inner_button:hover {
 	text-indent: 10px;
 	cursor: pointer
 }
-#accordion > div {
+#ai #accordion > div {
 	padding: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -223,11 +239,11 @@ a.signup_inner_button:active, a.signup_inner_button:hover {
 #ai input[type=text] {
 	width: 98%
 }
-.ulli li {
+#ai .ulli li {
 	margin-left: 20px;
 	list-style-type: disc;
 }
-#wpadminbar.ai-save-bar {
+#ai #wpadminbar.ai-save-bar {
 	top: auto;
 	bottom: 0px;
 	left: auto;
@@ -241,10 +257,10 @@ a.signup_inner_button:active, a.signup_inner_button:hover {
   position: fixed;
   width:106%;
 }
-#wpadminbar.ai-save-bar>div {
+#ai #wpadminbar.ai-save-bar>div {
 	margin: 7px;
 }
-#updated_text {
+#ai #updated_text {
 	color: #090;
 	display: inline-block;
 	line-height: 28px;
@@ -256,26 +272,26 @@ a.signup_inner_button:active, a.signup_inner_button:hover {
 	width: 160px;
 	font-weight: bold;
 }
-#wpbarbutton, #wpresetbutton {
+#ai #wpbarbutton, #wpresetbutton {
 	padding-left: 10px;
 	padding-right: 10px;
 	line-height: 26px;
 	border-radius: 3px;
 }
 
-#wpresetbutton {
+#ai #wpresetbutton {
   margin-left:5px;
   line-height: 28px;
 }
 
 
-#ds, #gs, #mp ,#so ,#rt ,#xss ,#ad ,#ic {
+#ai #ds, #ai #gs, #ai #mp ,#ai #so ,#ai #rt ,#ai #xss ,#ai #ad ,#ai #ic,#vi,#qu {
 margin-bottom:10px;
 }
 
-.ai-eye {
+#ai .ai-eye {
     background-image:url(../img/eye.png);
-    display:inline-table;
+    display:inline-block;
     height:16px;
     text-indent:-9999px;
     width:16px;
@@ -283,59 +299,145 @@ margin-bottom:10px;
     margin-left: 3px;
 }
 
-.ai-eye:hover {
+#ai .ai-eye:hover {
     background-image:url(../img/eye-hover.png);
 }
 
-#help-header {
+#ai .ai-file {
+    background-image:url(../img/filesave.png);
+    display:inline-table;
+    height:16px;
+    text-indent:-9999px;
+    width:16px;
+    background-repeat: no-repeat;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+#ai .ai-file:hover {
+    background-image:url(../img/filesave-hover.png);
+}
+
+#ai #help-header {
 display: none;
 }
 
-h4 {
+#ai h4 {
 font-size:1.1em
 }
 
-#ai input[type="text"]#ai_config_id  {
+#ai input[type="text"]#ai_config_id, #ai input[type="text"]#ai_custom_id   {
   width: 150px;
 }
 
-.config-list {
+#ai .config-list {
   display:inline-table;
   width: 220px;
 }
 
-div.ai-external-config-label {
+#ai div.ai-external-config-label {
     float:left;
     margin-right: 10px;
 }
 
-div.ai-external-config {
+#ai div.ai-external-config {
     float:left;
 }
-div.ai-external-config {
+#ai div.ai-external-config {
     width: 400px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-div.ai-external-config:hover{
+#ai div.ai-external-config:hover{
     overflow: visible; 
     white-space: normal; 
     width: 600px;
     text-overflow: clip;
 }
 
-div.ai-external-config:after {
+#ai div.ai-external-config:after {
     clear: both;
 }
 
-.anchor{
+#ai .ai-anchor{
   display: block;
   height: 32px; 
   margin-top: -32px; 
   visibility: hidden;
 }
 
+#ai .ai-anchor-hide {
+  display: none;
+  height: 0px; 
+  margin-top: 0px;    
+}
 
 
+#ai input[type="text"].ai-input-search {
+  width: 200px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  float:left;
+}
+
+#ai .hide-setting {
+  visibility: hidden;
+  position: absolute;
+}
+
+#ai .ai-remove-margin {
+  margin-top: 0;
+  margin-bottom: 0;  
+}
+
+#ai .ai-marked {
+    background-color: yellow;
+}
+
+#ai .ai-input-search {   
+    float:left; 
+}
+
+#ai #ai-input-search-result {
+    display:none;
+    padding: 7px;
+    float:left;
+    color: red; 
+    font-weight: bold; 
+}
+
+#ai #ai-input-search-result-show {
+   display:block;
+    padding: 10px;
+    float:left; 
+    color: transparent;
+}
+
+#ai em {
+  background-color: yellow;
+  font-style: normal;
+}
+
+#ai section {
+display:none;
+}
+ 
+#ai section:first-child {
+display:block;
+} 
+
+#ai .small-menu {
+float:left; 
+margin-right:30px;
+height:40px;
+}
+
+#ai #ai-input-search-help {
+margin-bottom: 10px;
+}
+
+#ai .manage-menus {
+  margin-top: 0;
+}

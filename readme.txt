@@ -3,14 +3,18 @@ Contributors: mdempfle, Michael Dempfle
 Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
-Tested up to: 4.2.3
-Stable tag: 6.3.6
+Tested up to: 4.3
+Stable tag: 6.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly.
 
 == Description ==
+
+> **[Advanced iFrame Pro](http://codecanyon.net/item/advanced-iframe-pro/5344999?ref=mdempfle)** | 
+> **[Demo](http://www.tinywebgallery.com/blog/advanced-iframe/demo-advanced-iframe-2-0)**
+
 Include content the way YOU like in an iframe that can hide and modify elements and foreward parameters. You can also embed content directly or show a part of an iframe.
 
 = Shortcode for advanced iframe =
@@ -62,11 +66,12 @@ It's quick and painless to get Advanced iFrame Pro. Simply Get Advanced iFrame P
 
 You can find the comparison chart here: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart
 See the pro demo here: 
-http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo
-= Administration =  
+http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo= Administration =  
 * Go to Settings -> Advanced iFrame
 
 =	Quick start guide =
+The quickstart guide is also available as video: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-video-tutorials 
+
 To include a webpage to your page please check the following things first:
 
 *	Check if your page page is allowed to be included http://www.tinywebgallery.com/blog/advanced-iframe/free-iframe-checker!
@@ -76,8 +81,10 @@ To include a webpage to your page please check the following things first:
 Most likely you have one of the following setups:
 
 1.	iframe cannot be included:  You cannot include the content because the owner does not allow this. 
-1.	iframe can be included and you are on a different domain: You are not allowed to modify the content of the iframe but you can show it or a part of it. To resize the content to the height/width you need to modify the iframe page to enable the provided workaround.
-1.	Iframe can be included and you are on the same domain: All features of the plugin can be used. 
+1.	iframe can be included and you are on a different domain: See the feature comparison chart: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-comparison-chart. To resize the content to the height/width or modify css you need to modify the remote iframe page by adding one line of Javascript to enable the provided workaround.
+1.  iframe can be included and you are on the same domain: All features of the plugin can be used. 
+
+If you mix http and https read http://www.tinywebgallery.com/blog/iframe-do-not-mix-http-and-https. Parent https and iframe http does not work on all mayor browsers!
 
 == Installation ==
 There are 2 ways to install the Advanced iFrame
@@ -149,7 +156,79 @@ Simply overwrite all files from your previous installation.
 If you have some radio elements empty after the update simply 
 select the one you like and save again.
 
+
 == Changelog ==
+= 6.5.3 =
+- Fix: https iframe on https did show an error message which is wrong. Now the message only is shown if http pages are included to https pages.
+
+= 6.5.2 =
+- Fix: Wordpress updates where not shown because of a missing return value. Now only the ones for advanced iframe are blocked as it should be.
+
+= 6.5.1 =
+- New: Wordpress 4.2.4 is supported
+- Fix: An anonymous function was used which is supported since php 5.3. But older php versions failed in the administration. Now the "old" way is used and the plugin is now compatible with older php versions again.
+
+= 6.5 =
+- New: Tab navigation in the administration.
+- New: The browser detection is now supporting "browser" and "desktop" also. 
+- New: include_html was added which does write the given string directly instead an iframe. This is helpful e.g. for a fallback text/link when the browser detection is used and a device is detected where your content does not work or should not be shown. Now you can print a message or display an image there.
+- New: Browscap version 6005 lite 7th June 2016 is now included. It is much smaller than the previous version which had a lot of overhead which where not needed here. (Pro)
+- New: A button for full screen iframes was added it does set all the required styles and settings for a fullscreen iframe (pro). 
+- New: hide_content_until_iframe_color was added. This hides the parent content with the given color until the iframe is loaded. This is very usefull if you want to use a fullscreen iframe and the parent content should never be shown (pro).
+- New: css calc() support for width and height. This makes it possible to do calcuations like 100%-200px at the height and the width. See http://caniuse.com/#feat=calc for browser support (pro).
+- New: Added a few new sections for better usability of the administation: "Zoom", "Lazy load" and "Url parameters"
+- New: Above the editor a button next to the media button was added to include a basic iframe shortcode. For later versions it is planned that the attributes for the button can be specified in the config.
+- New: When zoom is used the browser detection is needed. This does need a lot of memory. A temp file is now created before the check and removed after the check. So if the check does now fail because of a memory crash this file is not deleted and the script does not do the check. You only loose the IE8 support for zoom. The temp file is advanced-iframe-custom/browser-check-failed.txt and if you get mory memory you can remove this file to enable the check again (pro). 
+- New: A message is shown if you include a http iframe to a https page as many major browsers do block this. Therefore it does not make sense to use this setup.
+- New: The ai_external.js has now a timestamp. There you can then see if you use the latest version or maybe see a cached one!
+- New: The resize on element resize script is overwritten if jQuery is loaded after the ai_external.js script again. Now a warning is shown (pro)
+- New: user info and user meta of the src attribute have now an additional help which settings are available (pro)
+- New: The generate shortcode button does now only generate the include_* values if they are set as the other settings are ignored than. 
+- Fix: show_part_of_iframe_x and show_part_of_iframe_y are now always added to the generated iframe code if show_part_of_iframe is enabled (pro).
+- Fix: Added overflow:auto to the wrapper div. This fixed the problem returning a height of 0 of the wrapper element in chrome if the elements inside are floating: http://webdesignerwall.com/tutorials/css-clearing-floats-with-overflow 
+- Fix: The % info text of the area selector was improved. 
+- Fix: [ and ] in the security error message where not html encoded. This lead to a strange error message if another plugin is wrapped around and calling do_shortcode. 
+- Fix: The max-width for the sourounding div when responsive iframes are enabled where missing a ; which leads to a invalid css value.
+- Fix: Added missing links in the documentation at the responsive iframe settings.
+- Fix: auto_zoom_by_ratio was missing in the generated shortcode.
+- Fix: position:absolute is now optional (use_zoom_absolute_fix = "true") as it seems is also causes problems at other layouts. 
+
+= 6.4 =
+- New: The first video tutorial is avilable: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-video-tutorials 
+- New: Links to external pages can be opened in a simple fullscreen lightbox (Pro). See example 32 on http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/change-links-targets
+- New: The iframe url can be returned back to parent and added to the url (Pro). This url does than also load this iframe content again. Supported on the same domain and with the external workaround (Pro). See: http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/add-iframe-url-to-parent
+- New: hide_part_of_iframe does now support links (Pro)! Therefore it is now possible to add areas with custom links. See the updated demo 8 on http://www.tinywebgallery.com/blog/advanced-iframe/advanced-iframe-pro-demo/hide-a-part-of-the-iframe  
+- New: hide_part_of_iframe elements are hidden until the page is loaded to avoid that this blocks are shown without the iframe. this is only enabled if hide until loaded is enabled! 
+- New: Support for pdfs inside the iframe (Pro). If you include a pdf google doc is used to include the pdf. This solution  looks the same on all browsers. If you want to use the native pdf renderer of the browser/your system add NATIVE: before the url. Like NATIVE:http://www.example.com/pdf.pdf  DEMO NEEDED
+- New: All attributes from the user info and the user meta are available as replace parameters in the src attribute (Pro). 
+- New: Extract parts from the parent url and adds it to the iframe url (Pro). See urlpath at the description of "Url"
+- New: Extract parts from the parent query and add it to the iframe url (Pro). See query at the description of "Url"
+- New: Parameters from POST requests are alse extracted. If GET and POST are given the GET parameter is used.
+- New: Add css directly to an iframe on the same domain (Pro). This does than support !important also. 
+- New: Add css and js files to the iframe for the same domain or with the external workaround (Pro)
+- New: Custom css and js files can be created/viewed/edited/removed in the administration.
+- New: Marker css classes are added to the body and the first level of the elements in the iframe: add_css_class_iframe (Pro). It is than now possible to apply different changes to different pages in the iframe.
+- New: You can now reload the iframe in a certain interval: reload_interval (Pro)
+- New: A filter for the settings does now exist. Simply type for a search term and only the matching settings are shown. 
+- New: An icon is now shown which settings are saved to the ai_external.js
+- New: An icon is now shown where a special demo does exist. 
+- New: The dependeny to jQuery is now optional. This avoids double loading of jQuery if e.g. your theme does load jQuery not the wordpress way.
+- New: ai.js is only loaded if the advanced_iframe shortcode is on the page. "Include ai.js in the footer" has to be set to true to enable this.
+- New: Auto zoom by ratio if the height cannot be measured but the ratio is known (Pro).
+- New  allowfullscreen is now also available in the free version as this is a default html element.
+- New: Settings link on the plugin page
+- New: External history page http://www.tinywebgallery.com/aip-history.htm 
+- New: Improved documentation
+- New: A text is shown if ai_extenal.js file does not exist yet.
+- New: Width in the external workaround is now first checking if a width style is set and only if not found the measuring is done. This can solve problems with hidden elements! Also if you hide elements you should also set the width to 0 to avoid such issues.If you use the internal hide function hidden elements are set to a height and width of 0.
+- New: Tested up to Wordpress 4.2.2
+- Fix: The plugin does now work fine with the royal theme from codecanyon again! The theme and the plugin where using the same variable for the options. Now a unique variable name is used.
+- Fix: Changed && in the Javascript to two if statements to avoid problems with wptexturize and other page optimizing plugins 
+- Fix: Browser detection for mobile and android was not working because in the detection file e.g. isMobileDevice was changed to ismobiledevice. Now this works fine again ;). (Pro)
+- Fix: Show one element on the local domain was fixed.
+- Fix: aiResizeIframeHeightById has now a a try catch to detect configuration errors. 
+- Fix: position:absolute is added to the iframe at zoom to fix issues on some pages.
+
 = 6.3.7 =
 - Testet with 4.2.3
 
@@ -168,6 +247,7 @@ select the one you like and save again.
 
 = 6.3.2 =
 - Fix: Show one element on the local domain was fixed.
+- Fix: Measuring of width does now check if it is > as some full responsive sites do return such a value that is not valid. 
 
 = 6.3.1 =
 - New: index.htm files where added to all directories to prevent directory listings if you server does allow this.
@@ -206,7 +286,7 @@ select the one you like and save again.
 - Fix: The browser detection is now only used when the browser detection or zoom is used. browser detection needs quite some memory. So this reduces the memory usage of the plugin if these features are not used (Pro).  
 
 = 6.1 =
-- New {userid}, {username}, {useremail} are available as replace parameters in the src attribute (Pro).
+- New: {userid}, {username}, {useremail} are available as replace parameters in the src attribute (Pro).
 - Fix: {} in the src field could not be saved in the administration because of Wordpress esc_url. Now this works there too. It was always working in the shortcode attribute src.
 - Fix: In the external workaround the resizeLater function had a hardcoded id (advanced_iframe). When using a different one the callback with the size failed.
 - Fix: Browser detection needs at least php 5.3. Now a warning is shown when you don't have at least php 5.3 (Pro).

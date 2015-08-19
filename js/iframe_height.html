@@ -1,21 +1,28 @@
 <script type="text/javascript">
-	function getParamFromLocation(nr) {
-		var pair = window.location.search.substring(1);
-		var parts = pair.split('=');
-		return parts[nr];
-	}
-  var nHeight = getParamFromLocation(1);
+	function gup( name, url ) {
+    if (!url) url = location.href
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];
+  }
   
-  
-  if (nHeight != undefined) {
+  var nHeight = gup("height");
+ 
+  if (nHeight != null) {
     try {
-      var id = getParamFromLocation(3);
-      var nWidth = getParamFromLocation(2); 
-      if (id != undefined) {
+      var loc = gup("loc"); 
+      if (loc != null) {
+          window.parent.parent.aiChangeUrl(loc);
+      }     
+      var id = gup("id");
+      var nWidth = gup("width");
+      if (id != null) {
           var iHeight = parseInt(nHeight);
           var iWidth = parseInt(nWidth);
           window.parent.parent.aiResizeIframeHeightId(iHeight,iWidth, id);
-          window.parent.parent.aiShowIframeId( '#' + id);
+          window.parent.parent.aiShowIframeId(id);
       } else {
           alert("Please update the ai_external.js to the current version.");
       }  
