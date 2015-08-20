@@ -2,7 +2,7 @@
 /*
 Plugin Name: Advanced iFrame 
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
-Version: 6.5.3
+Version: 6.5.4
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
@@ -1144,12 +1144,12 @@ if (!class_exists('advancediFrame')) {
                   if (empty($include_html)) {
                     $ai_height = (empty ($include_height)) ? '' : (' style="height:'.$include_height.';" ');
   
-                    $html = '<div style="position:relative" id="ai-temp-wrapper-'.$id.'"><div '.$ai_height.' id="ai-temp-'.$id.'"><!-- --></div><div id="ai-temp-overlay-'.$id.'" class="ai-temp-overlay" style="position:absolute"></div></div>';
+                    $html = '<div '.$ai_height.' id="ai-temp-'.$id.'"><!-- --></div>';
                     $html .= '<script type="text/javascript">';
                     if  ($include_hide_page_until_loaded === 'true') {
                       $html .= 'jQuery("body").css("display", "none");';
                     }
-                    $html .= 'jQuery("#ai_temp_'.$id.'").load("' . $include_url;
+                    $html .= 'jQuery("#ai-temp-'.$id.'").load("' . $include_url;
                     if  (!empty ($include_content)) {
                       $html .= ' ' . $include_content;
                     }

@@ -4,7 +4,7 @@ Donate link: http://www.tinywebgallery.com
 Tags: iframe, embed, resize, content, advanced, shortcode, modify css, widget 
 Requires at least: 2.8.6
 Tested up to: 4.3
-Stable tag: 6.5.3
+Stable tag: 6.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -158,6 +158,9 @@ select the one you like and save again.
 
 
 == Changelog ==
+= 6.5.4 =
+- Fix: include_url was brocken. Now it works fine again.
+
 = 6.5.3 =
 - Fix: https iframe on https did show an error message which is wrong. Now the message only is shown if http pages are included to https pages.
 
