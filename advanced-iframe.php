@@ -3,6 +3,8 @@
 Plugin Name: Advanced iFrame 
 Plugin URI: http://www.tinywebgallery.com/blog/advanced-iframe
 Version: 6.5.5
+Text Domain: advanced-iframe
+Domain Path: /languages
 Author: Michael Dempfle
 Author URI: http://www.tinywebgallery.com
 Description: This plugin includes any webpage as shortcode in an advanced iframe or embeds the content directly.
